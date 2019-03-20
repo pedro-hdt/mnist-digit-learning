@@ -27,9 +27,8 @@ def task1_2(X, Y):
     M[10] = np.sum(M[:9,:], axis=0) / 10
 
     montage(M)
-    plt.savefig(fname='task1_2_imgs.pdf')
-    plt.show
-    sio.savemat(file_name='task1_2_M.mat', mdict={'M': M})
+    # TODO: Before submitting uncomment the following line
+    # plt.show()
 
     return M
 

@@ -5,13 +5,19 @@ from task1_2 import *
 import sys, getopt
 
 
-def test_task1_1():
+def test_task1_1(visual=False): #TODO: implement -v flag for visual (with windows opening)
+    plt.clf()
     task1_1(Xtrn, Ytrn)
+    if visual:
+        plt.show()
 
 
 def test_task1_2():
-    print task1_2(Xtrn, Ytrn)
-
+    plt.clf()
+    M = task1_2(Xtrn, Ytrn)
+    plt.savefig(fname='../results/task1_2_imgs.pdf')
+    plt.show()
+    sio.savemat(file_name='../results/task1_2_M.mat', mdict={'M': M})
 
 def main():
 

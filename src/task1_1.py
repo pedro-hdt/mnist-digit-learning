@@ -34,6 +34,5 @@ def task1_1(X, Y):
                 samples += 1
             j += 1
 
-        # plt.show()
-        plt.savefig(fname='task1_1_imgs_class{}.pdf'.format(i))
-        plt.clf()
+        plt.savefig(fname='../results/task1_1_imgs_class{}.pdf'.format(i)) # TODO: Before submitting comment this
+        # plt.show() TODO: Before submitting uncomment this
