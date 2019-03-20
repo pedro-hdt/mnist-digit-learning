@@ -12,17 +12,19 @@ def test_task1_1(visual=False): #TODO: implement -v flag for visual (with window
         plt.show()
 
 
-def test_task1_2():
+def test_task1_2(visual):
     plt.clf()
     M = task1_2(Xtrn, Ytrn)
     plt.savefig(fname='../results/task1_2_imgs.pdf')
-    plt.show()
     sio.savemat(file_name='../results/task1_2_M.mat', mdict={'M': M})
+    if visual:
+        plt.show()
+
 
 def main():
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'fs')
+        opts, args = getopt.getopt(sys.argv[1:], 'fsv')
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err)  # will print something like "option -a not recognized"
@@ -34,7 +36,9 @@ def main():
         sys.exit(2)
 
     for o, a in opts:
-        if o == '-f':
+        if o == '-v':
+            visual = True # TODO: complete thsi implementation
+        elif o == '-f':
             test_task1_1()
             test_task1_2()
         elif o == '-s':
@@ -45,6 +49,8 @@ def main():
             globals()['test_task1_' + subtask]()
         else:
             assert False, "Invalid option!"
+
+
 
 
 def usage():
