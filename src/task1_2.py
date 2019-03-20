@@ -1,3 +1,8 @@
+import numpy as np
+import scipy.io as sio
+from montage import *
+
+
 def task1_2(X, Y):
     # Input:
     # X : M-by-D data matrix (double)
@@ -5,8 +10,28 @@ def task1_2(X, Y):
     # Output:
     # M : (K+1)-by-D mean vector matrix (double)
     # Note that M[K+1, :] is the mean vector of X
-    M = []
+    D = len(X[0])
+    M = np.zeros((11, D))
 
-    pass
+
+    # for each of the 10 classes
+    for i in range(10):
+        samples = 0
+        # for each data'point'
+        for j in range(len(X)):
+            if Y[j] == i:
+                M[Y[j]] += X[j]
+                samples += 1
+        M[i] /= samples
+
+    M[10] = np.sum(M[:9,:], axis=0) / 10
+
+    montage(M)
+    plt.savefig(fname='task1_2_imgs.pdf')
+    plt.show
+    sio.savemat(file_name='task1_2_M.mat', mdict={'M': M})
 
     return M
+
+
+
