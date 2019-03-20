@@ -1,3 +1,6 @@
+import numpy as np
+from comp_pca import *
+
 def task1_3(X):
     # Input:
     # X : M-by-D data matrix (double)
@@ -7,11 +10,9 @@ def task1_3(X):
     # MinDims : 4-by-1 vector (integer) of the minimum number of PCA dimensions
     #           to cover 70%, 80%, 90%, and 95% of the total variance.
 
-    Evecs = []
-    Evals = []
-    CumVar = []
+    EVecs, EVals = comp_pca(X)
+    CumVar = np.cumsum(EVals)
     MinDims = []
 
-    pass
 
-    return Evecs, Evals, CumVar, MinDims
+    return EVecs, EVals, CumVar, MinDims

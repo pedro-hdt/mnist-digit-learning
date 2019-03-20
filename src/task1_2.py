@@ -30,7 +30,7 @@ def task1_2(X, Y):
         M[i] /= samples
 
     # TODO: check the total mean is mean of means
-    M[10] = np.sum(M[:9,:], axis=0) / 10
+    M[10] = np.sum(M[:9, :], axis=0) / 10
 
     montage(M)
     # TODO: Before submitting uncomment the following line

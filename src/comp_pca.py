@@ -17,16 +17,19 @@ def comp_pca(X):
     X_shift = X - X.mean(axis=0)
 
     # Covariance matrix
-    covar_m = 1/(N - 1) * np.dot(X_shift.T, X_shift)
+    # note we use 1.0, otherwise it gets cast to int and results in all 0s
+    covar_m = 1.0 / (N - 1) * np.dot(X_shift.T, X_shift)
 
     # find the eigenvectors and eigenvalues
     # EVecs will be the principal components
     EVals, EVecs = la.eig(covar_m)
+    # TODO: this might return complex values! do we need to deal with that?
 
     # The first element of each eigenvector must be non-negative
-    for v in EVecs:
-        if v[0] < 0:
-            v *= -1
+    for i in range(len(EVecs[0])):
+        if EVecs[0, i] < 0:
+            print 'negating'
+            EVecs[:, i] *= -1
 
     # Order eigenvalues
     idx = EVals[::-1].argsort()

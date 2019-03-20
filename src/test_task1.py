@@ -2,6 +2,7 @@ from montage import *
 from load_my_data_set import *
 from task1_1 import *
 from task1_2 import *
+from task1_3 import *
 import sys, getopt
 
 
@@ -23,9 +24,8 @@ def test_task1_2(visual):
 
 def test_task1_3(visual):
     plt.clf()
+    EVecs, EVals, CumVar, MinDims = task1_3(Xtrn)
 
-    if visual:
-        plt.show()
 
 
 def main():
