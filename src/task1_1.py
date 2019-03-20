@@ -17,7 +17,7 @@ def task1_1(X, Y):
         # Initialise a figure with 2 by 5 subplots and prettify it
         f, axarr = plt.subplots(2, 5)
         f.canvas.set_window_title('Class {}'.format(i))
-        f.subplots_adjust(wspace=0, hspace=0)
+        f.subplots_adjust(wspace=0, hspace=0.2)
         f.suptitle('First ten smaples of digit {}'.format(i), size=15)
         f.set_size_inches(7.45, 3)
 

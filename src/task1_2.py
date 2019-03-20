@@ -4,12 +4,17 @@ from montage import *
 
 
 def task1_2(X, Y):
-    # Input:
-    # X : M-by-D data matrix (double)
-    # Y : M-by-1 label vector (uint8)
-    # Output:
-    # M : (K+1)-by-D mean vector matrix (double)
-    # Note that M[K+1, :] is the mean vector of X
+
+    """ Write a Python function that calculates a mean vector of data for each class (k = 1, . . . , K,
+    where K = 10) and for all, and displays the images of K + 1 mean vectors in a single graph
+    using montage() function.
+    Inputs:
+    X and Y: the same formats as in Task 1.1.
+    M: (K+1)-by-D mean vector matrix (float64),
+    where K (not an input) is the number of classes, and D is the same as in Task 1.1.
+    M(K+1,:) is the mean vector of the whole data."""
+
+
     D = len(X[0])
     M = np.zeros((11, D))
 
@@ -24,6 +29,7 @@ def task1_2(X, Y):
                 samples += 1
         M[i] /= samples
 
+    # TODO: check the total mean is mean of means
     M[10] = np.sum(M[:9,:], axis=0) / 10
 
     montage(M)

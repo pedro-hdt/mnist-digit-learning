@@ -5,7 +5,7 @@ from task1_2 import *
 import sys, getopt
 
 
-def test_task1_1(visual=False): #TODO: implement -v flag for visual (with windows opening)
+def test_task1_1(visual):
     plt.clf()
     task1_1(Xtrn, Ytrn)
     if visual:
@@ -21,8 +21,14 @@ def test_task1_2(visual):
         plt.show()
 
 
-def main():
+def test_task1_3(visual):
+    plt.clf()
 
+    if visual:
+        plt.show()
+
+
+def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'fsv')
     except getopt.GetoptError as err:
@@ -35,26 +41,27 @@ def main():
         usage()
         sys.exit(2)
 
+    visual = False
+
     for o, a in opts:
         if o == '-v':
-            visual = True # TODO: complete thsi implementation
+            visual = True
         elif o == '-f':
-            test_task1_1()
-            test_task1_2()
+            test_task1_1(visual)
+            test_task1_2(visual)
         elif o == '-s':
             if len(args) != 1:
                 usage()
                 assert False, 'Invalid number of arguments!'
             subtask = args[0]
-            globals()['test_task1_' + subtask]()
+            globals()['test_task1_' + subtask](visual)
         else:
             assert False, "Invalid option!"
 
 
-
-
 def usage():
     print 'Usage: \"python2.7 test_task1\" followed by: '
+    print '-v to open the plots as the task runs'
     print '-f for the full task'
     print '-s for a specific sub-task followed by the sub-task index'
     print 'e.g. for task 1.1: '

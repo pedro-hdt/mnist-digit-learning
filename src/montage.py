@@ -22,4 +22,6 @@ def montage(X, colormap='gray'):
     plt.imshow(M, cmap=colormap)
     plt.axis('off')
     # plt.show() TODO: I commented this out so I can save the figure
+    # And I added this
+    return plt.gcf(), plt.gca()
 
