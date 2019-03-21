@@ -32,8 +32,9 @@ def comp_pca(X):
             EVecs[:, i] *= -1
 
     # Order eigenvalues
-    idx = EVals[::-1].argsort()
+    idx = EVals.argsort()[::-1]
     EVals = EVals[idx]
+
 
     # Order eigenvectors by the same order
     EVecs = EVecs[:, idx]
