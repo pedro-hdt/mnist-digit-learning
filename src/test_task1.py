@@ -3,6 +3,11 @@ from load_my_data_set import *
 from task1_1 import *
 from task1_2 import *
 from task1_3 import *
+from task1_4 import *
+from task1_5 import *
+from task1_6 import *
+from task1_7 import *
+from task1_8 import *
 import sys
 import getopt
 
@@ -32,6 +37,17 @@ def test_task1_3(visual):
     sio.savemat(file_name='../results/task1_3_evals.mat', mdict={'EVals': EVals})
     sio.savemat(file_name='../results/task1_3_cumvar.mat', mdict={'CumVar': CumVar})
     sio.savemat(file_name='../results/task1_3_mindims.mat', mdict={'MinDims': MinDims})
+
+
+def test_task1_4(visual):
+    plt.clf()
+    EVecs, EVals, CumVar, MinDims = task1_3(Xtrn)
+    plt.clf()
+    task1_4(EVecs)
+    plt.suptitle('First 10 Principal Components')
+    plt.savefig(fname='../results/task1_4_imgs.pdf')
+    if visual:
+        plt.show()
 
 
 def main():
