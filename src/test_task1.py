@@ -1,5 +1,6 @@
 from montage import *
 from load_my_data_set import *
+from my_kMeansClustering import *
 from task1_1 import *
 from task1_2 import *
 from task1_3 import *
@@ -50,14 +51,28 @@ def test_task1_4(visual):
         plt.show()
 
 
-def test_task1_5():
-    Ks = [1, 2, 3, 4, 5, 7, 10, 15, 20]
+def test_k_means():
+    Ck = []
+    centres = []
+    for x in range(len(Ytrn)):
+        if Ytrn[x] not in Ck:
+            Ck.append(Ytrn[x])
+            centres.append(Xtrn[x])
+        if len(Ck) == 10:
+            break
+    print centres
+    print Ck
+    my_kMeansClustering(Xtrn, 10, np.array(centres))
+
+
+def test_task1_5(visual):
+    Ks = np.array([1, 2, 3, 4, 5, 7, 10, 15, 20])
     task1_5(Xtrn, Ks)
 
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'fsv')
+        opts, args = getopt.getopt(sys.argv[1:], 'fsvk')
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err)  # will print something like "option -a not recognized"
@@ -73,6 +88,8 @@ def main():
     for o, a in opts:
         if o == '-v':
             visual = True
+        elif o == '-k':
+            test_k_means()
         elif o == '-f':
             test_task1_1(visual)
             test_task1_2(visual)

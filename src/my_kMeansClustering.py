@@ -16,15 +16,15 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
     N = len(X)
     D = X[0].size
 
-    idx = np.empty(N, 1)
-    C = np.empty(k, D)
+    idx = np.zeros((N, 1))
+    C = initialCentres
 
     dist = np.zeros((k, N))
 
-    idx_prev = np.empty(N, 1)
+    idx_prev = np.zeros((N, 1))
 
     # initialise error list
-    SSE = np.empty()
+    SSE = []
 
     # show cluster centres at iteration 0
     print("[0] Iteration: ", C.tolist())
@@ -33,7 +33,7 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
     # between each cluster centre and each observation
     for i in range(maxIter):
         for c in range(k):
-            dist[c] = sq_dist(X, C[:, c])
+            dist[c] = sq_dist(X, C[c])
 
         # Assign data to clusters
         # Ds are the actual distances and idx are the cluster assignments
@@ -45,20 +45,20 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
             if (np.sum(idx == c) == 0):
                 print('k-means: cluster {} is empty'.format(c))
             else:
-                SSE = np.append(SSE, sum_sq_error(X, k, N, C, idx))
-                C[c] = my_mean(X[idx[:] == c], axis=0)
+                SSE.append(sum_sq_error(X, k, N, C, idx))
+                C[c] = my_mean(X[idx[:] == c])
 
         # show cluster centres at iteration i
         print('[{}] Iteration: '.format(i+1), C.tolist())
 
         # If assignments were maintained, terminate
         if np.array_equal(idx, idx_prev):
-            return C, SSE
+            return C, idx, np.array(SSE)
 
         # Store current assignment to check if it changes in next iteration
         idx_prev = idx
 
-    return C, idx, SSE
+    return C, idx, np.array(SSE)
 
 
 def sq_dist(U, v):
