@@ -11,50 +11,48 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
     # C   : k-by-D matrix (double) of cluster centres
     # idx : N-by-1 vector (integer) of cluster index table
     # SSE : (L+1)-by-1 vector (double) of sum-squared-errors
-    
-    C = []
-    idx = []
-    SSE = []
 
+    N = len(X)
+    D = X[0].size
 
-    N = len(A)
-    dim = A[0].size
+    idx = np.empty(N, 1)
+    C = np.empty(k, D)
 
-    D = np.zeros((K, N))
+    dist = np.zeros((k, N))
 
-    idx_prev = np.empty_like(D.argmin(axis=0))
+    idx_prev = np.empty(N, 1)
 
     # initialise error list
     SSE = []
 
     # show cluster centres at iteration 0
-    print("[0] Iteration: ", centres.tolist())
+    print("[0] Iteration: ", C.tolist())
 
     # Compute Squared Euclidean distance (i.e. the squared distance)
     # between each cluster centre and each observation
-    for i in range(maxiter):
-        for c in range(K):
-            D[c] = sq_dist(A, centres[:, c])
+    for i in range(maxIter):
+        for c in range(k):
+            dist[c] = sq_dist(X, C[:, c])
 
         # Assign data to clusters
         # Ds are the actual distances and idx are the cluster assignments
-        idx = D.argmin(axis=0)  # find min dist. for each observation
+        idx = dist.argmin(axis=0)  # find min dist. for each observation
 
         # Update cluster centres
-        for c in range(K):
+        for c in range(k):
             # check the number of samples assigned to this cluster
             if (np.sum(idx == c) == 0):
-                print(f'k-means: cluster {c} is empty')
+                print('k-means: cluster {} is empty'.format(c))
             else:
-                errors.append(sum_sq_error(A, K, N, centres, idx))
-                centres[c] = np.mean(A[idx[:] == c], axis=0)
+                SSE.append(sum_sq_error(X, k, N, C, idx))
+                C[c] = np.mean(X[idx[:] == c], axis=0)
 
-        if (out):  # show cluster centres at iteration i
-            print(f'[{i + 1}] Iteration: ', centres.tolist())
+        # show cluster centres at iteration i
+        print('[{}] Iteration: '.format(i+1), C.tolist())
 
-            # If assignments were maintained,
-        if (np.array_equal(idx, idx_prev)):
-            return centres, errors
+        # If assignments were maintained, terminate
+        if np.array_equal(idx, idx_prev):
+            return C, SSE
 
         # Store current assignment to check if it changes in next iteration
         idx_prev = idx
@@ -67,12 +65,13 @@ def sq_dist(U, v):
 
 
 def sum_sq_error(A, K, N, centres, idx):
+
     z = np.zeros((K, N), dtype=bool)
     error = 0
 
     for row in range(K):
         for col in range(N):
-            if (idx[col] == row):
+            if idx[col] == row:
                 z[row, col] = True
 
     for cluster in range(K):
