@@ -13,43 +13,47 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
     # idx : N-by-1 vector (integer) of cluster index table
     # SSE : (L+1)-by-1 vector (double) of sum-squared-errors
 
+    # TODO: remove printing
+
     N = len(X)
-    D = X[0].size
 
     idx = np.zeros((N, 1))
+    idx_prev = np.zeros((N, 1))
     C = initialCentres
 
     dist = np.zeros((k, N))
-
-    idx_prev = np.zeros((N, 1))
 
     # initialise error list
     SSE = []
 
     # show cluster centres at iteration 0
-    print("[0] Iteration: ", C.tolist())
+    # print "[0] Iteration: ", C
 
     # Compute Squared Euclidean distance (i.e. the squared distance)
     # between each cluster centre and each observation
     for i in range(maxIter):
-        for c in range(k):
-            dist[c] = sq_dist(X, C[c])
+        for cluster in range(k):
+            dist[cluster] = sq_dist(X, C[cluster]) # TODO this dist can be used for error. Why are we recalculating?
 
         # Assign data to clusters
         # Ds are the actual distances and idx are the cluster assignments
         idx = dist.argmin(axis=0)  # find min dist. for each observation
 
         # Update cluster centres
-        for c in range(k):
+        for cluster in range(k):
             # check the number of samples assigned to this cluster
-            if (np.sum(idx == c) == 0):
-                print('k-means: cluster {} is empty'.format(c))
+            if np.sum(idx == cluster) == 0:
+                print('k-means: cluster {} is empty'.format(cluster))
             else:
-                SSE.append(sum_sq_error(X, k, N, C, idx))
-                C[c] = my_mean(X[idx[:] == c])
+                class_k = X[idx[:] == cluster]
+                C[cluster] = my_mean(class_k)
 
         # show cluster centres at iteration i
-        print('[{}] Iteration: '.format(i+1), C.tolist())
+        # print '[{}] Iteration: '.format(i+1), C
+
+        # add error to the list
+        # SSE.append(sum_sq_error(X, cluster, C, idx, N))
+        # SSE.append(sum_sq_error2(X, C, idx, N))
 
         # If assignments were maintained, terminate
         if np.array_equal(idx, idx_prev):
@@ -62,22 +66,30 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
 
 
 def sq_dist(U, v):
+
     return np.sum((U-v)**2, axis=1)
 
 
-def sum_sq_error(A, K, N, centres, idx):
+def sum_sq_error(X, k, centres, idx, N):
 
-    z = np.zeros((K, N), dtype=bool)
     error = 0
 
-    for row in range(K):
-        for col in range(N):
-            if idx[col] == row:
-                z[row, col] = True
+    for cluster in range(k):
+        class_k = X[idx[:] == cluster]
+        error += np.sum(sq_dist(class_k, centres[cluster]))
 
-    for cluster in range(K):
-        error += np.sum(sq_dist(A[z[cluster, :]], centres[cluster]))
+    error *= (1. / N)
 
-    error *= (1 / N)
+    return error
+
+
+def sum_sq_error2(X, centres, idx, N):
+
+    error = 0
+
+    for x in range(N):
+        error += sq_dist(X[x], centres[idx[x]])
+
+    error *= (1. / N)
 
     return error

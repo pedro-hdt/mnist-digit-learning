@@ -52,17 +52,10 @@ def test_task1_4(visual):
 
 
 def test_k_means():
-    Ck = []
-    centres = []
-    for x in range(len(Ytrn)):
-        if Ytrn[x] not in Ck:
-            Ck.append(Ytrn[x])
-            centres.append(Xtrn[x])
-        if len(Ck) == 10:
-            break
-    print centres
-    print Ck
-    my_kMeansClustering(Xtrn, 10, np.array(centres))
+    C, idx, SSE = my_kMeansClustering(Xtrn, 10, Xtrn[:10])
+    print C
+    print idx
+    print Ytrn
 
 
 def test_task1_5(visual):

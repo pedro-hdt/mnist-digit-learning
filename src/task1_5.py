@@ -1,6 +1,7 @@
 from my_kMeansClustering import *
 import scipy.io as sio
 
+
 def task1_5(X, Ks):
     # Input:
     # X : M-by-D data matrix (double)
