@@ -50,6 +50,11 @@ def test_task1_4(visual):
         plt.show()
 
 
+def test_task1_5():
+    Ks = [1, 2, 3, 4, 5, 7, 10, 15, 20]
+    task1_5(Xtrn, Ks)
+
+
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'fsv')

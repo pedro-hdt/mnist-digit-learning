@@ -1,4 +1,5 @@
 import numpy as np
+from my_mean import *
 
 
 def my_kMeansClustering(X, k, initialCentres, maxIter=500):
@@ -23,7 +24,7 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
     idx_prev = np.empty(N, 1)
 
     # initialise error list
-    SSE = []
+    SSE = np.empty()
 
     # show cluster centres at iteration 0
     print("[0] Iteration: ", C.tolist())
@@ -44,8 +45,8 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
             if (np.sum(idx == c) == 0):
                 print('k-means: cluster {} is empty'.format(c))
             else:
-                SSE.append(sum_sq_error(X, k, N, C, idx))
-                C[c] = np.mean(X[idx[:] == c], axis=0)
+                SSE = np.append(SSE, sum_sq_error(X, k, N, C, idx))
+                C[c] = my_mean(X[idx[:] == c], axis=0)
 
         # show cluster centres at iteration i
         print('[{}] Iteration: '.format(i+1), C.tolist())
