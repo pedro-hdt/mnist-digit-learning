@@ -1,6 +1,7 @@
 from my_kMeansClustering import *
 import scipy.io as sio
 from time import time
+from montage import *
 
 
 def task1_5(X, Ks):
@@ -11,23 +12,9 @@ def task1_5(X, Ks):
     X : M-by-D data matrix (double)
     Ks : 1-by-L vector (integer) of the numbers of nearest neighbours """
 
-    C = []
-    idx = []
-    SSE = []
-
     for k in Ks:
         C_k, idx_k, SSE_k = my_kMeansClustering(X, k, X[:k])
-        C.append(C_k)
-        idx.append(idx_k)
-        SSE.append(SSE_k)
-
-    # TODO: remove timing code
-    start_time = time()
-    # Saving the data
-    for k in range(len(Ks)):
-        sio.savemat(file_name='../results/task1_5_c_{}.mat'.format(Ks[k]), mdict={'C': C[k]})
-        sio.savemat(file_name='../results/task1_5_idx_{}.mat'.format(Ks[k]), mdict={'idx': idx[k]})
-        sio.savemat(file_name='../results/task1_5_sse_{}.mat'.format(Ks[k]), mdict={'SSE': SSE[k]})
-
-    print 'Saving the data took: {} secs'.format(time()-start_time)
+        sio.savemat(file_name='task1_5_c_{}.mat'.format(k), mdict={'C': C_k})
+        sio.savemat(file_name='task1_5_idx_{}.mat'.format(k), mdict={'idx': idx_k})
+        sio.savemat(file_name='task1_5_sse_{}.mat'.format(k), mdict={'SSE': SSE_k})
 

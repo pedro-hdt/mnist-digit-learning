@@ -11,6 +11,7 @@ from task1_6 import *
 from task1_7 import *
 from task1_8 import *
 import sys
+import os
 import getopt
 from scipy.spatial.distance import cdist
 from scipy.cluster.vq import kmeans
@@ -25,6 +26,7 @@ def run_all(visual):
     run_vec_dist(visual)
     run_k_means(visual)
     run_task1_5(visual)
+    run_task1_6(visual)
 
 
 def run_task1_1(visual):
@@ -77,19 +79,26 @@ def run_vec_dist():
         print 'Maximum error: ' + str(np.max(diff))
 
 
-def run_k_means(visual):
+def run_k_means(visual, k=10):
 
-    my_C, idx, SSE = my_kMeansClustering(Xtrn, 10, Xtrn[:10])
+    my_C, idx, SSE = my_kMeansClustering(Xtrn, k, Xtrn[:k])
     print 'Clusters assigned: ' + str(idx)
     print 'Data labels: ' + str(Ytrn)
-    print SSE
 
-    C, distortion = kmeans(Xtrn, k_or_guess=Xtrn[:10], iter=500)
+    # Write to file and reload to verify this is done correctly
+    sio.savemat(file_name='../results/task1_5_c_{}.mat'.format(k), mdict={'C': my_C})
+    my_C = sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C']
+
+    C, distortion = kmeans(Xtrn, k_or_guess=Xtrn[:k], iter=1)
     if np.allclose(my_C, C):
         print 'Your k-means matches the SciPy implementation!'
-        diff = np.abs(my_C - C)
-        print 'Total error: ' + str(np.sum(diff))
-        print 'Maximum error: ' + str(np.max(diff))
+    else:
+        print 'Your k-means does not match the SciPy implementation... :\'('
+    diff = np.abs(my_C - C)
+    print 'Total error: ' + str(np.sum(diff))
+    print 'Maximum error: ' + str(np.max(diff))
+    print 'My final square error: ' + str(SSE[-1])
+    print 'Final square error lib: ' + str(distortion ** 2)
 
     if visual:
         montage(C)
@@ -102,19 +111,25 @@ def run_k_means(visual):
 
 def run_task1_5(visual, cached=False):
 
-    Ks = np.array([1, 2, 3, 4, 5, 7, 10, 15, 20])
-
     if not cached:
         start_time = time()
         task1_5(Xtrn, Ks)
         print 'Elapsed time: {} secs'.format(time() - start_time)
 
+        # Move files to results directory to avoid cluttering our src folder
+        for k in Ks:
+            os.rename('task1_5_c_{}.mat'.format(k), '../results/task1_5_c_{}.mat'.format(k))
+            os.rename('task1_5_idx_{}.mat'.format(k), '../results/task1_5_idx_{}.mat'.format(k))
+            os.rename('task1_5_sse_{}.mat'.format(k), '../results/task1_5_sse_{}.mat'.format(k))
+
     for k in Ks:
         # load data
         my_C = sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C']
+        my_SSE = sio.loadmat(file_name='../results/task1_5_sse_{}.mat'.format(k))['SSE']
+        my_idx = my_C.argsort(axis=0)[:, 0]
 
         # check against std lib implementation
-        C, distortion = kmeans(Xtrn, k_or_guess=Xtrn[:k], iter=500)
+        C, distortion = kmeans(Xtrn, k_or_guess=Xtrn[:k], iter=1)
 
         print '-------------------------- k = {} -------------------------'.format(k)
         diff = np.abs(my_C - C)
@@ -122,8 +137,10 @@ def run_task1_5(visual, cached=False):
             print 'Your k-means matches the SciPy implementation!'
         else:
             print 'Your k-means does not match the SciPy implementation... :\'('
-        print 'Total error: ' + str(np.sum(diff))
-        print 'Maximum error: ' + str(np.max(diff))
+        print 'Total diff: ' + str(np.sum(diff))
+        print 'Maximum diff: ' + str(np.max(diff))
+        print 'My final square error: ' + str(my_SSE[0][-1])
+        print 'Final square error lib: ' + str(distortion**2)
 
         if visual:
             # visualise
@@ -135,12 +152,22 @@ def run_task1_5(visual, cached=False):
             plt.show()
 
 
-def run1_6(visual):
-    pass
+def run_task1_6(visual):
+
+    for k in Ks:
+        fname = '../results/task1_5_c_{}.mat'.format(k)
+        task1_6(fname)
+        plt.savefig(fname='task1_6_imgs_{}.pdf'.format(k))
+        plt.show()
 
 
 def main():
     try:
+        # options:
+        # -f: full task
+        # -s: specific sub tasks
+        # -v: visual (opens plots in new windows)
+        # -c: cached (data from files)
         opts, args = getopt.getopt(sys.argv[1:], 'fsvc')
     except getopt.GetoptError as err:
         # print help information and exit:
@@ -167,14 +194,20 @@ def main():
         elif o == '-s':
             for task in args:
                 if task == 'k':
-                    run_k_means(visual)
+                    if len(args) > 1:
+                        k = int(args[1])
+                    else:
+                        k = 10
+                    print 'Running k-means (k = {})\n'.format(k)
+                    run_k_means(visual, k)
+                    break
                 elif task == 'dist':
                     run_vec_dist(visual)
                 else:
                     task_n = task[0]
                     subtask_n = task[2:]
                     func_name = 'run_task' + task_n + '_' + subtask_n
-                    print 'Running task ' + task
+                    print 'Running task ' + task + '\n'
                     if task == '1.5':
                         globals()[func_name](visual, cached)
                     else:
@@ -193,9 +226,14 @@ def usage():
     print '-s (specific) for specific sub-tasks followed by the number'
     print 'e.g. for task 1.1: '
     print '\"python2.7 run_cw -s 1.1\"'
+    print 'To run k-means clustering with k=<X> just type: '
+    print '\"python2.7 run_cw -s k <X>\"'
 
 
 if __name__ == '__main__':
+
+    # Values of k for k-means clustering
+    Ks = np.array([1, 2, 3, 4, 5, 7, 10, 15, 20])
 
     # Import data
     Xtrn, Ytrn, Xtst, Ytst = load_my_data_set('../data')
