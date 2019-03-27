@@ -13,6 +13,7 @@ from task1_8 import *
 import sys
 import getopt
 from scipy.spatial.distance import cdist
+from time import time
 
 def test_task1_1(visual):
     plt.clf()
@@ -64,16 +65,29 @@ def test_vec_dist():
         print 'Maximum error: ' + str(np.max(diff))
 
 
-def test_k_means():
+def test_k_means(visual):
     C, idx, SSE = my_kMeansClustering(Xtrn, 10, Xtrn[:10])
-    print C
-    print idx
-    print Ytrn
+    print 'Clusters assigned: ' + str(idx)
+    print 'Data labels: ' + str(Ytrn)
+    print SSE
+
+    if visual:
+        montage(C)
+        plt.show()
 
 
 def test_task1_5(visual):
+    start_time = time()
     Ks = np.array([1, 2, 3, 4, 5, 7, 10, 15, 20])
     task1_5(Xtrn, Ks)
+    print 'Elapsed time: {} secs'.format(time() - start_time)
+
+    if visual:
+        for k in Ks:
+            C = sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C']
+            montage(C)
+            plt.show()
+
 
 
 def main():
@@ -97,7 +111,7 @@ def main():
         elif o == '-d':
             test_vec_dist()
         elif o == '-k':
-            test_k_means()
+            test_k_means(visual)
         elif o == '-f':
             test_task1_1(visual)
             test_task1_2(visual)

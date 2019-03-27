@@ -2,7 +2,7 @@ import numpy as np
 
 
 def sq_dist(U, v):
-
+    """ Square distance between matrix and vector or 2 vectors """
     return np.sum((U-v)**2, axis=1)
 
 
