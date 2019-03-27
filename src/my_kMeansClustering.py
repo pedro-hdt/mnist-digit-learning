@@ -17,7 +17,7 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
     idx : N-by-1 vector (integer) of cluster index table
     SSE : (L+1)-by-1 vector (double) of sum-squared-errors """
 
-    # TODO: remove printing
+    # TODO: remove printing?
 
     N = len(X)
 
