@@ -1,5 +1,6 @@
 from montage import *
 from load_my_data_set import *
+from my_dist import *
 from my_kMeansClustering import *
 from task1_1 import *
 from task1_2 import *
@@ -11,7 +12,7 @@ from task1_7 import *
 from task1_8 import *
 import sys
 import getopt
-
+from scipy.spatial.distance import cdist
 
 def test_task1_1(visual):
     plt.clf()
@@ -51,6 +52,18 @@ def test_task1_4(visual):
         plt.show()
 
 
+def test_vec_dist():
+    X = Xtrn
+    Y = Xtrn[:10]
+    my_DI = vec_sq_dist(X, Y)
+    DI = cdist(X, Y, 'sqeuclidean')
+    if np.allclose(my_DI, DI):
+        print 'Your DI matches the SciPy implementation!'
+        diff = np.abs(my_DI - DI)
+        print 'Total error: ' + str(np.sum(diff))
+        print 'Maximum error: ' + str(np.max(diff))
+
+
 def test_k_means():
     C, idx, SSE = my_kMeansClustering(Xtrn, 10, Xtrn[:10])
     print C
@@ -65,7 +78,7 @@ def test_task1_5(visual):
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'fsvk')
+        opts, args = getopt.getopt(sys.argv[1:], 'fsvkd')
     except getopt.GetoptError as err:
         # print help information and exit:
         print str(err)  # will print something like "option -a not recognized"
@@ -81,6 +94,8 @@ def main():
     for o, a in opts:
         if o == '-v':
             visual = True
+        elif o == '-d':
+            test_vec_dist()
         elif o == '-k':
             test_k_means()
         elif o == '-f':
