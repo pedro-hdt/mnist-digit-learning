@@ -1,5 +1,5 @@
 from my_dist import *
-
+from scipy.stats import mode
 
 def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
 	"""
@@ -11,24 +11,28 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
 	:return: Ypreds : N-by-L matrix of predicted labels for Xtst
 	"""
 
-	Ypreds = []
+	N = len(Xtst)
+	L = len(Ks)
+	Ypreds = np.zeros((N, L), dtype='uint8')
 
 	dist_mat = vec_sq_dist(Xtrn, Xtst)
 
-	for k in Ks:
-
-		k_nn = k
-
-		for i in range(len(Xtst)):
-
+	for l in range(L):
+		k = Ks[l] # k in k-NN
+		for n in range(N):
 			# curent test sample being classified
-			test_sample = Xtst[i]
+			tst_sample = Xtst[n]
 
 			# distance vector between test sample and each of training samples
-			dist = dist_mat[:, i]
+			dist = dist_mat[:, n]
 
+			# get sorting index for distances to first k-nn only
+			idx = dist.argsort()[:k]
 
+			# extract list of closest training samples
+			k_nn_labels = Ytrn[idx]
 
-
+			# we predict it is the most common value (ie the mode) of the k-nn
+			Ypreds[n, l], _ = mode(k_nn_labels)
 
 	return Ypreds

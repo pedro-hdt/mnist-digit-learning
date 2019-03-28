@@ -10,6 +10,7 @@ from task1_5 import *
 from task1_6 import *
 from task1_7 import *
 from task1_8 import *
+from task2_1 import *
 import sys
 import os
 import getopt
@@ -150,11 +151,15 @@ def test_k_means(k):
 
 def verify_task1_5():
 
+    Ks = Ks_clustering
+
     for k in Ks:
         test_k_means(k)
 
 
 def run_task1_5(visual, cached=False):
+
+    Ks = Ks_clustering
 
     if cached:
         verify_task1_5()
@@ -182,6 +187,7 @@ def run_task1_5(visual, cached=False):
 
 def run_task1_6(visual):
 
+    Ks = Ks_clustering
     runtimes = []
 
     for k in Ks:
@@ -194,6 +200,15 @@ def run_task1_6(visual):
         plt.show()
 
     return sum(runtimes)
+
+
+def run_task2_1(visual):
+
+    Ks = Ks_class
+    task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks)
+
+    for k in Ks:
+        os.rename('task2_1_cm{}.mat'.format(k), '../results/task2_1_cm{}.mat'.format(k))
 
 
 def main():
@@ -218,8 +233,8 @@ def main():
     if len(opts) == 0:
         run_all()
 
-    print opts
-    print args
+    # print opts
+    # print args
 
     for o, a in opts:
         if o == '-v':
@@ -272,8 +287,11 @@ def usage():
 if __name__ == '__main__':
 
     # Values of k for k-means clustering
-    Ks = np.array([1, 2, 3, 4, 5, 7, 10, 15, 20])
-    # Ks = np.array([2, 3, 7]) # for shorter testing
+    Ks_clustering = [1, 2, 3, 4, 5, 7, 10, 15, 20]
+    # Ks_clustering = [2, 3, 7] # for shorter testing
+
+    # Values of k for k-nn classification
+    Ks_class = [1, 3, 5, 10, 20]
 
     # Import data
     Xtrn, Ytrn, Xtst, Ytst = load_my_data_set('../data')
