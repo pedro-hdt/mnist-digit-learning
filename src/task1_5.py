@@ -2,6 +2,7 @@ from my_kMeansClustering import *
 import scipy.io as sio
 from time import time
 from montage import *
+from scipy.cluster.vq import kmeans # TODO: remove this import after testing
 
 
 def task1_5(X, Ks):
@@ -15,6 +16,13 @@ def task1_5(X, Ks):
     for k in Ks:
         C_k, idx_k, SSE_k = my_kMeansClustering(X, k, X[:k])
         sio.savemat(file_name='task1_5_c_{}.mat'.format(k), mdict={'C': C_k})
+        # loaded = sio.loadmat(file_name='task1_5_c_{}.mat'.format(k))['C']
+        # assert np.array_equal(C_k, loaded)
+        # C, distortion = kmeans(X, k_or_guess=X[:k], iter=1)
+        # plt.clf()
+        # montage(np.concatenate((C, np.zeros_like(C), loaded)))
+        # plt.suptitle('Lib (first), You (second)')
+        # plt.show()
         sio.savemat(file_name='task1_5_idx_{}.mat'.format(k), mdict={'idx': idx_k})
         sio.savemat(file_name='task1_5_sse_{}.mat'.format(k), mdict={'SSE': SSE_k})
 
