@@ -8,7 +8,7 @@ def sq_dist(U, v):
 
 def vec_sq_dist(X, Y):
     """ Vectorised square distance matrix between two matrices X and Y:
-    d_{ij} is the distance between X[i] and Y[i] """
+    d_{ij} is the distance between X[i] and Y[j] """
 
     N = len(X)
     M = len(Y)
