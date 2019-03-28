@@ -8,7 +8,7 @@ def task1_6(MAT_ClusterCenters):
     montage() function to put all the images into a single figure.
 
     Input:
-    MAT_ClusterCentres : file name of the file that contains cluster centres C.
+    :param MAT_ClusterCentres: file name of the file that contains cluster centres C.
     """
 
     C = sio.loadmat(file_name=MAT_ClusterCenters)['C']

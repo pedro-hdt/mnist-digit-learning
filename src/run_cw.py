@@ -58,6 +58,7 @@ def run_task1_2(visual):
     M = task1_2(Xtrn, Ytrn)
     runtime = time() - start_time
     plt.savefig(fname='../results/task1_2_imgs.pdf')
+    plt.savefig(fname='../results/task1_2_imgs.png')
     sio.savemat(file_name='../results/task1_2_M.mat', mdict={'M': M})
     if visual:
         plt.show()
@@ -87,6 +88,7 @@ def run_task1_4(visual):
     runtime = time() - start_time
     plt.suptitle('First 10 Principal Components')
     plt.savefig(fname='../results/task1_4_imgs.pdf')
+    plt.savefig(fname='../results/task1_2_imgs.png')
     if visual:
         plt.show()
         return runtime
@@ -126,12 +128,13 @@ def test_k_means(k):
     my_C = sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C']
     my_distortion = sio.loadmat(file_name='../results/task1_5_sse_{}.mat'.format(k))['SSE'][0][-1] ** 0.5
     C, distortion = kmeans(Xtrn, k_or_guess=Xtrn[:k], iter=1)
-    if np.allclose(my_C, C):
+    diff = np.abs(my_C - C)
+    total_diff = np.sum(diff)
+    if total_diff < 1:
         print 'Your k-means matches the SciPy implementation!'
     else:
         print 'Your k-means does not match the SciPy implementation... :\'('
-    diff = np.abs(my_C - C)
-    print 'Total diff: ' + str(np.sum(diff))
+    print 'Total diff: ' + str(total_diff)
     print 'Maximum diff: ' + str(np.max(diff))
     print 'Final distortion (you): ' + str(my_distortion)
     print 'Final distortion (lib): ' + str(distortion)
@@ -146,11 +149,16 @@ def test_k_means(k):
 
 
 def verify_task1_5():
+
     for k in Ks:
         test_k_means(k)
 
 
 def run_task1_5(visual, cached=False):
+
+    if cached:
+        verify_task1_5()
+        return
 
     start_time = time()
     task1_5(Xtrn, Ks)
@@ -166,6 +174,8 @@ def run_task1_5(visual, cached=False):
         os.rename('task1_5_c_{}.mat'.format(k), '../results/task1_5_c_{}.mat'.format(k))
         os.rename('task1_5_idx_{}.mat'.format(k), '../results/task1_5_idx_{}.mat'.format(k))
         os.rename('task1_5_sse_{}.mat'.format(k), '../results/task1_5_sse_{}.mat'.format(k))
+
+    verify_task1_5()
 
     return runtime
 
