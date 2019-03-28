@@ -24,7 +24,7 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
     :param Ks: 1-by-L vector (integer) of the numbers of nearest neighbours in Xtrain
     """
 
-    # TODO: check output foratting: https://piazza.com/class/jqp5f9lmifp25w?cid=207
+    # TODO: check output formatting: https://piazza.com/class/jqp5f9lmifp25w?cid=207
 
     # Numbers refer to tasks in docstring above
     start_time = time() # 2.
@@ -35,11 +35,10 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
     L = len(Ks)
     for l in range(L):
         k = Ks[l]
-        CM, acc = comp_confmat(Ytst, Ypreds[:, k], 10)
+        CM, acc = comp_confmat(Ytst, Ypreds[:, l], 10) # 3.
         sio.savemat(file_name='task2_1_cm{}.mat'.format(k), mdict={'cm': CM}) # 3.
-        # 4.
-        Nerrs = N - CM.trace()
-        print 'k = {}'.format(k)
-        print 'N = {}'.format(N)
-        print 'Nerrs = {}'.format(Nerrs)
-        print 'acc = {}'.format(acc)
+        Nerrs = N - CM.trace() # 4.
+        print 'k = {}'.format(k) # 4.
+        print 'N = {}'.format(N) # 4.
+        print 'Nerrs = {}'.format(Nerrs) # 4.
+        print 'acc = {}'.format(acc) # 4.

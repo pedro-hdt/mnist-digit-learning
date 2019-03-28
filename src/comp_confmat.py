@@ -28,6 +28,6 @@ def comp_confmat(Ytrues, Ypreds, K):
 	# Sum of the diagonal of the confusion matrix is the number of
 	# correct predictions, form which we compute the accuracy
 	correct_preds = CM.trace() # trace returns sum of diagonal
-	acc = correct_preds / n
+	acc = (1.* correct_preds) / n
 
 	return CM, acc
