@@ -202,6 +202,25 @@ def run_task1_6(visual):
     return sum(runtimes)
 
 
+def run_task1_7(visual):
+
+    runtimes = []
+    start_time = time()
+
+    Ks = [1, 2, 3, 5, 10]
+    MAT_M = '../results/task1_2_M.mat'
+    MAT_evecs = '../results/task1_3_evecs.mat'
+    MAT_evals = '../results/task1_3_evals.mat'
+    posVec = my_mean(Xtrn)
+    for k in Ks:
+        MAT_ClusterCentres = '../results/task1_5_c_{}.mat'.format(k)
+        task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, 200)
+        plt.savefig(fname='../results/task1_7_{}'.format(k))
+        runtimes.append(time() - start_time)
+
+    return sum(runtimes)
+
+
 def run_task2_1(visual):
 
     Ks = Ks_class

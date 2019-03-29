@@ -3,13 +3,17 @@ import numpy.linalg as la
 
 
 def comp_pca(X):
-    # Input:
-    # X: N * D matrix (double)
-    # Output:
-    # Evecs: D-by-D matrix (double) contains all eigenvectors as columns
-    # NB: follow the Task 1.3 specifications on eigenvectors.
-    # EVals: Eigenvalues in descending order, D x 1 vector
-    # (Note that the i-th columns of Evecs should corresponds to the i-th element in EVals)
+    """
+    Write a Python function that computes the principal components of a data set
+    The eigenvalues should be sorted in descending order, so that lambda_1 is the largest and lambda_D is
+    the smallest, and i'th column of EVecs should hold the eigenvector that corresponds to lambda_i
+    :param X: N * D matrix (double)
+    :return:
+        Evecs: D-by-D matrix (double) contains all eigenvectors as columns
+        NB: follow the Task 1.3 specifications on eigenvectors.
+        EVals: Eigenvalues in descending order, D x 1 vector
+        (Note that the i-th columns of Evecs should corresponds to the i-th element in EVals)
+    """
 
     N = len(X)
 
