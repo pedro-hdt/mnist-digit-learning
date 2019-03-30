@@ -4,18 +4,23 @@ from comp_pca import *
 
 
 def task1_3(X):
-    """Write a Python function task1_3() that
+    """
+    Write a Python function task1_3() that
         * carries out PCA (i.e. calls comp_pca),
         * computes cumulative variances
         * plots the cumulative variances
-        * finds the minimum number of PCA dimensions to cover 70%, 80%, 90%, 95% of the total variance,
+        * finds the minimum number of PCA dimensions to cover
+        70%, 80%, 90%, 95% of the total variance
+
     Input:
-    X : M-by-D data matrix (double)
+    :param: X : M-by-D data matrix (double)
+
     Output:
-    EVecs, Evals: same as in comp_pca.py
-    CumVar  : D-by-1 vector (double) of cumulative variance
-    MinDims : 4-by-1 vector (integer) of the minimum number of PCA dimensions to cover 70%, 80%, 90%,
-    and 95% of the total variance."""
+    :return: EVecs, Evals: same as in comp_pca.py
+    :return: CumVar  : D-by-1 vector (double) of cumulative variance
+    :return: MinDims : 4-by-1 vector (integer) of the minimum number of PCA dimensions to cover
+    70%, 80%, 90%, and 95% of the total variance.
+    """
 
     # Carry out PCA
     EVecs, EVals = comp_pca(X)

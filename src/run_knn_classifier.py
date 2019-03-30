@@ -20,8 +20,6 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
     for l in range(L):
         k = Ks[l] # k in k-NN
         for n in range(N):
-            # curent test sample being classified
-            tst_sample = Xtst[n]
 
             # distance vector between test sample and each of training samples
             dist = dist_mat[:, n]

@@ -217,6 +217,7 @@ def run_task1_7(visual):
         task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, 200)
         plt.savefig(fname='../results/task1_7_{}'.format(k))
         runtimes.append(time() - start_time)
+        plt.show()
 
     return sum(runtimes)
 

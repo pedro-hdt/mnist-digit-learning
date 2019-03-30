@@ -43,4 +43,5 @@ def comp_pca(X):
     # Order eigenvectors by the same order
     EVecs = EVecs[:, idx]
 
+    # we need to force this vector to 2d because the spec requries it as a column
     return EVecs, EVals

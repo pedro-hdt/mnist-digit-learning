@@ -1,6 +1,7 @@
 import scipy.io as sio
 import numpy as np
 import matplotlib.pyplot as plt
+from my_dist import *
 
 
 def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
@@ -30,31 +31,41 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     C = sio.loadmat(file_name=MAT_ClusterCentres)['C']
     M = sio.loadmat(file_name=MAT_M)['M']
     EVecs = sio.loadmat(file_name=MAT_evecs)['EVecs']
-    EVals = sio.loadmat(file_name=MAT_evals)['EVals']
+    EVals = sio.loadmat(file_name=MAT_evals, squeeze_me=True)['EVals']
 
     K = len(M) - 1
 
     # Principal components in 2D are 2 first eigenvectors (w/ highest eigenvalues)
-    PC = EVecs[:, :2]
+    # PC = EVecs[:, :2]
+    # TODO: REMOVE THIS?
 
     # Transform the original data C to the principal subspace
-    projected_C = np.dot(C, PC)
-    sigma = EVals[:2]
+    projected_C = np.dot(C, EVecs) + posVec
+    sigma = EVals[:2]**0.5 # standard deviation is sqrt(var)
 
-    for i in range(K):
+    # extract relevant mean vector
+    mean = M[-1]
+    projected_mean = np.dot(mean, EVecs) + posVec
+    print projected_mean[:2]
 
-        # extract relevant mean vector
-        mean = M[i]
+    for i in range(nbins):
+        for j in range(nbins):
+            cell = np.array([i, j])
+            print cell
+            DI = vec_sq_dist(projected_C[:, :2], cell)
+            assignment = DI.argmin(axis=1)
+            print DI
+            print assignment
+            #Dmap[i, j] =
 
-        # Plot the data in the new basis
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        ax.scatter(projected_C[:, 0], projected_C[:, 1], marker='.')
-        ax.xlabel('1st Principal Component');
-        ax.ylabel('2nd Principal Component');
-        ax.box(on=True)
-        ax.set_xlim((mean-5*sigma[0], mean+5*sigma[1]))
-        ax.set_ylim((mean-5*sigma[0], mean+5*sigma[1]))
-
+    # Plot the data in the new basis
+    plt.scatter(projected_C[:, 0], projected_C[:, 1], marker='.')
+    plt.xlabel('1st Principal Component')
+    plt.ylabel('2nd Principal Component')
+    plt.box(on=True)
+    xrange = (projected_mean[0]-(5*sigma[0]), projected_mean[1]+5*(sigma[0]))
+    yrange = (projected_mean[0]-(5*sigma[1]), projected_mean[1]+5*(sigma[1]))
+    plt.xlim(xrange)
+    plt.ylim(yrange)
 
     return Dmap
