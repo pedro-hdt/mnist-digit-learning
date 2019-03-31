@@ -33,38 +33,44 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     EVecs = sio.loadmat(file_name=MAT_evecs)['EVecs']
     EVals = sio.loadmat(file_name=MAT_evals, squeeze_me=True)['EVals']
 
-    K = len(M) - 1
+    #Extract std deviation is sqrt(var)
+    sigma = EVals[:2]**0.5
 
-    # Principal components in 2D are 2 first eigenvectors (w/ highest eigenvalues)
-    # PC = EVecs[:, :2]
-    # TODO: REMOVE THIS?
-
-    # Transform the original data C to the principal subspace
-    projected_C = np.dot(C, EVecs) + posVec
-    sigma = EVals[:2]**0.5 # std deviation is sqrt(var)
-
-    # extract relevant mean vector
+    # Extract relevant mean vector and transform it to the principal subspace
     mean = M[-1]
-    projected_mean = np.dot(mean, EVecs) + posVec
+    projected_mean = np.dot(mean, EVecs) - posVec
 
+    # Create grid
     xrange = np.linspace(projected_mean[0] - (5 * sigma[0]), projected_mean[1] + 5 * (sigma[0]), num=nbins)
     yrange = np.linspace(projected_mean[0] - (5 * sigma[1]), projected_mean[1] + 5 * (sigma[1]), num=nbins)
+    xx_pc, yy_pc = np.meshgrid(xrange, yrange)
+    # Padding the grid with 0's to make it match the dimensions od the unprojected data
+    grid_pc = np.zeros((784, nbins, nbins))
+    grid_pc[:2] = np.array([xx_pc, yy_pc])
 
-    xx, yy = np.meshgrid(xrange, yrange)
-    colormap = plt.cm.get_cmap(lut=len(C))
-    colors = colormap(np.arange(len(C)))
-    print colors.shape
+    # 'Unproject' grid according to the specifications at
+    # http://www.inf.ed.ac.uk/teaching/courses/inf2b/coursework/inf2b_cwk2_2019_notes_task1_7.pdf
+    # y is projected data
+    # V is EVecs
+    # x is unprojected data
+    # p is position vector
+    V_inv = np.linalg.inv(EVecs.T)
+    grid = np.dot(V_inv, grid_pc) + posVec
 
+    # Classify the grid
     for i in range(nbins):
         for j in range(nbins):
-            cell = np.array([[xx[i, j], yy[i, j]]])
-            DI = vec_sq_dist(projected_C[:, :2], cell)
+            cell = grid[i, j]
+            DI = vec_sq_dist(C[:, :2], cell)
             assignment = np.asscalar(DI.argmin(axis=0))
             Dmap[i, j] = assignment
 
+    # Create a color map for plotting
+    colormap = plt.cm.get_cmap(lut=len(C))
+    colors = colormap(np.arange(len(C)))
 
     # Plot the data in the new basis
-    plt.scatter(xx, yy, c=colors[Dmap.ravel()])
+    plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
 
     plt.xlabel('1st Principal Component')
     plt.ylabel('2nd Principal Component')
