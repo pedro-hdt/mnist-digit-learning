@@ -41,34 +41,35 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
 
     # Transform the original data C to the principal subspace
     projected_C = np.dot(C, EVecs) + posVec
-    sigma = EVals[:2]**0.5 # standard deviation is sqrt(var)
+    sigma = EVals[:2]**0.5 # std deviation is sqrt(var)
 
     # extract relevant mean vector
     mean = M[-1]
     projected_mean = np.dot(mean, EVecs) + posVec
-    print projected_mean[:2]
 
-    xrange = np.linspace(projected_mean[0] - (5 * sigma[0]), projected_mean[1] + 5 * (sigma[0]))
-    yrange = np.linspace(projected_mean[0] - (5 * sigma[1]), projected_mean[1] + 5 * (sigma[1]))
+    xrange = np.linspace(projected_mean[0] - (5 * sigma[0]), projected_mean[1] + 5 * (sigma[0]), num=nbins)
+    yrange = np.linspace(projected_mean[0] - (5 * sigma[1]), projected_mean[1] + 5 * (sigma[1]), num=nbins)
 
-    grid = np.meshgrid(xrange, yrange)
+    xx, yy = np.meshgrid(xrange, yrange)
+    colormap = plt.cm.get_cmap(lut=len(C))
+    colors = colormap(np.arange(len(C)))
+    print colors.shape
 
     for i in range(nbins):
         for j in range(nbins):
-            cell = np.array([i, j])
-            print cell
+            cell = np.array([[xx[i, j], yy[i, j]]])
             DI = vec_sq_dist(projected_C[:, :2], cell)
-            assignment = DI.argmin(axis=1)
-            print DI
-            print assignment
-            #Dmap[i, j] =
+            assignment = np.asscalar(DI.argmin(axis=0))
+            Dmap[i, j] = assignment
+
 
     # Plot the data in the new basis
-    plt.scatter(projected_C[:, 0], projected_C[:, 1], marker='.')
+    plt.scatter(xx, yy, c=colors[Dmap.ravel()])
+
     plt.xlabel('1st Principal Component')
     plt.ylabel('2nd Principal Component')
     plt.box(on=True)
-    plt.xlim(xrange)
-    plt.ylim(yrange)
+    plt.xlim(projected_mean[0] - (5 * sigma[0]), projected_mean[1] + 5 * (sigma[0]))
+    plt.ylim(projected_mean[0] - (5 * sigma[1]), projected_mean[1] + 5 * (sigma[1]))
 
     return Dmap
