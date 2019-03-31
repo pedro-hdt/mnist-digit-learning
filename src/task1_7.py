@@ -48,6 +48,11 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     projected_mean = np.dot(mean, EVecs) + posVec
     print projected_mean[:2]
 
+    xrange = np.linspace(projected_mean[0] - (5 * sigma[0]), projected_mean[1] + 5 * (sigma[0]))
+    yrange = np.linspace(projected_mean[0] - (5 * sigma[1]), projected_mean[1] + 5 * (sigma[1]))
+
+    grid = np.meshgrid(xrange, yrange)
+
     for i in range(nbins):
         for j in range(nbins):
             cell = np.array([i, j])
@@ -63,8 +68,6 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     plt.xlabel('1st Principal Component')
     plt.ylabel('2nd Principal Component')
     plt.box(on=True)
-    xrange = (projected_mean[0]-(5*sigma[0]), projected_mean[1]+5*(sigma[0]))
-    yrange = (projected_mean[0]-(5*sigma[1]), projected_mean[1]+5*(sigma[1]))
     plt.xlim(xrange)
     plt.ylim(yrange)
 
