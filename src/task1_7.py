@@ -1,6 +1,7 @@
 import scipy.io as sio
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.colors as colors
 from my_dist import *
 
 
@@ -40,7 +41,8 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
 
     # Extract relevant mean vector and transform it to the principal subspace
     mean = M[-1]
-    projected_mean = np.dot(mean, EVecs) - posVec
+    projected_posVec = np.dot(posVec, EVecs)
+    projected_mean = np.dot(mean, EVecs) - projected_posVec
 
     # Create grid
     xrange = np.linspace(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]), num=nbins)
@@ -67,12 +69,14 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
         assignment = np.asscalar(DI.argmin(axis=0))
         Dmap[:, i] = assignment
 
+    Dmap = Dmap.reshape((nbins, nbins))
+
     # Create a color map for plotting
-    colormap = plt.cm.get_cmap(lut=K)
-    colors = colormap(np.arange(K))
+    colormap = plt.get_cmap(lut=K)
 
     # Plot the data in the new basis
-    plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
+    # plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
+    plt.contourf(xx_pc, yy_pc, Dmap, cmap=colormap)
 
     plt.xlabel('1st Principal Component')
     plt.ylabel('2nd Principal Component')
