@@ -25,10 +25,12 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
             the cluster number that the point belongs to.
     """
 
-    Dmap = np.zeros((nbins, nbins), dtype='uint8')
+    D = posVec.shape[1]
+    Dmap = np.zeros((1, nbins*nbins), dtype='uint8')
 
     # Load all the data
     C = sio.loadmat(file_name=MAT_ClusterCentres)['C']
+    K = len(C)
     M = sio.loadmat(file_name=MAT_M)['M']
     EVecs = sio.loadmat(file_name=MAT_evecs)['EVecs']
     EVals = sio.loadmat(file_name=MAT_evals, squeeze_me=True)['EVals']
@@ -41,12 +43,13 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     projected_mean = np.dot(mean, EVecs) - posVec
 
     # Create grid
-    xrange = np.linspace(projected_mean[0] - (5 * sigma[0]), projected_mean[1] + 5 * (sigma[0]), num=nbins)
-    yrange = np.linspace(projected_mean[0] - (5 * sigma[1]), projected_mean[1] + 5 * (sigma[1]), num=nbins)
+    xrange = np.linspace(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]), num=nbins)
+    yrange = np.linspace(projected_mean[:, 0] - (5 * sigma[1]), projected_mean[:, 1] + 5 * (sigma[1]), num=nbins)
     xx_pc, yy_pc = np.meshgrid(xrange, yrange)
     # Padding the grid with 0's to make it match the dimensions od the unprojected data
-    grid_pc = np.zeros((784, nbins, nbins))
-    grid_pc[:2] = np.array([xx_pc, yy_pc])
+    grid_pc = np.zeros((D, nbins * nbins))
+    grid_pc[0] = np.array([xx_pc]).ravel()
+    grid_pc[1] = np.array([yy_pc]).ravel()
 
     # 'Unproject' grid according to the specifications at
     # http://www.inf.ed.ac.uk/teaching/courses/inf2b/coursework/inf2b_cwk2_2019_notes_task1_7.pdf
@@ -55,19 +58,18 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     # x is unprojected data
     # p is position vector
     V_inv = np.linalg.inv(EVecs.T)
-    grid = np.dot(V_inv, grid_pc) + posVec
+    grid = np.dot(V_inv, grid_pc) + posVec.T
 
     # Classify the grid
-    for i in range(nbins):
-        for j in range(nbins):
-            cell = grid[i, j]
-            DI = vec_sq_dist(C[:, :2], cell)
-            assignment = np.asscalar(DI.argmin(axis=0))
-            Dmap[i, j] = assignment
+    for i in range(nbins*nbins):
+        cell = grid[:, i].reshape((1, D))
+        DI = vec_sq_dist(C, cell)
+        assignment = np.asscalar(DI.argmin(axis=0))
+        Dmap[:, i] = assignment
 
     # Create a color map for plotting
-    colormap = plt.cm.get_cmap(lut=len(C))
-    colors = colormap(np.arange(len(C)))
+    colormap = plt.cm.get_cmap(lut=K)
+    colors = colormap(np.arange(K))
 
     # Plot the data in the new basis
     plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
@@ -75,7 +77,7 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     plt.xlabel('1st Principal Component')
     plt.ylabel('2nd Principal Component')
     plt.box(on=True)
-    plt.xlim(projected_mean[0] - (5 * sigma[0]), projected_mean[1] + 5 * (sigma[0]))
-    plt.ylim(projected_mean[0] - (5 * sigma[1]), projected_mean[1] + 5 * (sigma[1]))
+    plt.xlim(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]))
+    plt.ylim(projected_mean[:, 0] - (5 * sigma[1]), projected_mean[:, 1] + 5 * (sigma[1]))
 
-    return Dmap
+    return Dmap.reshape((nbins, nbins))
