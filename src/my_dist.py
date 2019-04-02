@@ -24,6 +24,8 @@ def vec_sq_dist(X, Y):
     for i in range(M):
         YY[i] = np.dot(Y[i], Y[i])
 
-    DI = np.tile(XX, (M, 1)).T - 2 * np.dot(X, Y.T) + np.tile(YY, (N, 1))
+    # again, np.dot here causes a memory error in task 2.2 but so does np.tile,
+    # meaning my laptop cannot handle the DI matrix itself so we restrict the dataset size
+    DI = np.tile(XX, (M, 1)).T + np.tile(YY, (N, 1)) - 2 * np.dot(X, Y.T)
 
     return DI

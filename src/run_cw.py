@@ -248,6 +248,7 @@ def run_task2_2(visual):
     posVec = my_mean(Xtrn)
     nbins = 200
 
+    # TODO try running this on DICE for more RAM so we can use the whole dataset (maybe?)
     N = 2000
 
     for k in Ks:
