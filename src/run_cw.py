@@ -280,6 +280,11 @@ def run_task2_4(visual):
     sio.savemat(file_name='../results/task2_4_corrs.mat', mdict={'Corrs': Corrs})
 
 
+def run_task2_5(visual):
+
+    task2_5(Xtrn, Ytrn, Xtst, Ytst, 0.01)
+
+
 def main():
     try:
         # options:

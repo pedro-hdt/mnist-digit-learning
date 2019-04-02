@@ -1,4 +1,8 @@
-def my_gaussian_classify(Xtrn, Ctrn, Xtst, epsilon):
+from my_mean import *
+from logdet import *
+
+
+def my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon):
 	"""
 	Write a Python function for the classification with a single Gaussian distribution per class
 	where Xtrn, Ytrn, Xtst, and Ypreds are the same as those in Task1. epsilon is a scalar
@@ -15,15 +19,60 @@ def my_gaussian_classify(Xtrn, Ctrn, Xtst, epsilon):
 	:param epsilon:
 	:return:
 		Cpreds: N-by-1 matrix of predicted labels for Xtst
-		Ms: D-by-K matrix of mean vectors where Ms[k, :] is the sample
+		Ms: K-by-D matrix of mean vectors where Ms[k, :] is the sample
 		mean vector for class k.
-		Covs: D-by-D-by-K 3D array of covariance matrices, where Cov[k, :, :]
+		Covs: K-by-D-by-D 3D array of covariance matrices, where Cov[k, :, :]
 		is the covariance matrix (after the regularisation) for class k.
 	"""
 
-	Cpreds = []
-	Ms = []
-	Covs = []
-	pass # YourCode - Bayes classification with multivariate Gaussian distributions.#
+	# Number of classes
+	K = 10
+
+	# Size of the matrices
+	N = len(Xtst)
+	M = len(Xtrn)
+	D = len(Xtrn[0])
+
+	Cpreds = np.zeros((N, 1))
+	Ms = np.zeros((K, D))
+	Covs = np.zeros((K, D, D))
+	inv_Covs = np.zeros((K, D, D))
+	priors = np.zeros(K)
+
+	# Bayes classification with multivariate Gaussian distributions
+	for C_k in range(K):
+
+		# Extract class samples
+		class_samples = Xtrn[Ytrn[:] == C_k]
+
+		# Calculate prior probabilities
+		priors[C_k] = len(class_samples) / M
+
+		# Estimate mean
+		Ms[C_k] = my_mean(class_samples)
+
+		# Estimate covariance matrix
+		X_shift = class_samples - Ms[C_k]
+		Covs[C_k] = (1.0 / len(class_samples)) * np.dot(X_shift.T, X_shift) + epsilon * np.identity(D)
+		inv_Covs[C_k] = np.linalg.inv(Covs[C_k])
+
+	for i in range(N):
+
+		# Extract relevant test sample and initialize vector of posterior probabilites
+		test_sample = Xtst[i]
+		log_post_probs = np.zeros(K)
+
+		for C_k in range(K):
+
+			# load mean for easier reading in the formula
+			mu = Ms[C_k]
+
+			# Calculate log posterior probability
+			log_post_probs[C_k] = \
+				- 0.5 * np.dot(np.dot((test_sample - mu).T, inv_Covs[C_k]), test_sample - mu) \
+				- 0.5 * logdet(Covs[C_k]) \
+				+ np.log(priors[C_k])
+
+		Cpreds[i] = log_post_probs.argmax()
 
 	return Cpreds, Ms, Covs
