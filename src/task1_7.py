@@ -72,11 +72,15 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     Dmap = Dmap.reshape((nbins, nbins))
 
     # Create a color map for plotting
-    colormap = plt.get_cmap(lut=K)
+    colormap = plt.get_cmap(name='tab10', lut=K)
+    colors = colormap(np.arange(K))
 
     # Plot the data in the new basis
-    # plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
-    plt.contourf(xx_pc, yy_pc, Dmap, cmap=colormap)
+    plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
+    plt.figure()
+    # TODO sort this out then delete the 2 lines above
+    # setting levels parameter doesn't work
+    plt.contourf(xx_pc, yy_pc, Dmap)
 
     plt.xlabel('1st Principal Component')
     plt.ylabel('2nd Principal Component')
@@ -86,4 +90,4 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     plt.suptitle('Decision regions after k-means clustering for k = {}'.format(K))
     # plt.show() # TODO uncomment this before submission
 
-    return Dmap.reshape((nbins, nbins))
+    return Dmap

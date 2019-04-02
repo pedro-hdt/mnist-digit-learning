@@ -20,7 +20,6 @@ def task2_2(X, Y, k, MAT_evecs, MAT_evals, posVec, nbins):
     """
 
     D = posVec.shape[1]
-    Dmap = np.zeros((1, nbins * nbins), dtype='uint8')
 
     # Load the data
     EVecs = sio.loadmat(file_name=MAT_evecs)['EVecs']
@@ -55,13 +54,10 @@ def task2_2(X, Y, k, MAT_evecs, MAT_evals, posVec, nbins):
 
     # Classify the points in the grid
     Dmap = run_knn_classifier(X, Y, grid.T, [k])
-
-    # Create a color map for plotting
-    colormap = plt.get_cmap(lut=10)
-    colors = colormap(np.arange(10))
+    Dmap = Dmap.reshape((nbins, nbins))
 
     # Plot the data in the new basis
-    plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
+    plt.contourf(xx_pc, yy_pc, Dmap, levels=range(10))
 
     plt.xlabel('1st Principal Component')
     plt.ylabel('2nd Principal Component')
