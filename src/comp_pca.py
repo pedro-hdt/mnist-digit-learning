@@ -1,5 +1,6 @@
 import numpy as np
 import numpy.linalg as la
+from my_mean import *
 
 
 def comp_pca(X):
@@ -18,7 +19,7 @@ def comp_pca(X):
     N = len(X)
 
     # Mean shift the original matrix
-    X_shift = X - X.mean(axis=0)
+    X_shift = X - my_mean(X)
 
     # Covariance matrix
     # note we use 1.0, otherwise it gets cast to int and results in all 0s

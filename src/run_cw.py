@@ -225,7 +225,8 @@ def run_task1_7(visual):
         plt.savefig(fname='../results/task1_7_{}.pdf'.format(k))
         plt.savefig(fname='../results/task1_7_{}.png'.format(k))
         runtimes.append(time() - start_time)
-        plt.show()
+        if visual:
+            plt.show()
 
     return sum(runtimes)
 
@@ -256,12 +257,19 @@ def run_task2_2(visual):
         plt.savefig(fname='task2_2_imgs_{}.pdf'.format(k))
         plt.savefig(fname='task2_2_imgs_{}.png'.format(k))
         sio.savemat(file_name='task2_2_dmap_{}.mat'.format(k), mdict={'Dmap': Dmap})
-        plt.show()
+        if visual:
+            plt.show()
 
     for k in Ks:
         os.rename('task2_2_dmap_{}.mat'.format(k), '../results/task2_2_dmap_{}.mat'.format(k))
         os.rename('task2_2_imgs_{}.pdf'.format(k), '../results/task2_2_imgs_{}.pdf'.format(k))
         os.rename('task2_2_imgs_{}.png'.format(k), '../results/task2_2_imgs_{}.png'.format(k))
+
+
+def run_task2_3(visual):
+
+    task2_3(Xtrn, Ytrn)
+
 
 
 def main():

@@ -84,5 +84,6 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     plt.xlim(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]))
     plt.ylim(projected_mean[:, 0] - (5 * sigma[1]), projected_mean[:, 1] + 5 * (sigma[1]))
     plt.suptitle('Decision regions after k-means clustering for k = {}'.format(K))
+    # plt.show() # TODO uncomment this before submission
 
     return Dmap.reshape((nbins, nbins))
