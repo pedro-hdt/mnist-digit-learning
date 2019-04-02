@@ -1,5 +1,7 @@
 from comp_pca import *
 from my_mean import *
+import matplotlib.pyplot as plt
+from math import acos, cos, sin , pi
 
 
 def task2_3(X, Y):
@@ -19,7 +21,7 @@ def task2_3(X, Y):
 
     # These parameters control the number of classes and pca dimensions respectively
     # They are irrelevant for the assignment, and could be hardcoded but this
-    # makes the code reusable
+    # makes the code easier to adapt to other situations
     n_classes = 10
     pca_dim = 2
 
@@ -28,27 +30,49 @@ def task2_3(X, Y):
     X_pc = np.dot(X, EVecs)[:, :pca_dim]
 
     # 2. Estimating the parameters of Gaussian for each class
-    mean = np.zeros((n_classes, 2))
+    mean = np.zeros((n_classes, pca_dim))
     covar_m = np.zeros((n_classes, pca_dim, pca_dim))
-    invcovar_m = np.zeros((n_classes, pca_dim, pca_dim))
-    std_dv = np.zeros((n_classes, 2))
+    std_dv = np.zeros((n_classes, pca_dim))
 
     for C_k in range(n_classes):
         class_samples = X_pc[Y[:] == C_k]
         mean[C_k] = my_mean(class_samples)
         X_pcshift = class_samples - mean[C_k]
         covar_m[C_k] = (1.0 / len(class_samples)) * np.dot(X_pcshift.T, X_pcshift)
-        invcovar_m[C_k] = np.linalg.inv(covar_m[C_k])
-        std_dv[C_k] = np.diag(covar_m[C_k])
+        std_dv[C_k] = np.sqrt(np.diag(covar_m[C_k]))
         # In FAQ page:
         # Q: Which type of covariance matrix should I use - the one normalised
         #    by N or N-1?
         # A: Please use the one normalised by N, because MLE is assumed.
 
-    # 3. On a single graph plot a contour of the distribution for each class
-    # (without using the contour function)
-    for C_k in range(n_classes):
-        x1, x2 = comp_pca(covar_m[C_k])
+        # 3. On a single graph plot a contour of the distribution for each class
+        # (without using the contour function)
 
+        # We do this based on slides 9-10 from
+        # https://www.inf.ed.ac.uk/teaching/courses/inf2b/learnSlides/inf2b-learnlec09-full.pdf
 
-    print 'hello'
+        # Define contour size using the std deviation
+        a = std_dv[C_k][0]
+        b = std_dv[C_k][1]
+
+        # Define a circle
+        x = np.linspace(0, 2*np.pi, 100)
+        contour = np.array([a * np.cos(x), b * np.sin(x)])
+
+        # Use the eigenvectors of the covariance matrix to create a linear transformation
+        # of the circle (adding the mean to translate the location)
+        vs, _ = comp_pca(covar_m[C_k])
+        myrot = np.dot(vs.T, contour) + mean[C_k].reshape([pca_dim, 1])
+        plt.plot(myrot[0], myrot[1])
+        plt.text(mean[C_k, 0], mean[C_k, 1], s=str(C_k))
+
+        # This is alternative code for this section, as seen in
+        # https://stackoverflow.com/questions/10952060/plot-ellipse-with-matplotlib-pyplot-python
+        #
+        # unit = np.array([1, 0])
+        # angle = acos( np.dot(vs[0], unit) / (np.linalg.norm(unit) * np.linalg.norm(vs[0])) )
+        # rot_mat = np.array([[cos(angle), -sin(angle)], [sin(angle), cos(angle)]])
+        # rot_contour = np.dot(rot_mat, contour)
+        # plt.plot(rot_contour[0], rot_contour[1])
+
+    plt.show()

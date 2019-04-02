@@ -27,6 +27,9 @@ from time import time
 import hashlib
 
 
+# TODO use clock instead of time
+
+
 def run_all(visual):
     start_time = time()
     times = []
@@ -249,7 +252,7 @@ def run_task2_2(visual):
     posVec = my_mean(Xtrn)
     nbins = 200
 
-    # TODO try running this on DICE for more RAM so we can use the whole dataset (maybe?)
+    # TODO can do 15000 on DICE
     N = 2000
 
     for k in Ks:
