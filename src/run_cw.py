@@ -11,6 +11,13 @@ from task1_6 import *
 from task1_7 import *
 from task1_8 import *
 from task2_1 import *
+from task2_2 import *
+from task2_3 import *
+from task2_4 import *
+from task2_5 import *
+from task2_6 import *
+from task2_7 import *
+from task2_8 import *
 import sys
 import os
 import getopt
@@ -215,7 +222,8 @@ def run_task1_7(visual):
     for k in Ks:
         MAT_ClusterCentres = '../results/task1_5_c_{}.mat'.format(k)
         task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, 200)
-        plt.savefig(fname='../results/task1_7_{}'.format(k))
+        plt.savefig(fname='../results/task1_7_{}.pdf'.format(k))
+        plt.savefig(fname='../results/task1_7_{}.png'.format(k))
         runtimes.append(time() - start_time)
         plt.show()
 
@@ -229,6 +237,30 @@ def run_task2_1(visual):
 
     for k in Ks:
         os.rename('task2_1_cm{}.mat'.format(k), '../results/task2_1_cm{}.mat'.format(k))
+
+
+def run_task2_2(visual):
+
+    Ks = [1, 3]
+
+    MAT_evecs = '../results/task1_3_evecs.mat'
+    MAT_evals = '../results/task1_3_evals.mat'
+    posVec = my_mean(Xtrn)
+    nbins = 200
+
+    N = 2000
+
+    for k in Ks:
+        Dmap = task2_2(Xtrn[:N], Ytrn[:N], k, MAT_evecs, MAT_evals, posVec, nbins)
+        plt.savefig(fname='task2_2_imgs_{}.pdf'.format(k))
+        plt.savefig(fname='task2_2_imgs_{}.png'.format(k))
+        sio.savemat(file_name='task2_2_dmap_{}.mat'.format(k), mdict={'Dmap': Dmap})
+        plt.show()
+
+    for k in Ks:
+        os.rename('task2_2_dmap_{}.mat'.format(k), '../results/task2_2_dmap_{}.mat'.format(k))
+        os.rename('task2_2_imgs_{}.pdf'.format(k), '../results/task2_2_imgs_{}.pdf'.format(k))
+        os.rename('task2_2_imgs_{}.png'.format(k), '../results/task2_2_imgs_{}.png'.format(k))
 
 
 def main():
