@@ -30,11 +30,25 @@ def task2_3(X, Y):
     # 2. Estimating the parameters of Gaussian for each class
     mean = np.zeros((n_classes, 2))
     covar_m = np.zeros((n_classes, pca_dim, pca_dim))
+    invcovar_m = np.zeros((n_classes, pca_dim, pca_dim))
+    std_dv = np.zeros((n_classes, 2))
+
     for C_k in range(n_classes):
         class_samples = X_pc[Y[:] == C_k]
-        N = len(class_samples)
         mean[C_k] = my_mean(class_samples)
         X_pcshift = class_samples - mean[C_k]
-        covar_m[C_k] = (1.0 / N) * np.dot(X_pcshift.T, X_pcshift)
+        covar_m[C_k] = (1.0 / len(class_samples)) * np.dot(X_pcshift.T, X_pcshift)
+        invcovar_m[C_k] = np.linalg.inv(covar_m[C_k])
+        std_dv[C_k] = np.diag(covar_m[C_k])
+        # In FAQ page:
+        # Q: Which type of covariance matrix should I use - the one normalised
+        #    by N or N-1?
+        # A: Please use the one normalised by N, because MLE is assumed.
+
+    # 3. On a single graph plot a contour of the distribution for each class
+    # (without using the contour function)
+    for C_k in range(n_classes):
+        x1, x2 = comp_pca(covar_m[C_k])
+
 
     print 'hello'

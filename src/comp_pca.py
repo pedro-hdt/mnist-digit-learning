@@ -8,7 +8,7 @@ def comp_pca(X):
     Write a Python function that computes the principal components of a data set
     The eigenvalues should be sorted in descending order, so that lambda_1 is the largest and lambda_D is
     the smallest, and i'th column of EVecs should hold the eigenvector that corresponds to lambda_i
-    :param X: N * D matrix (double)
+    :param X: N-by-D matrix (double)
     :return:
         Evecs: D-by-D matrix (double) contains all eigenvectors as columns
         NB: follow the Task 1.3 specifications on eigenvectors.
