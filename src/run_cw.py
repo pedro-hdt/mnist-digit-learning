@@ -320,6 +320,11 @@ def run_task2_8(visual):
         print '-------------------- L = {} --------------------'.format(L)
         task2_8(Xtrn, Ytrn, Xtst, Ytst, 0.01, L)
         print
+        os.rename('task2_8_cm_{}.mat'.format(L), '../results/task2_8_cm_{}.mat'.format(L))
+        os.rename('task2_8_g{}_m1.mat'.format(L), '../results/task2_8_g{}_m1.mat'.format(L))
+        os.rename('task2_8_g{}_cov1.mat'.format(L), '../results/task2_8_g{}_cov1.mat'.format(L))
+
+
 
 
 def main():
