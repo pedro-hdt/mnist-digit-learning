@@ -82,13 +82,13 @@ def task2_6(X, Y, epsilon, MAT_evecs, MAT_evals, posVec, nbins):
 
     # Plot the data in the new basis
     # Create a color map for plotting
-    colormap = plt.get_cmap(name='tab10', lut=10)
-    colors = colormap(np.arange(10))
+    colormap = plt.cm.viridis
+    colors = [colormap(i) for i in np.linspace(0, 1, 20)]
 
     # Plot the data in the new basis
-    plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
+    #plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
     plt.figure()
-    plt.contourf(xx_pc, yy_pc, Dmap, levels=range(10), colormap=colormap)
+    plt.contourf(xx_pc, yy_pc, Dmap, levels=range(10), colors=colors)
     # TODO choose plotting method after verifying
 
     plt.xlabel('1st Principal Component')

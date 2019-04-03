@@ -1,7 +1,8 @@
 from run_gaussian_classifiers import *
+from comp_confmat import *
 
 
-def task2_7(Xtrain, Ytrain, Xtest, Ytest, epsilon, ratio):
+def task2_7(Xtrn, Ytrn, Xtst, Ytst, epsilon, ratio):
     """
     This task aims to investigate the effect of amount of training data on classification performance
     for Gaussian classifiers.
@@ -19,7 +20,8 @@ def task2_7(Xtrain, Ytrain, Xtest, Ytest, epsilon, ratio):
         acc : scalar (double) of correct classification rate
     """
 
-    CM, acc = my_gaussian_classify(Xtrn, Ytrn, X)
-    pass
+    data_limit = int(ratio * len(Ytrn))
+    Ypreds, _, _ = my_gaussian_classify(Xtrn[:data_limit], Ytrn[:data_limit], Xtst, epsilon)
+    CM, acc = comp_confmat(Ytst, Ypreds, 10)
 
     return CM, acc
