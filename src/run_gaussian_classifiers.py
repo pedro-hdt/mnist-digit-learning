@@ -72,6 +72,6 @@ def my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon):
 			+ np.log(priors[C_k])
 
 	# Finally, assign to each sample the class that maximises the log posterior probaility
-	Cpreds = log_post_probs.argmax(axis=0)
+	Cpreds = log_post_probs.argmax(axis=0).astype('uint8')
 
 	return Cpreds, Ms, Covs

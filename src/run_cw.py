@@ -300,6 +300,16 @@ def run_task2_6(visual):
     if visual:
         plt.show()
 
+def run_task2_7(visual):
+
+    ratios = [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]
+    for ratio in ratios:
+        R = ratio * 100
+        cm, acc = task2_7(Xtrn, Ytrn, Xtst, Ytst, 0.01, ratio)
+        print 'Ratio = {}%'.format(R)
+        print 'acc = {}\n'.format(acc)
+        sio.savemat('../results/task2_7_cm_R.mat'.format(R), mdict={'CM': cm})
+
 
 def main():
     try:

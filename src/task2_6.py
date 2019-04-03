@@ -57,7 +57,27 @@ def task2_6(X, Y, epsilon, MAT_evecs, MAT_evals, posVec, nbins):
     V_inv = np.linalg.inv(EVecs.T)
     grid = np.dot(V_inv, grid_pc) + posVec.T
 
-    Dmap = my_gaussian_classify(X, Y, grid.T, epsilon)
+    # Since the vectorisation in the gaussian classifier requires a large amount of memory,
+    # we split the grid into chunks that can be independently classified, to avoid
+    # a MemoryError.
+    # We can do this since the classification of each sample is independent from all others
+    # Note also that this will cause us to train the gaussian classifiers twice, but that
+    # can be done in a couple of seconds so it is not a big problem
+
+    n_chunks = 4
+    chunk_size = grid.shape[1] / n_chunks
+    Dmap = np.zeros(nbins * nbins, dtype='uint8')
+    for n in range(n_chunks):
+        low_limit = n * chunk_size
+        up_limit = (n + 1) * chunk_size
+        grid_chunk = grid[:, low_limit : up_limit].T
+        print low_limit, up_limit
+        Dmap[low_limit : up_limit], _, _ = my_gaussian_classify(X, Y, grid_chunk, epsilon)
+    low_limit = n_chunks * chunk_size
+    grid_chunk = grid[:, low_limit:].T
+    print low_limit, 'onwards'
+    Dmap[low_limit:], _, _ = my_gaussian_classify(X, Y, grid_chunk, epsilon)
+
     Dmap = Dmap.reshape((nbins, nbins))
 
     # Plot the data in the new basis
@@ -67,9 +87,9 @@ def task2_6(X, Y, epsilon, MAT_evecs, MAT_evals, posVec, nbins):
 
     # Plot the data in the new basis
     plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
-
     plt.figure()
-    plt.contourf(xx_pc, yy_pc, Dmap, levels=range(10))
+    plt.contourf(xx_pc, yy_pc, Dmap, levels=range(10), colormap=colormap)
+    # TODO choose plotting method after verifying
 
     plt.xlabel('1st Principal Component')
     plt.ylabel('2nd Principal Component')
