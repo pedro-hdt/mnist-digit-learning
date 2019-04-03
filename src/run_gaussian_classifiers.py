@@ -14,7 +14,7 @@ def my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon):
 	data in this task.
 
 	:param Xtrn: M-by-D training data matrix
-	:param Ctrn: M-by-1 label vector for Xtrn
+	:param Ytrn: M-by-1 label vector for Xtrn
 	:param Xtst: N-by-D test data matrix
 	:param epsilon:
 	:return:

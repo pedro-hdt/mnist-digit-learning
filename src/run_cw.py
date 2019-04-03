@@ -287,6 +287,17 @@ def run_task2_5(visual):
     print 'Elapsed time: {}'.format(time()-start_time)
 
 
+def run_task2_6(visual):
+
+    MAT_evecs = '../results/task1_3_evecs.mat'
+    MAT_evals = '../results/task1_3_evals.mat'
+    task2_6(Xtrn, Ytrn, 0.01, MAT_evecs, MAT_evals, my_mean(Xtrn), 200)
+    plt.savefig('../results/task2_6_img.pdf')
+    plt.savefig('../results/task2_6_img.png')
+    if visual:
+        plt.show()
+
+
 def main():
     try:
         # options:
