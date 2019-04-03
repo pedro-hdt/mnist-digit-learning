@@ -4,14 +4,16 @@ import numpy as np
 def comp_confmat(Ytrues, Ypreds, K):
     """
     Write a Python function that creates a confusion matrix
+
     :param Ytrues: N-by-1 ground truth label vector
     :param Ypreds: N-by-1 predicted label vector
     :param K: number of classes
-    :returns:
-        CM : K-by-K confusion matrix, where CM(i,j) is
-        the number of samples whose target is the ith class
-        that was classified as j
-        acc : accuracy (i.e. correct classification rate)
+    :returns: tuple (CM, acc)
+
+        - CM : K-by-K confusion matrix, where CM(i,j) is
+          the number of samples whose target is the ith class
+          that was classified as j
+        - acc : accuracy (i.e. correct classification rate)
     """
 
     # Initialise the matrix with 0s so we can increment

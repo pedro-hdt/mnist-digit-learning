@@ -25,9 +25,12 @@ def run_mgcs(Xtrn, Ytrn, Xtst, epsilon, L):
 
     N = len(Xtst)
     D = Xtst.shape[1]
-    MMs =  np.zeros((L * K, D))
+
+    # Return vars
+    MMs = np.zeros((L * K, D))
     MCovs = np.zeros((L * K, D, D))
 
+    # Internal vars
     inv_Covs = np.zeros((L * K, D, D))
     priors = np.zeros(L * K)
     log_post_probs = np.zeros((L * K, N))
@@ -78,10 +81,11 @@ def run_mgcs(Xtrn, Ytrn, Xtst, epsilon, L):
                 - 0.5 * logdet(MCovs[C_k*L+subclass]) \
                 + np.log(priors[C_k*L+subclass])
 
-    # Finally, assign to each sample the class that maximises the log posterior probaility
+    # Assign to each sample the class that maximises the log posterior probaility
     Ypreds = log_post_probs.argmax(axis=0).astype('uint8')
-    # Because we have L gaussians per class, we divide the assignments by L and take the ceiling
-    # which gives us the corresponding final class.
+
+    # Finally, because we have L gaussians per class, we divide the assignments by L
+    # and take the ceiling which gives us the corresponding final class.
     # (Multiplication by 1.0 ensures that result is not cast to an int)
     Ypreds = np.ceil(Ypreds / (1.0 * L))
 

@@ -21,8 +21,8 @@ def my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon):
 
 	- Cpreds: N-by-1 matrix of predicted labels for Xtst
 	- Ms: K-by-D matrix of mean vectors where Ms[k, :] is the sample mean vector for class k.
-	- Covs: K-by-D-by-D 3D array of covariance matrices, where Cov[k, :, :]
-	is the covariance matrix (after the regularisation) for class k.
+	- Covs: K-by-D-by-D 3D array of covariance matrices, where Cov[k, :, :] is the covariance
+	  matrix (after the regularisation) for class k.
 	"""
 
 	# Number of classes
