@@ -1,5 +1,6 @@
 from my_kMeansClustering import *
-from run_gaussian_classifiers import my_gaussian_classify
+from my_mean import *
+from logdet import *
 
 
 def run_mgcs(Xtrn, Ytrn, Xtst, epsilon, L):
@@ -24,10 +25,14 @@ def run_mgcs(Xtrn, Ytrn, Xtst, epsilon, L):
 
     N = len(Xtst)
     D = Xtst.shape[1]
-    Ypreds = np.zeros((N, 1))
     MMs =  np.zeros((L * K, D))
     MCovs = np.zeros((L * K, D, D))
 
+    inv_Covs = np.zeros((L * K, D, D))
+    priors = np.zeros(L * K)
+    log_post_probs = np.zeros((L * K, N))
+
+    # Clustering and training
     for C_k in range(K):
 
         # Extract class samples
@@ -35,18 +40,49 @@ def run_mgcs(Xtrn, Ytrn, Xtst, epsilon, L):
 
         # Choose L random initial cluster centres and perform k-means
         centres = class_samples[np.random.randint(0, len(class_samples), L)]
-        C, idx, SSE = my_kMeansClustering(class_samples, L, centres)
+        _, idx, _ = my_kMeansClustering(class_samples, L, centres)
+
+        # Gaussian estimation (training)
+        for subclass in range(L):
+
+            # Extract class samples
+            subclass_samples = class_samples[idx[:] == subclass]
+
+            # Calculate prior probabilities
+            priors[C_k*L+subclass] = (1.0 * len(subclass_samples)) / N
+
+            # Estimate mean
+            MMs[C_k*L+subclass] = my_mean(subclass_samples)
+
+            # Estimate covariance matrix (and its inverse)
+            X_shift = subclass_samples - MMs[C_k*L+subclass]
+            MCovs[C_k*L+subclass] = (1.0 / len(subclass_samples)) * np.dot(X_shift.T, X_shift) + epsilon * np.identity(D)
+            inv_Covs[C_k*L+subclass] = np.linalg.inv(MCovs[C_k*L+subclass])
+
+    # Classification
+    for C_k in range(K):
 
         for subclass in range(L):
 
-            subclass_samples = class_samples[idx[:] == subclass]
-            Ypred, Ms, Covs = my_gaussian_classify()
+            # Extract the mean and mean shift the data
+            mu = MMs[C_k*L+subclass]
+            Xtst_shift = Xtst - mu
 
+            # Formula derived from (with extra vectorization) lect note 9 (equation 9.9 on page 4)
+            # https://www.inf.ed.ac.uk/teaching/courses/inf2b/learnnotes/inf2b-learn09-notes-nup.pdf
+            # for clarification on the einstein summation see:
+            # https://stackoverflow.com/questions/14758283/is-there-a-numpy-scipy-dot-product-calculating-only-the-diagonal-entries-of-the
+            # https://docs.scipy.org/doc/numpy/reference/generated/numpy.einsum.html
+            log_post_probs[C_k*L+subclass] = \
+                - 0.5 * np.einsum('ij,jk,ki->i', Xtst_shift, inv_Covs[C_k*L+subclass], Xtst_shift.T) \
+                - 0.5 * logdet(MCovs[C_k*L+subclass]) \
+                + np.log(priors[C_k*L+subclass])
 
-
-
-
-
-    pass
+    # Finally, assign to each sample the class that maximises the log posterior probaility
+    Ypreds = log_post_probs.argmax(axis=0).astype('uint8')
+    # Because we have L gaussians per class, we divide the assignments by L and take the ceiling
+    # which gives us the corresponding final class.
+    # (Multiplication by 1.0 ensures that result is not cast to an int)
+    Ypreds = np.ceil(Ypreds / (1.0 * L))
 
     return Ypreds, MMs, MCovs

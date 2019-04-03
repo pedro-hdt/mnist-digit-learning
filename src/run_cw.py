@@ -313,6 +313,13 @@ def run_task2_7(visual):
         sio.savemat('../results/task2_7_cm_{}.mat'.format(R), mdict={'CM': cm})
 
 
+def run_task2_(visual):
+
+    Ls = [2, 5, 10]
+    for L in Ls:
+        task2_8(Xtrn, Ytrn, Xtst, Ytst, 0.01, L)
+
+
 def main():
     try:
         # options:

@@ -46,7 +46,7 @@ def my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon):
 		class_samples = Xtrn[Ytrn[:] == C_k]
 
 		# Calculate prior probabilities
-		priors[C_k] = float(len(class_samples)) / M
+		priors[C_k] = (1.0 * len(class_samples)) / M
 
 		# Estimate mean
 		Ms[C_k] = my_mean(class_samples)
