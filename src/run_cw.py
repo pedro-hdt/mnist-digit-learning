@@ -285,6 +285,9 @@ def run_task2_5(visual):
     start_time = time()
     task2_5(Xtrn, Ytrn, Xtst, Ytst, 0.01)
     print 'Elapsed time: {}'.format(time()-start_time)
+    os.rename('task2_5_cm.mat', '../results/task2_5_cm.mat')
+    os.rename('task2_5_m10.mat', '../results/task2_5_m10.mat')
+    os.rename('task2_5_cov10.mat', '../results/task2_5_cov10.mat')
 
 
 def run_task2_6(visual):
