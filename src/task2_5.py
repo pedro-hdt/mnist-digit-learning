@@ -35,12 +35,12 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
     print 'Elapsed time in gaussian classification: {}'.format(time() - start_time) #2.
 
     # 3.
-    cm, acc = comp_confmat(Ytst, Ypreds)
+    cm, acc = comp_confmat(Ytst, Ypreds, 10)
     sio.savemat(file_name='task2_5_cm.mat', mdict={'cm': cm})
 
     # 4.
-    M10 = Ms[10]
-    Cov10 = Covs[10]
+    M10 = Ms[9]     # class 10 has index 9
+    Cov10 = Covs[9] # class 10 has index 9
     sio.savemat(file_name='task2_5_m10.mat', mdict={'M10': M10})
     sio.savemat(file_name='task2_5_cov10.mat', mdict={'Cov10': Cov10})
 
@@ -49,4 +49,4 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
     Nerrs = N - cm.trace()
     print 'N = {}'.format(N)
     print 'Nerrs = {}'.format(Nerrs)
-    print 'acc = {}'.forma(acc)
+    print 'acc = {}'.format(acc)

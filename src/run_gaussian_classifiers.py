@@ -46,7 +46,7 @@ def my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon):
 		class_samples = Xtrn[Ytrn[:] == C_k]
 
 		# Calculate prior probabilities
-		priors[C_k] = len(class_samples) / M
+		priors[C_k] = float(len(class_samples)) / M
 
 		# Estimate mean
 		Ms[C_k] = my_mean(class_samples)
@@ -56,23 +56,22 @@ def my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon):
 		Covs[C_k] = (1.0 / len(class_samples)) * np.dot(X_shift.T, X_shift) + epsilon * np.identity(D)
 		inv_Covs[C_k] = np.linalg.inv(Covs[C_k])
 
-	for i in range(N):
+	# For each class, calculate the log posterior probability for all samples
+	log_post_probs = np.zeros((K, N))
+	for C_k in range(K):
 
-		# Extract relevant test sample and initialize vector of posterior probabilites
-		test_sample = Xtst[i]
-		log_post_probs = np.zeros(K)
+		# Extract the mean and mean shift the data
+		mu = Ms[C_k]
+		Xtst_shift = Xtst - mu
 
-		for C_k in range(K):
+		# Formula derived from (with extra vectorization) lect note 9 (equation 9.9 on page 4)
+		# https://www.inf.ed.ac.uk/teaching/courses/inf2b/learnnotes/inf2b-learn09-notes-nup.pdf
+		log_post_probs[C_k] = \
+			- 0.5 * np.diag(np.dot(np.dot(Xtst_shift, inv_Covs[C_k]), Xtst_shift.T)) \
+			- 0.5 * logdet(Covs[C_k]) \
+			+ np.log(priors[C_k])
 
-			# load mean for easier reading in the formula
-			mu = Ms[C_k]
-
-			# Calculate log posterior probability
-			log_post_probs[C_k] = \
-				- 0.5 * np.dot(np.dot((test_sample - mu).T, inv_Covs[C_k]), test_sample - mu) \
-				- 0.5 * logdet(Covs[C_k]) \
-				+ np.log(priors[C_k])
-
-		Cpreds[i] = log_post_probs.argmax()
+	# Finally, assign to each sample the class that maximises the log posterior probaility
+	Cpreds = log_post_probs.argmax(axis=0)
 
 	return Cpreds, Ms, Covs

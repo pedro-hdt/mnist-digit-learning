@@ -282,7 +282,9 @@ def run_task2_4(visual):
 
 def run_task2_5(visual):
 
+    start_time = time()
     task2_5(Xtrn, Ytrn, Xtst, Ytst, 0.01)
+    print 'Elapsed time: {}'.format(time()-start_time)
 
 
 def main():
