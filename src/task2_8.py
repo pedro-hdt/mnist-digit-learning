@@ -34,7 +34,7 @@ def task2_8(Xtrn, Ytrn, Xtst, Ytst, epsilon, L):
 
     start_time = time() # 2.
     Ypreds, MMs, MCovs = run_mgcs(Xtrn, Ytrn, Xtst, epsilon, L) # 1.
-    print 'Elapsed time in classification with multiple gaussians per class: {}'.format(time() - start_time) # 2.
+    print 'Elapsed time in MGC: {} secs'.format(time() - start_time) # 2.
 
     # 3.
     cm, acc = comp_confmat(Ytst, Ypreds, 10)

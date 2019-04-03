@@ -32,7 +32,7 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
 
     start_time = time() # 2.
     Ypreds, Ms, Covs = my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon) # 1.
-    print 'Elapsed time in gaussian classification: {}'.format(time() - start_time) #2.
+    print 'Elapsed time in Gaussian classification: {} secs'.format(time() - start_time) #2.
 
     # 3.
     cm, acc = comp_confmat(Ytst, Ypreds, 10)

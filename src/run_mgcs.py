@@ -82,11 +82,11 @@ def run_mgcs(Xtrn, Ytrn, Xtst, epsilon, L):
                 + np.log(priors[C_k*L+subclass])
 
     # Assign to each sample the class that maximises the log posterior probaility
-    Ypreds = log_post_probs.argmax(axis=0).astype('uint8')
+    Ypreds = log_post_probs.argmax(axis=0)
 
     # Finally, because we have L gaussians per class, we divide the assignments by L
     # and take the ceiling which gives us the corresponding final class.
     # (Multiplication by 1.0 ensures that result is not cast to an int)
-    Ypreds = np.ceil(Ypreds / (1.0 * L))
+    Ypreds = (Ypreds / (1.0 * L)).astype('uint8')
 
     return Ypreds, MMs, MCovs
