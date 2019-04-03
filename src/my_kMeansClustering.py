@@ -4,18 +4,20 @@ from my_dist import *
 
 
 def my_kMeansClustering(X, k, initialCentres, maxIter=500):
-    """ Write a Python function that carries out the k-means clustering
+    """
+    Write a Python function that carries out the k-means clustering and returns
 
-    Input
-    X : N-by-D matrix (double) of input sample data
-    k : scalar (integer) - the number of clusters
-    initialCentres : k-by-D matrix (double) of initial cluster centres
-    maxIter  : scalar (integer) - the maximum number of iterations
+    :param X: N-by-D matrix (double) of input sample data
+    :param k: scalar (integer) - the number of clusters
+    :param initialCentres: k-by-D matrix (double) of initial cluster centres
+    :param maxIter: scalar (integer) - the maximum number of iterations
+    :returns: tuple (C, idx, SSE)
 
-    Output
-    C   : k-by-D matrix (double) of cluster centres
-    idx : N-by-1 vector (integer) of cluster index table
-    SSE : (L+1)-by-1 vector (double) of sum-squared-errors """
+    - C - k-by-D matrix (double) of cluster centres
+    - idx - N-by-1 vector (integer) of cluster index table
+    - SSE - (L+1)-by-1 vector (double) of sum-squared-errors
+    """
+
 
     # TODO: remove printing?
 

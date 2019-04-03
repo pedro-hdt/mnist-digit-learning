@@ -294,7 +294,9 @@ def run_task2_6(visual):
 
     MAT_evecs = '../results/task1_3_evecs.mat'
     MAT_evals = '../results/task1_3_evals.mat'
+    start_time = time()
     task2_6(Xtrn, Ytrn, 0.01, MAT_evecs, MAT_evals, my_mean(Xtrn), 200)
+    print 'Elapsed time: {}'.format(time() - start_time)
     plt.savefig('../results/task2_6_img.pdf')
     plt.savefig('../results/task2_6_img.png')
     if visual:
@@ -308,7 +310,7 @@ def run_task2_7(visual):
         cm, acc = task2_7(Xtrn, Ytrn, Xtst, Ytst, 0.01, ratio)
         print 'Ratio = {}%'.format(R)
         print 'acc = {}\n'.format(acc)
-        sio.savemat('../results/task2_7_cm_R.mat'.format(R), mdict={'CM': cm})
+        sio.savemat('../results/task2_7_cm_{}.mat'.format(R), mdict={'CM': cm})
 
 
 def main():

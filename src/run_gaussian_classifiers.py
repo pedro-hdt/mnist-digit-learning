@@ -17,12 +17,12 @@ def my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon):
 	:param Ytrn: M-by-1 label vector for Xtrn
 	:param Xtst: N-by-D test data matrix
 	:param epsilon:
-	:return:
-		Cpreds: N-by-1 matrix of predicted labels for Xtst
-		Ms: K-by-D matrix of mean vectors where Ms[k, :] is the sample
-		mean vector for class k.
-		Covs: K-by-D-by-D 3D array of covariance matrices, where Cov[k, :, :]
-		is the covariance matrix (after the regularisation) for class k.
+	:return: tuple (Cpreds, Ms, Covs)
+
+	- Cpreds: N-by-1 matrix of predicted labels for Xtst
+	- Ms: K-by-D matrix of mean vectors where Ms[k, :] is the sample mean vector for class k.
+	- Covs: K-by-D-by-D 3D array of covariance matrices, where Cov[k, :, :]
+	is the covariance matrix (after the regularisation) for class k.
 	"""
 
 	# Number of classes
@@ -66,8 +66,11 @@ def my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon):
 
 		# Formula derived from (with extra vectorization) lect note 9 (equation 9.9 on page 4)
 		# https://www.inf.ed.ac.uk/teaching/courses/inf2b/learnnotes/inf2b-learn09-notes-nup.pdf
+		# for clarification on the einstein summation see:
+		# https://stackoverflow.com/questions/14758283/is-there-a-numpy-scipy-dot-product-calculating-only-the-diagonal-entries-of-the
+		# https://docs.scipy.org/doc/numpy/reference/generated/numpy.einsum.html
 		log_post_probs[C_k] = \
-			- 0.5 * np.diag(np.dot(np.dot(Xtst_shift, inv_Covs[C_k]), Xtst_shift.T)) \
+			- 0.5 * np.einsum('ij,jk,ki->i', Xtst_shift, inv_Covs[C_k], Xtst_shift.T) \
 			- 0.5 * logdet(Covs[C_k]) \
 			+ np.log(priors[C_k])
 

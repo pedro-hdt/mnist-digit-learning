@@ -20,8 +20,13 @@ def task2_7(Xtrn, Ytrn, Xtst, Ytst, epsilon, ratio):
         acc : scalar (double) of correct classification rate
     """
 
+    # Extract relevant part of dataset
     data_limit = int(ratio * len(Ytrn))
+
+    # Classify
     Ypreds, _, _ = my_gaussian_classify(Xtrn[:data_limit], Ytrn[:data_limit], Xtst, epsilon)
+
+    # Analyse results
     CM, acc = comp_confmat(Ytst, Ypreds, 10)
 
     return CM, acc
