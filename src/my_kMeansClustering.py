@@ -18,8 +18,6 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
     - SSE - (L+1)-by-1 vector (double) of sum-squared-errors where L is the number of iterations done
     """
 
-    # TODO: remove printing?
-
     N = len(X)
 
     idx = np.zeros((N, 1))
@@ -28,9 +26,6 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
 
     # initialise error list
     SSE = np.zeros((maxIter+1, 1))
-
-    # show cluster centres at iteration 0
-    # print "[0] Iteration: ", C
 
     # Compute Squared Euclidean distance (i.e. the squared distance)
     # between each cluster centre and each observation
@@ -42,6 +37,9 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
         # Ds are the actual distances and idx are the cluster assignments
         idx = dist.argmin(axis=1).T  # find min dist. for each observation
 
+        # add error to the list
+        SSE[i] = sum_sq_error(dist, k, idx, N)
+
         # Update cluster centres
         for cluster in range(k):
             # check the number of samples assigned to this cluster
@@ -51,24 +49,23 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
                 class_k = X[idx[:] == cluster]
                 C[cluster] = my_mean(class_k)
 
-        # show cluster centres at iteration i
-        # print '[{}] Iteration: '.format(i+1), C
-
-        # add error to the list
-        SSE[i] = sum_sq_error(dist, k, idx, N)
-
         # If assignments were maintained, terminate
         if np.array_equal(idx, idx_prev):
-            return C, idx, SSE[:i+1]
+            # but first add final error to the list
+            SSE[i+1] = sum_sq_error(dist, k, idx, N)
+            return C, idx, SSE[:i+2]
 
         # Store current assignment to check if it changes in next iteration
         idx_prev = idx
+
+    # add final error to the list
+    SSE[-1] = sum_sq_error(dist, k, idx, N)
 
     return C, idx, SSE
 
 
 def sum_sq_error(dist, k, idx, N):
-
+    # TODO make this one more efficient
     error = 0
 
     for cluster in range(k):

@@ -103,7 +103,7 @@ def run_task1_4(visual):
     fig.suptitle('First 10 Principal Components')
     fig.canvas.set_window_title('Task 1.4')
     plt.savefig(fname='../results/task1_4_imgs.pdf')
-    plt.savefig(fname='../results/task1_2_imgs.png')
+    plt.savefig(fname='../results/task1_4_imgs.png')
     if visual:
         plt.show()
         return runtime
@@ -129,29 +129,27 @@ def run_vec_dist(visual):
 
 def run_k_means(visual, k=10, test=False):
 
+    # Run my own k-means function
     my_C, idx, SSE = my_kMeansClustering(Xtrn, k, Xtrn[:k])
-    print 'Clusters assigned: ' + str(idx)
-    print 'Data labels: ' + str(Ytrn)
 
     # Write to file and reload to verify this is done correctly
-    sio.savemat(file_name='../results/task1_5_c_{}.mat'.format(k), mdict={'C': my_C})
+    sio.savemat(file_name='testing.mat', mdict={'C': my_C})
+    sio.savemat(file_name='testing_sse.mat', mdict={'SSE': SSE})
 
-    if visual:
-        test_k_means(k)
-
-
-def test_k_means(k):
-
+    # Loading files that were just saved
     print '\n---------------------------- k = {} ---------------------------'.format(k)
-    C = sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C']
-    my_distortion = sio.loadmat(file_name='../results/task1_5_sse_{}.mat'.format(k))['SSE'][0][-1] ** 0.5
+    C = sio.loadmat(file_name='testing.mat')['C']
+    my_distortion = sio.loadmat(file_name='testing_sse.mat')['SSE'][0][-1] ** 0.5
 
+    # Calling the k-means library function\
     libC, distortion = kmeans(Xtrn, k_or_guess=Xtrn[:k], iter=1)
 
+    # Computing differences
     diff = np.abs(C - libC)
     total_diff = np.sum(diff)
     max_diff = np.max(diff)
 
+    # Showing test results
     if np.allclose(libC, C):
         print 'Your k-means matches the SciPy implementation!'
     else:
@@ -161,7 +159,7 @@ def test_k_means(k):
     print 'Final distortion (you): {}'.format(my_distortion)
     print 'Final distortion (lib): {}'.format(distortion)
 
-    # visualise
+    # Visualise results
     montage(libC)
     plt.suptitle('Library function')
     plt.figure()
@@ -169,11 +167,15 @@ def test_k_means(k):
     plt.suptitle('Your result')
     plt.show()
 
+    os.remove('testing.mat')
+    os.remove('testing_sse.mat')
+
 
 def run_task1_5(visual, cached=False):
 
-    Ks = [3, 7, 15]
+    Ks = Ks_clustering
 
+    # Call the function and time it
     start_time = time()
     task1_5(Xtrn, Ks)
     runtime = time() - start_time
@@ -186,32 +188,23 @@ def run_task1_5(visual, cached=False):
         os.rename('task1_5_idx_{}.mat'.format(k), '../results/task1_5_idx_{}.mat'.format(k))
         os.rename('task1_5_sse_{}.mat'.format(k), '../results/task1_5_sse_{}.mat'.format(k))
 
-    # Save hashes of files obtained to verify they are as tested
-    for k in Ks:
-        hasher1 = hashlib.md5()
-        with open('../results/task1_5_c_{}.mat'.format(k)) as f:
-            hasher1.update(f.read())
-            result = hasher1.hexdigest()
-
-        with open('final{}.txt'.format(k), 'w+') as f:
-            f.write(result)
-
     return runtime
 
-
-def simple1_5():
-
-    print 'Running simple 1.5'
-    task1_5(Xtrn, Ks_clustering)
-    print 'Done!'
 
 def graph_sse():
 
     for k in Ks_clustering:
         SSE = sio.loadmat(file_name='../results/task1_5_sse_{}.mat'.format(k))['SSE']
         fig, ax = plt.subplots()
-        x = np.linspace(0, len(SSE), len(SSE))
+        x = np.arange(len(SSE))
         ax.plot(x, SSE)
+        ax.set(xlabel='Iteration number', ylabel='SSE')
+        if k == 1:
+            ax.set(xticks=x)
+        fig.suptitle('SSE for k = {}'.format(k))
+        fig.canvas.set_window_title('Task 1.5')
+        plt.savefig('../results/task1_5_graph_{}.png'.format(k))
+        plt.savefig('../results/task1_5_graph_{}.pdf'.format(k))
     plt.show()
 
 def run_task1_6(visual):
