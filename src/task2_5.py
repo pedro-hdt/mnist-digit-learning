@@ -12,7 +12,7 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
     (in seconds) to the standard output.
     3. Obtains the confusion matrix, stores it to a matrix variable cm, and saves it with the
     file name 'task2_5_cm.mat'.
-    4 Copy the mean vector and covariance matrix for Class 10, i.e., Ms[10,:] and Covs[10,:,:],
+    4. Copy the mean vector and covariance matrix for Class 10, i.e., Ms[10,:] and Covs[10,:,:],
     to new variables, M10 and Cov10, respectively, in the following manner:
     M10 = Ms[10,:]
     Cov10 = Covs[10,:,:]

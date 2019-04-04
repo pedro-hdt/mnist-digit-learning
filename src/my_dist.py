@@ -18,6 +18,8 @@ def vec_sq_dist(X, Y):
     # this doesn't work because the dot product creates a matrix that is too big for memory
     # For clarification on what's happening here, check the Gaussian classification function
     XX = np.einsum('ij,ji->i', X, X.T)
+    if Y.ndim == 1:
+        return sq_dist(X, Y)
     YY = np.einsum('ij,ji->i', Y, Y.T)
 
     # again, np.dot here causes a memory error in task 2.2 but so does np.tile,

@@ -252,6 +252,11 @@ def run_task1_7(visual):
 
     return sum(runtimes)
 
+def run_task1_8(visual):
+
+    k = 10
+    task1_8(Xtrn, Ytrn, k)
+
 
 def run_task2_1(visual):
 

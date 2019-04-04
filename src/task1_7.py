@@ -1,7 +1,6 @@
 import scipy.io as sio
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as colors
 from my_dist import *
 
 
