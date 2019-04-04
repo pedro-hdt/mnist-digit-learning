@@ -81,6 +81,8 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     # TODO sort this out then delete the 2 lines above
     # setting levels parameter doesn't work
     plt.contourf(xx_pc, yy_pc, Dmap, cmap=colormap)
+    plt.figure()
+    plt.imshow(Dmap)
 
     plt.xlabel('1st Principal Component')
     plt.ylabel('2nd Principal Component')

@@ -1,6 +1,7 @@
 from my_kMeansClustering import *
 import scipy.io as sio
 from montage import *
+from scipy.cluster.vq import kmeans
 
 
 def task1_5(X, Ks):

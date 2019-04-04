@@ -207,6 +207,7 @@ def graph_sse():
         plt.savefig('../results/task1_5_graph_{}.pdf'.format(k))
     plt.show()
 
+
 def run_task1_6(visual):
 
     Ks = Ks_clustering
@@ -218,7 +219,13 @@ def run_task1_6(visual):
         task1_6(fname)
         runtime = time() - start_time
         runtimes.append(runtime)
-        plt.savefig(fname='task1_6_imgs_{}.pdf'.format(k))
+        fig = plt.gcf()
+        fig.suptitle('Cluster centres for k = {}'.format(k))
+        fig.canvas.set_window_title('Task 1.6')
+        plt.savefig(fname='../results/task1_6_imgs_{}.pdf'.format(k))
+        plt.savefig(fname='../results/task1_6_imgs_{}.png'.format(k))
+        plt.figure()
+        montage(sio.loadmat('../results/task1_5_libc_{}.mat'.format(k))['C'])
         plt.show()
 
     return sum(runtimes)
@@ -233,7 +240,8 @@ def run_task1_7(visual):
     MAT_M = '../results/task1_2_M.mat'
     MAT_evecs = '../results/task1_3_evecs.mat'
     MAT_evals = '../results/task1_3_evals.mat'
-    posVec = my_mean(Xtrn)
+    posVec = np.atleast_2d(my_mean(Xtrn))
+    print posVec.shape
     for k in Ks:
         MAT_ClusterCentres = '../results/task1_5_c_{}.mat'.format(k)
         task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, 200)
