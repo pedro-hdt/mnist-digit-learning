@@ -241,7 +241,6 @@ def run_task1_7(visual):
     MAT_evecs = '../results/task1_3_evecs.mat'
     MAT_evals = '../results/task1_3_evals.mat'
     posVec = np.atleast_2d(my_mean(Xtrn))
-    print posVec.shape
     for k in Ks:
         MAT_ClusterCentres = '../results/task1_5_c_{}.mat'.format(k)
         task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, 200)
