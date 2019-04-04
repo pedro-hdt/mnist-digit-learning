@@ -87,6 +87,8 @@ def task1_8(X, Y, k):
             ax.set(xticks=x)
         fig.suptitle('SSE for k = {}\nMethod: {}'.format(k, method))
         fig.canvas.set_window_title('Task 1.8')
+        plt.savefig('../results/task1_8_{}.pdf'.format(i))
+        plt.savefig('../results/task1_8_{}.png'.format(i))
         print '\nMethod: {} '.format(method)
         print 'Final error: ', np.asscalar(sse[-1])
         print 'Number of iterations: ', len(sse)-1
