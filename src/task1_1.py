@@ -28,8 +28,8 @@ def task1_1(X, Y):
 
         # Prettify our plots with titles
         fig = plt.gcf()
-        fig.suptitle('First ten smaples of digit {}'.format(C_k), size=15)
-        fig.canvas.set_window_title('Class {}'.format(C_k))
+        fig.suptitle('First ten smaples of digit {}'.format(C_k), size=13)
+        fig.canvas.set_window_title('Task 1.1 - Class {}'.format(C_k))
 
         # Saving the files in both pdf and png for the report
         plt.savefig(fname='../results/task1_1_imgs_class{}.pdf'.format(C_k))
