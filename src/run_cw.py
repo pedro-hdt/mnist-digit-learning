@@ -59,8 +59,6 @@ def run_task1_1(visual):
     start_time = time()
     task1_1(Xtrn, Ytrn)
     runtime = time() - start_time
-    if visual:
-        plt.show()
     return runtime
 
 def run_task1_2(visual):
