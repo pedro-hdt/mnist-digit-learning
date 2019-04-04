@@ -31,18 +31,6 @@ def task1_5(X, Ks):
         idxs.append(np.copy(idx))
         SSEs.append(np.copy(SSE))
 
-    for i in range(len(Ks)):
-
-        print np.allclose(libCs[i], Cs[i])
-
-        # visualise
-        montage(Cs[i])
-        plt.suptitle('Your result')
-        plt.figure()
-        montage(libCs[i])
-        plt.suptitle('Library function')
-        plt.show()
-
     # Save all files
     for i in range(len(Ks)):
 
@@ -51,6 +39,15 @@ def task1_5(X, Ks):
         sio.savemat(file_name='task1_5_idx_{}.mat'.format(k), mdict={'idx': idxs[i]})
         sio.savemat(file_name='task1_5_sse_{}.mat'.format(k), mdict={'SSE': SSEs[i]})
         sio.savemat(file_name='lib{}.mat'.format(k), mdict={'C': libCs[i]})
+
+    for k in Ks:
+        hasher = hashlib.md5()
+        with open('task1_5_c_{}.mat'.format(k)) as f:
+            hasher.update(f.read())
+            result = hasher.hexdigest()
+
+        with open('inside{}.txt'.format(k), 'w+') as f:
+            f.write(result)
 
     for i in range(len(Ks)):
 
@@ -66,12 +63,3 @@ def task1_5(X, Ks):
         montage(libC)
         plt.suptitle('Library function')
         plt.show()
-
-    for k in Ks:
-        hasher = hashlib.md5()
-        with open('task1_5_c_{}.mat'.format(k)) as f:
-            hasher.update(f.read())
-            result = hasher.hexdigest()
-
-        with open('inside{}.txt'.format(k), 'w+') as f:
-            f.write(result)

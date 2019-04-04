@@ -129,9 +129,6 @@ def run_vec_dist(visual):
 
 def run_k_means(visual, k=10, test=False):
 
-    if test:
-        return verify_task1_5()
-
     my_C, idx, SSE = my_kMeansClustering(Xtrn, k, Xtrn[:k])
     print 'Clusters assigned: ' + str(idx)
     print 'Data labels: ' + str(Ytrn)
@@ -140,105 +137,64 @@ def run_k_means(visual, k=10, test=False):
     sio.savemat(file_name='../results/task1_5_c_{}.mat'.format(k), mdict={'C': my_C})
 
     if visual:
-        test_k_means(Xtrn, k)
+        test_k_means(k)
 
 
-def test_k_means(x, k):
-
-    hasher1 = hashlib.md5()
-    with open('../results/task1_5_c_{}.mat'.format(k)) as f:
-        hasher1.update(f.read())
-        result = hasher1.hexdigest()
-
-    with open('final{}.txt'.format(k), 'w+') as f:
-        f.write(result)
+def test_k_means(k):
 
     print '\n---------------------------- k = {} ---------------------------'.format(k)
-    my_C = sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C']
+    C = sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C']
     my_distortion = sio.loadmat(file_name='../results/task1_5_sse_{}.mat'.format(k))['SSE'][0][-1] ** 0.5
-    C = sio.loadmat(file_name='lib{}.mat'.format(k))['C']
-    diff = np.abs(my_C - C)
+
+    libC, distortion = kmeans(Xtrn, k_or_guess=Xtrn[:k], iter=1)
+
+    diff = np.abs(C - libC)
     total_diff = np.sum(diff)
-    if total_diff < 1:
+    max_diff = np.max(diff)
+
+    if np.allclose(libC, C):
         print 'Your k-means matches the SciPy implementation!'
     else:
         print 'Your k-means does not match the SciPy implementation... :\'('
     print 'Total diff: {}'.format(total_diff)
-    print 'Maximum diff: {}'.format(np.max(diff))
+    print 'Maximum diff: {}'.format(max_diff)
     print 'Final distortion (you): {}'.format(my_distortion)
-    # print 'Final distortion (lib): {}'.format(distortion)
+    print 'Final distortion (lib): {}'.format(distortion)
 
     # visualise
-    montage(C)
+    montage(libC)
     plt.suptitle('Library function')
     plt.figure()
-    montage(my_C)
+    montage(C)
     plt.suptitle('Your result')
     plt.show()
-
-
-def verify_task1_5(Ks):
-
-    for k in Ks:
-        gc.collect()
-        test_k_means(Xtrn, k)
 
 
 def run_task1_5(visual, cached=False):
 
     Ks = [3, 7, 15]
 
-    if cached:
-        verify_task1_5(Ks)
-        return
-
     start_time = time()
     task1_5(Xtrn, Ks)
     runtime = time() - start_time
     print 'Elapsed time: {} secs'.format(runtime)
 
-    myCs = []
-    libCs = []
-    for k in Ks:
-        myCs.append(sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C'])
-        libCs.append(sio.loadmat(file_name='lib{}.mat'.format(k))['C'])
-
-    for i in range(len(Ks)):
-
-        myC = myCs[i]
-        libC = libCs[i]
-        k = Ks[i]
-
-        print '\n---------------------------- k = {} ---------------------------'.format(k)
-        if np.allclose(myC, libC):
-            print 'Your k-means matches the SciPy implementation!'
-        else:
-            print 'Your k-means does not match the SciPy implementation... :\'('
-
-        # visualise
-        montage(libC)
-        plt.suptitle('Library function')
-        plt.figure()
-        montage(myC)
-        plt.suptitle('Your result')
-        plt.show()
-
-    for k in Ks:
-        hasher = hashlib.md5()
-        with open('task1_5_c_{}.mat'.format(k)) as f:
-            hasher.update(f.read())
-            result = hasher.hexdigest()
-
-        with open('outside{}.txt'.format(k), 'w+') as f:
-            f.write(result)
-
     # Move files to results directory to avoid cluttering our src folder
+    print 'Moving files...'
     for k in Ks:
         os.rename('task1_5_c_{}.mat'.format(k), '../results/task1_5_c_{}.mat'.format(k))
         os.rename('task1_5_idx_{}.mat'.format(k), '../results/task1_5_idx_{}.mat'.format(k))
         os.rename('task1_5_sse_{}.mat'.format(k), '../results/task1_5_sse_{}.mat'.format(k))
 
-    # verify_task1_5(Ks)
+    # Save hashes of files obtained to verify they are as tested
+    for k in Ks:
+        hasher1 = hashlib.md5()
+        with open('../results/task1_5_c_{}.mat'.format(k)) as f:
+            hasher1.update(f.read())
+            result = hasher1.hexdigest()
+
+        with open('final{}.txt'.format(k), 'w+') as f:
+            f.write(result)
 
     return runtime
 
