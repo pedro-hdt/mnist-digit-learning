@@ -15,20 +15,19 @@ def my_kMeansClustering(X, k, initialCentres, maxIter=500):
 
     - C - k-by-D matrix (double) of cluster centres
     - idx - N-by-1 vector (integer) of cluster index table
-    - SSE - (L+1)-by-1 vector (double) of sum-squared-errors
+    - SSE - (L+1)-by-1 vector (double) of sum-squared-errors where L is the number of iterations done
     """
-
 
     # TODO: remove printing?
 
     N = len(X)
 
-    idx = np.zeros((N, ))
-    idx_prev = np.zeros((N, ))
+    idx = np.zeros((N, 1))
+    idx_prev = np.zeros((N, 1))
     C = initialCentres
 
     # initialise error list
-    SSE = np.zeros(maxIter)
+    SSE = np.zeros((maxIter+1, 1))
 
     # show cluster centres at iteration 0
     # print "[0] Iteration: ", C

@@ -36,7 +36,6 @@ def comp_pca(X):
     # The first element of each eigenvector must be non-negative
     for i in range(EVecs.shape[1]):
         if EVecs[0, i] < 0:
-            print 'negating'
             EVecs[:, i] *= -1
 
     # Order eigenvalues in descending order

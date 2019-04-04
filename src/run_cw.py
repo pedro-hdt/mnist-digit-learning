@@ -24,7 +24,7 @@ import getopt
 from scipy.spatial.distance import cdist
 from scipy.cluster.vq import kmeans
 from time import time
-import hashlib
+import gc
 
 
 # TODO use clock instead of time
@@ -93,13 +93,15 @@ def run_task1_3(visual):
 
 
 def run_task1_4(visual):
-    plt.clf()
+
     EVecs, EVals, CumVar, MinDims = task1_3(Xtrn)
     plt.clf()
     start_time = time()
     task1_4(EVecs)
     runtime = time() - start_time
-    plt.suptitle('First 10 Principal Components')
+    fig = plt.gcf()
+    fig.suptitle('First 10 Principal Components')
+    fig.canvas.set_window_title('Task 1.4')
     plt.savefig(fname='../results/task1_4_imgs.pdf')
     plt.savefig(fname='../results/task1_2_imgs.png')
     if visual:
@@ -107,16 +109,22 @@ def run_task1_4(visual):
         return runtime
 
 
-def run_vec_dist():
+def run_vec_dist(visual):
     X = Xtrn
     Y = Xtrn[:10]
+    start_time = time()
     my_DI = vec_sq_dist(X, Y)
+    my_runtime = time()-start_time
+    start_time = time()
     DI = cdist(X, Y, 'sqeuclidean')
+    lib_runtime = time() - start_time
     if np.allclose(my_DI, DI):
         print 'Your DI matches the SciPy implementation!'
+        print 'Your runtime: {}'.format(my_runtime)
+        print 'Lib runtime: {}'.format(lib_runtime)
         diff = np.abs(my_DI - DI)
-        print 'Total error: ' + str(np.sum(diff))
-        print 'Maximum error: ' + str(np.max(diff))
+        print 'Total error: {}'.format(np.sum(diff))
+        print 'Maximum error: {}'.format(np.max(diff))
 
 
 def run_k_means(visual, k=10, test=False):
@@ -132,49 +140,56 @@ def run_k_means(visual, k=10, test=False):
     sio.savemat(file_name='../results/task1_5_c_{}.mat'.format(k), mdict={'C': my_C})
 
     if visual:
-        test_k_means(k)
+        test_k_means(Xtrn, k)
 
 
-def test_k_means(k):
+def test_k_means(x, k):
+
+    hasher1 = hashlib.md5()
+    with open('../results/task1_5_c_{}.mat'.format(k)) as f:
+        hasher1.update(f.read())
+        result = hasher1.hexdigest()
+
+    with open('final{}.txt'.format(k), 'w+') as f:
+        f.write(result)
 
     print '\n---------------------------- k = {} ---------------------------'.format(k)
     my_C = sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C']
     my_distortion = sio.loadmat(file_name='../results/task1_5_sse_{}.mat'.format(k))['SSE'][0][-1] ** 0.5
-    C, distortion = kmeans(Xtrn, k_or_guess=Xtrn[:k], iter=1)
+    C = sio.loadmat(file_name='lib{}.mat'.format(k))['C']
     diff = np.abs(my_C - C)
     total_diff = np.sum(diff)
     if total_diff < 1:
         print 'Your k-means matches the SciPy implementation!'
     else:
         print 'Your k-means does not match the SciPy implementation... :\'('
-    print 'Total diff: ' + str(total_diff)
-    print 'Maximum diff: ' + str(np.max(diff))
-    print 'Final distortion (you): ' + str(my_distortion)
-    print 'Final distortion (lib): ' + str(distortion)
+    print 'Total diff: {}'.format(total_diff)
+    print 'Maximum diff: {}'.format(np.max(diff))
+    print 'Final distortion (you): {}'.format(my_distortion)
+    # print 'Final distortion (lib): {}'.format(distortion)
 
     # visualise
     montage(C)
     plt.suptitle('Library function')
-    plt.show()
+    plt.figure()
     montage(my_C)
     plt.suptitle('Your result')
     plt.show()
 
 
-def verify_task1_5():
-
-    Ks = Ks_clustering
+def verify_task1_5(Ks):
 
     for k in Ks:
-        test_k_means(k)
+        gc.collect()
+        test_k_means(Xtrn, k)
 
 
 def run_task1_5(visual, cached=False):
 
-    Ks = Ks_clustering
+    Ks = [3, 7, 15]
 
     if cached:
-        verify_task1_5()
+        verify_task1_5(Ks)
         return
 
     start_time = time()
@@ -182,20 +197,66 @@ def run_task1_5(visual, cached=False):
     runtime = time() - start_time
     print 'Elapsed time: {} secs'.format(runtime)
 
+    myCs = []
+    libCs = []
+    for k in Ks:
+        myCs.append(sio.loadmat(file_name='../results/task1_5_c_{}.mat'.format(k))['C'])
+        libCs.append(sio.loadmat(file_name='lib{}.mat'.format(k))['C'])
+
+    for i in range(len(Ks)):
+
+        myC = myCs[i]
+        libC = libCs[i]
+        k = Ks[i]
+
+        print '\n---------------------------- k = {} ---------------------------'.format(k)
+        if np.allclose(myC, libC):
+            print 'Your k-means matches the SciPy implementation!'
+        else:
+            print 'Your k-means does not match the SciPy implementation... :\'('
+
+        # visualise
+        montage(libC)
+        plt.suptitle('Library function')
+        plt.figure()
+        montage(myC)
+        plt.suptitle('Your result')
+        plt.show()
+
+    for k in Ks:
+        hasher = hashlib.md5()
+        with open('task1_5_c_{}.mat'.format(k)) as f:
+            hasher.update(f.read())
+            result = hasher.hexdigest()
+
+        with open('outside{}.txt'.format(k), 'w+') as f:
+            f.write(result)
+
     # Move files to results directory to avoid cluttering our src folder
     for k in Ks:
-
-        C, distortion = kmeans(Xtrn, k_or_guess=Xtrn[:k], iter=1)
-        sio.savemat(file_name='../results/task1_5_c_{}_lib.mat'.format(k), mdict={'C': C, 'distortion': distortion})
-
         os.rename('task1_5_c_{}.mat'.format(k), '../results/task1_5_c_{}.mat'.format(k))
         os.rename('task1_5_idx_{}.mat'.format(k), '../results/task1_5_idx_{}.mat'.format(k))
         os.rename('task1_5_sse_{}.mat'.format(k), '../results/task1_5_sse_{}.mat'.format(k))
 
-    verify_task1_5()
+    # verify_task1_5(Ks)
 
     return runtime
 
+
+def simple1_5():
+
+    print 'Running simple 1.5'
+    task1_5(Xtrn, Ks_clustering)
+    print 'Done!'
+
+def graph_sse():
+
+    for k in Ks_clustering:
+        SSE = sio.loadmat(file_name='../results/task1_5_sse_{}.mat'.format(k))['SSE']
+        fig, ax = plt.subplots()
+        x = np.linspace(0, len(SSE), len(SSE))
+        ax.plot(x, SSE)
+    plt.show()
 
 def run_task1_6(visual):
 
@@ -365,13 +426,18 @@ def main():
             globals()['run_task' + args[0]](visual)
         elif o == '-s':
             for task in args:
-                if task == 'k':
+                if task == 'sse':
+                    graph_sse()
+                elif task == 'simple':
+                    simple1_5()
+                elif task == 'k':
                     if len(args) > 1:
                         k = int(args[1])
+                        print 'Running k-means (k = {})\n'.format(k)
+                        run_k_means(visual, k, test)
                     else:
-                        k = 10
-                    print 'Running k-means (k = {})\n'.format(k)
-                    run_k_means(visual, k, test)
+                        print 'Running k-means (k = 10)\n'
+                        run_k_means(visual, test=test)
                     break
                 elif task == 'dist':
                     run_vec_dist(visual)
@@ -406,7 +472,7 @@ if __name__ == '__main__':
 
     # Values of k for k-means clustering
     Ks_clustering = [1, 2, 3, 4, 5, 7, 10, 15, 20]
-    # Ks_clustering = [2, 3, 7] # for shorter testing
+    Ks_clustering_short = [3, 7, 15] # for shorter testing
 
     # Values of k for k-nn classification
     Ks_class = [1, 3, 5, 10, 20]

@@ -37,7 +37,7 @@ def task1_3(X):
     ax.plot(np.arange(len(CumVar))+1, CumVar)
     ax.set(xlabel='# of principal components', ylabel='Cumulative variance')
     fig.suptitle('Cumulative Variance', size=13)
-    fig.canvas.set_window_title('Cumulative variance')
+    fig.canvas.set_window_title('Task 1.3')
     fig.savefig('../results/task1_3_graph.pdf')
     fig.savefig('../results/task1_3_graph.png')
 
