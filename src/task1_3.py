@@ -39,6 +39,7 @@ def task1_3(X):
     fig.suptitle('Cumulative Variance', size=13)
     fig.canvas.set_window_title('Cumulative variance')
     fig.savefig('../results/task1_3_graph.pdf')
+    fig.savefig('../results/task1_3_graph.png')
 
     # Find minimum number of PCA dimensions to cover percentages of variance
     MinDims = np.zeros((4, 1), dtype='int32')
