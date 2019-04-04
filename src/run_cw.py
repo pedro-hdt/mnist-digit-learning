@@ -55,13 +55,17 @@ def run_all(visual):
 
 
 def run_task1_1(visual):
+
     plt.clf()
     start_time = time()
     task1_1(Xtrn, Ytrn)
     runtime = time() - start_time
+    print runtime
     return runtime
 
+
 def run_task1_2(visual):
+
     plt.clf()
     start_time = time()
     M = task1_2(Xtrn, Ytrn)
@@ -71,11 +75,11 @@ def run_task1_2(visual):
     sio.savemat(file_name='../results/task1_2_M.mat', mdict={'M': M})
     if visual:
         plt.show()
+    print runtime
     return runtime
 
 
 def run_task1_3(visual):
-    plt.clf()
     start_time = time()
     EVecs, EVals, CumVar, MinDims = task1_3(Xtrn)
     runtime = time() - start_time
