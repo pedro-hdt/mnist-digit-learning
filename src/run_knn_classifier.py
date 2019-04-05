@@ -15,48 +15,34 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
     """
 
     # redirect output from stdout to text file so we can use the results in report
-    # sys.stdout = open('../results/task2_1_log.txt', 'w+')
+    sys.stdout = open('../results/task2_1_log.txt', 'w+')
 
     N = len(Xtst)
     L = len(Ks)
     Ypreds = np.zeros((N, L), dtype='uint8')
-    Ypreds2 = np.zeros((N, L), dtype='uint8')
-
 
     # Compute distance from every point in test set to every point in dataset
     dist_mat = vec_sq_dist(Xtrn, Xtst)
 
-    start_time = time()
+    # get sorting index for all distances
+    idx = dist_mat.argsort(axis=0)
+
     for l in range(L):
+
+        start_time = time()
+
         k = Ks[l] # k in k-NN
-
-        # # get sorting index for distances to first k-nn only
-        # idx = dist_mat.argsort(axis=0)[:k]
-        #
-        # # extract list of closest training samples
-        # k_nn_labels = Ytrn[idx]
-        #
-        # # we predict it is the most common value (ie the mode) of the k-nn
-        # Ypreds2[:, l], _ = mode(k_nn_labels)
-
 
         for n in range(N):
 
-            # distance vector between test sample and each of training samples
-            dist = dist_mat[:, n]
-
-            # get sorting index for distances to first k-nn only
-            idx = dist.argsort()[:k]
-
-            # extract list of closest training samples
-            k_nn_labels = Ytrn[idx]
+            # extract list of closest training samples using the first k entries of the index we calculated
+            k_nn_labels = Ytrn[idx[:k, n]]
 
             # we predict it is the most common value (ie the mode) of the k-nn
             Ypreds[n, l], _ = mode(k_nn_labels)
 
-            #print np.array_equal(Ypreds[n, l], Ypreds2[n, l].T)
-
-    runtime = time()- start_time
-    print runtime
+        runtime = time() - start_time
+        print '\nRuntime of k-NN for k = {}'.format(l)
+        print runtime
 
     return Ypreds

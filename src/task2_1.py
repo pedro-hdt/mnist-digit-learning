@@ -40,7 +40,7 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
 
         # 4.
         Nerrs = N - CM.trace()
-        print 'k = {}'.format(k)
+        print '\nk = {}'.format(k)
         print 'N = {}'.format(N)
         print 'Nerrs = {}'.format(Nerrs)
         print 'acc = {}'.format(acc)
