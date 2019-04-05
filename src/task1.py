@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.io as sio
 from aux import my_mean, comp_pca, my_kMeansClustering, vec_sq_dist
-from montage import montage
+from montage import *
 from time import time
 
 def task1_1(X, Y):
