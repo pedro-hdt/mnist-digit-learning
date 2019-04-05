@@ -301,9 +301,6 @@ def task1_8(X, Y, k):
     #   * Use the mean of each class as the initial cluster centres
     #==================================================================================#
 
-    # redirect output from stdout to text file so we can use the results in report
-    sys.stdout = open('../results/task1_8_log.txt', 'w+')
-
     D = X.shape[1]
     SSEs = []
     methods = ['first 10 samples',

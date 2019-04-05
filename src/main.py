@@ -21,6 +21,8 @@ Xtrn, Ytrn, Xtst, Ytst = load_my_data_set('../data')
 Xtrn = Xtrn / 255.0
 Xtst = Xtst / 255.0
 
+overall_start_time = time()
+
 # 1.1 ===================================================================================
 plt.clf()
 task1.task1_1(Xtrn, Ytrn)
@@ -103,4 +105,8 @@ for k in Ks:
 k = 10
 task1.task1_8(Xtrn, Ytrn, k)
 
+# FINAL TIMING ==========================================================================
+runtime = time() - overall_start_time
+
+# FINAL PLOTIING ========================================================================
 plt.show()

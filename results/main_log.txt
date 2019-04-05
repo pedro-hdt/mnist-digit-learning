@@ -1,11 +1,31 @@
-Elapsed time in clustering for k = 1: 0.436626911163 secs
-Elapsed time in clustering for k = 2: 6.02261209488 secs
-Elapsed time in clustering for k = 3: 12.0258190632 secs
-Elapsed time in clustering for k = 4: 18.3145480156 secs
-Elapsed time in clustering for k = 5: 9.25707006454 secs
-Elapsed time in clustering for k = 7: 25.8341619968 secs
-Elapsed time in clustering for k = 10: 36.6627621651 secs
-Elapsed time in clustering for k = 15: 42.5053620338 secs
-Elapsed time in clustering for k = 20: 27.1714558601 secs
-Total time for clustering: 178.236880064 secs
+Elapsed time in clustering for k = 1: 0.683023929596 secs
+Elapsed time in clustering for k = 2: 6.17598295212 secs
+Elapsed time in clustering for k = 3: 12.477011919 secs
+Elapsed time in clustering for k = 4: 18.7372748852 secs
+Elapsed time in clustering for k = 5: 9.50255894661 secs
+Elapsed time in clustering for k = 7: 26.7230000496 secs
+Elapsed time in clustering for k = 10: 39.2589221001 secs
+Elapsed time in clustering for k = 15: 42.7242538929 secs
+Elapsed time in clustering for k = 20: 30.1511759758 secs
+Total time for clustering: 186.442779064 secs
 Moving files...
+
+Method: first 10 samples 
+Final error:  39.1534690582
+Number of iterations:  78
+
+Method: random samples 
+Final error:  39.1534677942
+Number of iterations:  74
+
+Method: furthest from mean 
+Final error:  39.3517567748
+Number of iterations:  43
+
+Method: random sample of each class 
+Final error:  39.3227960598
+Number of iterations:  52
+
+Method: mean of each class 
+Final error:  39.2941085885
+Number of iterations:  112
