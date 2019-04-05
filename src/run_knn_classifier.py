@@ -25,7 +25,7 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
     # get sorting index for all distances
     idx = dist_mat.argsort(axis=0)
 
-    overhead_runtime = time() / start_time
+    overhead_runtime = time() - start_time
 
     for l in range(L):
 
