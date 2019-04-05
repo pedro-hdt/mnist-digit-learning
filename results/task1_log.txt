@@ -10,16 +10,16 @@
 ==================== Running task 1.4 ====================
 
 ==================== Running task 1.5 ====================
-Elapsed time in clustering for k = 1: 0.391556024551 secs
-Elapsed time in clustering for k = 2: 6.10676193237 secs
-Elapsed time in clustering for k = 3: 12.4466269016 secs
-Elapsed time in clustering for k = 4: 18.6833591461 secs
-Elapsed time in clustering for k = 5: 10.229995966 secs
-Elapsed time in clustering for k = 7: 26.3908829689 secs
-Elapsed time in clustering for k = 10: 37.7772119045 secs
-Elapsed time in clustering for k = 15: 40.6239318848 secs
-Elapsed time in clustering for k = 20: 27.0947761536 secs
-Total time for clustering: 179.753619909 secs
+Elapsed time in clustering for k = 1: 0.391971826553 secs
+Elapsed time in clustering for k = 2: 5.75978708267 secs
+Elapsed time in clustering for k = 3: 11.3182411194 secs
+Elapsed time in clustering for k = 4: 17.1543121338 secs
+Elapsed time in clustering for k = 5: 9.14151787758 secs
+Elapsed time in clustering for k = 7: 24.731623888 secs
+Elapsed time in clustering for k = 10: 35.5951690674 secs
+Elapsed time in clustering for k = 15: 39.4074800014 secs
+Elapsed time in clustering for k = 20: 24.5227949619 secs
+Total time for clustering: 168.029251099 secs
 Moving files...
 
 ==================== Running task 1.6 ====================
@@ -35,3 +35,41 @@ Moving files...
 ==================== Running task 1.6 ====================
 
 ==================== Running task 1.6 ====================
+
+==================== Running task 1.6 ====================
+
+==================== Running task 1.6 ====================
+
+==================== Running task 1.7 ====================
+
+==================== Running task 1.7 ====================
+
+==================== Running task 1.7 ====================
+
+==================== Running task 1.7 ====================
+
+==================== Running task 1.7 ====================
+
+==================== Running task 1.8 ====================
+
+Method: first 10 samples 
+Final error:  39.1534690582
+Number of iterations:  78
+
+Method: random samples 
+Final error:  39.1663335723
+Number of iterations:  182
+
+Method: furthest from mean 
+Final error:  39.3517567748
+Number of iterations:  43
+
+Method: random sample of each class 
+Final error:  39.2941059183
+Number of iterations:  136
+
+Method: mean of each class 
+Final error:  39.2941085885
+Number of iterations:  112
+
+Total runtime of task 1:  345.442774057

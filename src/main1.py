@@ -94,7 +94,7 @@ posVec = np.atleast_2d(my_mean(Xtrn))
 for k in Ks:
     MAT_ClusterCentres = '../results/task1_5_c_{}.mat'.format(k)
     Dmap = task1.task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, 200)
-    sio.savemat('../results/task1_7_dmap_{}.mat'.format(k))
+    sio.savemat('../results/task1_7_dmap_{}.mat'.format(k), mdict={'Dmap': Dmap})
     plt.savefig(fname='../results/task1_7_imgs_{}.pdf'.format(k))
     plt.savefig(fname='../results/task1_7_imgs_{}.png'.format(k))
     runtimes.append(time() - start_time)
