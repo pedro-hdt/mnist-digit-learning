@@ -104,7 +104,7 @@ task1.task1_8(Xtrn, Ytrn, k)
 
 # FINAL TIMING ==========================================================================
 runtime = time() - overall_start_time
-print 'Total runtime of task 1: ', runtime
+print '\nTotal runtime of task 1: ', runtime
 
 # FINAL PLOTIING ========================================================================
 plt.show()

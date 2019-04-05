@@ -98,7 +98,7 @@ def run_task2_8(visual):
 
 # FINAL TIMING ==========================================================================
 runtime = time() - overall_start_time
-print 'Total runtime of task 2: ', runtime
+print '\nTotal runtime of task 2: ', runtime
 
 # FINAL PLOTIING ========================================================================
 plt.show()

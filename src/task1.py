@@ -5,6 +5,7 @@ from aux import my_mean, comp_pca, my_kMeansClustering, vec_sq_dist
 from montage import *
 from time import time
 
+
 def task1_1(X, Y):
     """
     Write a Python function that displays the images of the first ten samples for each class
