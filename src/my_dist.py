@@ -16,13 +16,11 @@ def vec_sq_dist(X, Y):
     # YY = np.diag(np.dot(Y, Y.T))
     # XX = np.diag(np.dot(X, X.T))
     # this doesn't work because the dot product creates a matrix that is too big for memory
-    XX = np.zeros(N)
-    for i in range(N):
-        XX[i] = np.dot(X[i], X[i])
-
-    YY = np.zeros(M)
-    for i in range(M):
-        YY[i] = np.dot(Y[i], Y[i])
+    # For clarification on what's happening here, check the Gaussian classification function
+    XX = np.einsum('ij,ji->i', X, X.T)
+    if Y.ndim == 1:
+        return sq_dist(X, Y)
+    YY = np.einsum('ij,ji->i', Y, Y.T)
 
     # again, np.dot here causes a memory error in task 2.2 but so does np.tile,
     # meaning my laptop cannot handle the DI matrix itself so we restrict the dataset size

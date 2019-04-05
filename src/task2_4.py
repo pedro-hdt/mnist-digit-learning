@@ -6,16 +6,17 @@ def task2_4(X, Y):
     """
     Write a Python function that calculates correlation r12 on 2D-PCA for each class and for
     all the classes (i.e. whole data)
-    :param Xtrain: M-by-D data matrix (double)
-    :param Ytrain: M-by-1 label vector (unit8) for X
+
+    :param X: M-by-D data matrix (double)
+    :param Y: M-by-1 label vector (unit8) for X
     :return: Corrs  : (K+1)-by-1 vector (double) of correlation r_{12}
-    for each class k = 1,...,K, and the last element holds the correlation
-    for the whole data, i.e. Xtrain.
+             for each class k = 1,...,K, and the last element holds the correlation
+             for the whole data, i.e. Xtrain.
     """
 
     # These parameters control the number of classes and pca dimensions respectively
-    # They are irrelevant for the assignment, and could be hardcoded but this
-    # makes the code reusable
+    # They are 'irrelevant' for the assignment, and could be hardcoded but this
+    # makes the code reusable and more readable
     n_classes = 10
     pca_dim = 2
 

@@ -2,6 +2,7 @@ from run_gaussian_classifiers import *
 from comp_confmat import *
 from time import time
 import scipy.io as sio
+import sys
 
 
 def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
@@ -12,7 +13,7 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
     (in seconds) to the standard output.
     3. Obtains the confusion matrix, stores it to a matrix variable cm, and saves it with the
     file name 'task2_5_cm.mat'.
-    4 Copy the mean vector and covariance matrix for Class 10, i.e., Ms[10,:] and Covs[10,:,:],
+    4. Copy the mean vector and covariance matrix for Class 10, i.e., Ms[10,:] and Covs[10,:,:],
     to new variables, M10 and Cov10, respectively, in the following manner:
     M10 = Ms[10,:]
     Cov10 = Covs[10,:,:]
@@ -21,12 +22,15 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
         - N The number of test samples
         - Nerrs The number of wrongly classified test samples
         - acc Accuracy (i.e. correct classification rate)
-    :param Xtrain: M-by-D training data matrix (double)
-    :param Ytrain: M-by-1 label vector (unit8) for Xtrain
-    :param Xtest: M-by-D test data matrix (double)
-    :param Ytest: M-by-1 label vector (unit8) for Xtest
+
+    :param Xtrn: M-by-D training data matrix (double)
+    :param Ytrn: M-by-1 label vector (unit8) for Xtrain
+    :param Xtst: M-by-D test data matrix (double)
+    :param Ytst: M-by-1 label vector (unit8) for Xtest
     :param epsilon: a scalar variable (double) for covariance regularisation
     """
+
+    sys.stdout = open('../results/task2_5_log.txt', 'w+')
 
     # Number tags refer to the subtasks as numbered in the docstring above
 
@@ -50,3 +54,7 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
     print 'N = {}'.format(N)
     print 'Nerrs = {}'.format(Nerrs)
     print 'acc = {}'.format(acc)
+
+    sys.stdout = sys.__stdout__
+    with open('../results/task2_5_log.txt', 'r') as f:
+        print f.read()

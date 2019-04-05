@@ -2,6 +2,7 @@ from run_knn_classifier import *
 from comp_confmat import *
 from time import time
 import scipy.io as sio
+import sys
 
 
 def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
@@ -24,21 +25,36 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
     :param Ks: 1-by-L vector (integer) of the numbers of nearest neighbours in Xtrain
     """
 
-    # TODO: check output formatting: https://piazza.com/class/jqp5f9lmifp25w?cid=207
+    # redirect output from stdout to text file so we can use the results in report
+    sys.stdout = open('../results/task2_1_log_individual.txt', 'w+')
 
     # Numbers refer to tasks in docstring above
     start_time = time() # 2.
     Ypreds = run_knn_classifier(Xtrn, Ytrn, Xtst, Ks) # 1.
-    print 'Elapsed time in k-nn: {}\n'.format(time() - start_time) #2.
+    runtime = time() - start_time # 2.
+    sys.stdout = sys.__stdout__
+    print 'Elapsed time in k-nn: {}\n'.format(runtime) #2.
+
+    # redirect output from stdout to text file so we can use the results in report
+    sys.stdout = open('../results/task2_1_log_stats.txt', 'w+')
 
     N = len(Ytst)
     L = len(Ks)
     for l in range(L):
+
+        # 3.
         k = Ks[l]
-        CM, acc = comp_confmat(Ytst, Ypreds[:, l], 10) # 3.
-        sio.savemat(file_name='task2_1_cm{}.mat'.format(k), mdict={'cm': CM}) # 3.
-        Nerrs = N - CM.trace() # 4.
-        print 'k = {}'.format(k) # 4.
-        print 'N = {}'.format(N) # 4.
-        print 'Nerrs = {}'.format(Nerrs) # 4.
-        print 'acc = {}'.format(acc) # 4.
+        CM, acc = comp_confmat(Ytst, Ypreds[:, l], 10)
+        sio.savemat(file_name='task2_1_cm{}.mat'.format(k), mdict={'cm': CM})
+
+        # 4.
+        Nerrs = N - CM.trace()
+        print '\nk = {}'.format(k)
+        print 'N = {}'.format(N)
+        print 'Nerrs = {}'.format(Nerrs)
+        print 'acc = {}'.format(acc)
+
+    sys.stdout = sys.__stdout__
+    with open('../results/task2_1_log_stats.txt', 'r') as f:
+        msg = f.read()
+        print msg

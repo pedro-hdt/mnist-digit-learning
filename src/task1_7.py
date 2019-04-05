@@ -1,7 +1,6 @@
 import scipy.io as sio
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as colors
 from my_dist import *
 
 
@@ -12,7 +11,6 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     should be m +- 5sigma, where m is the mean and sigma is the standard deviation of the data on
     the corresponding PCA axis.
 
-    Input:
     :param MAT_ClusterCentres: filename of cluster centre matrix
     :param MAT_M: MAT filename of mean vectors of (K+1)-by-D, where K is
     the number of classes (which is 10 for the MNIST data)
@@ -21,9 +19,8 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     :param posVec: 1-by-D vector (double) to specify the position of the plane
     :param nbins: scalar (integer) to specify the number of bins for each PCA axis
 
-    Output:
     :return: Dmap : nbins-by-nbins matrix (uint8) - each element represents
-            the cluster number that the point belongs to.
+             the cluster number that the point belongs to.
     """
 
     D = posVec.shape[1]
@@ -45,19 +42,22 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     projected_mean = np.dot(mean, EVecs) - projected_posVec
 
     # Create grid
-    xrange = np.linspace(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]), num=nbins)
-    yrange = np.linspace(projected_mean[:, 0] - (5 * sigma[1]), projected_mean[:, 1] + 5 * (sigma[1]), num=nbins)
+    xbounds = [np.asscalar(projected_mean[:, 0] - (5 * sigma[0])), np.asscalar(projected_mean[:, 1] + 5 * (sigma[0]))]
+    ybounds = [np.asscalar(projected_mean[:, 0] - (5 * sigma[1])), np.asscalar(projected_mean[:, 1] + 5 * (sigma[1]))]
+    xrange = np.linspace(xbounds[0], xbounds[1], num=nbins)
+    yrange = np.linspace(ybounds[0], ybounds[1], num=nbins)
     xx_pc, yy_pc = np.meshgrid(xrange, yrange)
-    # Padding the grid with 0's to make it match the dimensions od the unprojected data
+
+    # Padding the grid with 0's to make it match the dimensions of the 'unprojected' data
     grid_pc = np.zeros((D, nbins * nbins))
     grid_pc[0] = np.array([xx_pc]).ravel()
     grid_pc[1] = np.array([yy_pc]).ravel()
 
-    # 'Unproject' grid according to the specifications at
+    # 'Unproject' grid according to the specifications from
     # http://www.inf.ed.ac.uk/teaching/courses/inf2b/coursework/inf2b_cwk2_2019_notes_task1_7.pdf
-    # y is projected data
+    # y is the projected data
     # V is EVecs
-    # x is unprojected data
+    # x is the unprojected data
     # p is position vector
     V_inv = np.linalg.inv(EVecs.T)
     grid = np.dot(V_inv, grid_pc) + posVec.T
@@ -71,23 +71,15 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
 
     Dmap = Dmap.reshape((nbins, nbins))
 
-    # Create a color map for plotting
-    colormap = plt.get_cmap(name='tab10', lut=K)
-    colors = colormap(np.arange(K))
-
-    # Plot the data in the new basis
-    plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
-    plt.figure()
-    # TODO sort this out then delete the 2 lines above
-    # setting levels parameter doesn't work
-    plt.contourf(xx_pc, yy_pc, Dmap)
-
-    plt.xlabel('1st Principal Component')
-    plt.ylabel('2nd Principal Component')
-    plt.box(on=True)
-    plt.xlim(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]))
-    plt.ylim(projected_mean[:, 0] - (5 * sigma[1]), projected_mean[:, 1] + 5 * (sigma[1]))
-    plt.suptitle('Decision regions after k-means clustering for k = {}'.format(K))
-    # plt.show() # TODO uncomment this before submission
+    # Plot Dmap (normalised to fit the colormap)
+    fig, ax = plt.subplots()
+    ax.imshow(Dmap / (1.0 * K), cmap='viridis', origin='lower', extent=xbounds + ybounds)
+    ax.set(xlabel='1st Principal Component',
+           ylabel='2nd Principal Component',
+           xlim=xbounds,
+           ylim=ybounds)
+    fig.canvas.set_window_title('Task 1.7')
+    fig.suptitle('Decision regions after k-means clustering for k = {}'.format(K))
+    # plt.show()
 
     return Dmap

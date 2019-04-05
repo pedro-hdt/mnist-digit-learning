@@ -36,11 +36,13 @@ def task2_6(X, Y, epsilon, MAT_evecs, MAT_evals, posVec, nbins):
     projected_mean = np.dot(mean, EVecs) - projected_posVec
 
     # Extract std deviation (sqrt(var))
-    sigma = EVals[:2] ** 0.5
+    sigma = EVals[:pca_dim] ** 0.5
 
     # Create grid
-    xrange = np.linspace(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]), num=nbins)
-    yrange = np.linspace(projected_mean[:, 0] - (5 * sigma[1]), projected_mean[:, 1] + 5 * (sigma[1]), num=nbins)
+    xbounds = [np.asscalar(projected_mean[:, 0] - (5 * sigma[0])), np.asscalar(projected_mean[:, 1] + 5 * (sigma[0]))]
+    ybounds = [np.asscalar(projected_mean[:, 0] - (5 * sigma[1])), np.asscalar(projected_mean[:, 1] + 5 * (sigma[1]))]
+    xrange = np.linspace(xbounds[0], xbounds[1], num=nbins)
+    yrange = np.linspace(ybounds[0], ybounds[1], num=nbins)
     xx_pc, yy_pc = np.meshgrid(xrange, yrange)
 
     # Padding the grid with 0's to make it match the dimensions of the unprojected data
@@ -84,24 +86,14 @@ def task2_6(X, Y, epsilon, MAT_evecs, MAT_evals, posVec, nbins):
     Dmap, _, _ = my_gaussian_classify(X, Y, grid.T, epsilon)
     Dmap = Dmap.reshape((nbins, nbins))
 
-    # Plot the data in the new basis
-    # Create a color map for plotting
-    colormap = plt.get_cmap(lut=10)
-    colors = colormap(np.arange(10))
-
-    # Plot the data in the new basis
-    plt.figure()
-    plt.scatter(xx_pc, yy_pc, c=colors[Dmap.ravel()])
-    # plt.figure()
-    # plt.contourf(xx_pc, yy_pc, Dmap)
-    # TODO contourf doesn't work (same problem as 1.7)
-    # TODO add plt.show()
-
-    plt.xlabel('1st Principal Component')
-    plt.ylabel('2nd Principal Component')
-    plt.box(on=True)
-    plt.xlim(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]))
-    plt.ylim(projected_mean[:, 0] - (5 * sigma[1]), projected_mean[:, 1] + 5 * (sigma[1]))
-    plt.suptitle('Gaussian decision regions')
+    # Plot Dmap (normalised to fit the colormap) in the new basis
+    fig, ax = plt.subplots()
+    ax.imshow(Dmap / (1.0 * n_classes), cmap='viridis', origin='lower', extent=xbounds + ybounds)
+    ax.set(xlabel='1st Principal Component',
+           ylabel='2nd Principal Component',
+           xlim=xbounds,
+           ylim=ybounds)
+    fig.canvas.set_window_title('Task 2.6')
+    fig.suptitle('Decision regions of Gaussian classifiers')
 
     return Dmap
