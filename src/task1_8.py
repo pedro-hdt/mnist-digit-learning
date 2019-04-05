@@ -1,5 +1,6 @@
 from my_kMeansClustering import *
 import matplotlib.pyplot as plt
+import sys
 
 
 def task1_8(X, Y, k):
@@ -26,6 +27,9 @@ def task1_8(X, Y, k):
     #   * Randomly pick 10 samples, one from each class, from the dataset
     #   * Use the mean of each class as the initial cluster centres
     #==================================================================================#
+
+    # redirect output from stdout to text file so we can use the results in report
+    sys.stdout = open('../results/task1_8_log.txt', 'w+')
 
     D = X.shape[1]
     SSEs = []

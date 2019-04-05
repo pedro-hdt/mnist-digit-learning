@@ -24,8 +24,6 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
     :param Ks: 1-by-L vector (integer) of the numbers of nearest neighbours in Xtrain
     """
 
-    # TODO: check output formatting: https://piazza.com/class/jqp5f9lmifp25w?cid=207
-
     # Numbers refer to tasks in docstring above
     start_time = time() # 2.
     Ypreds = run_knn_classifier(Xtrn, Ytrn, Xtst, Ks) # 1.
@@ -34,11 +32,15 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
     N = len(Ytst)
     L = len(Ks)
     for l in range(L):
+
+        # 3.
         k = Ks[l]
-        CM, acc = comp_confmat(Ytst, Ypreds[:, l], 10) # 3.
-        sio.savemat(file_name='task2_1_cm{}.mat'.format(k), mdict={'cm': CM}) # 3.
-        Nerrs = N - CM.trace() # 4.
-        print 'k = {}'.format(k) # 4.
-        print 'N = {}'.format(N) # 4.
-        print 'Nerrs = {}'.format(Nerrs) # 4.
-        print 'acc = {}'.format(acc) # 4.
+        CM, acc = comp_confmat(Ytst, Ypreds[:, l], 10)
+        sio.savemat(file_name='task2_1_cm{}.mat'.format(k), mdict={'cm': CM})
+
+        # 4.
+        Nerrs = N - CM.trace()
+        print 'k = {}'.format(k)
+        print 'N = {}'.format(N)
+        print 'Nerrs = {}'.format(Nerrs)
+        print 'acc = {}'.format(acc)
