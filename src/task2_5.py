@@ -30,7 +30,7 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
     :param epsilon: a scalar variable (double) for covariance regularisation
     """
 
-    sys.stdout = open('task2_5_log.txt', 'w+')
+    sys.stdout = open('../results/task2_5_log.txt', 'w+')
 
     # Number tags refer to the subtasks as numbered in the docstring above
 
@@ -56,5 +56,5 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
     print 'acc = {}'.format(acc)
 
     sys.stdout = sys.__stdout__
-    with open('task2_5_log.txt', 'r') as f:
+    with open('../results/task2_5_log.txt', 'r') as f:
         print f.read()

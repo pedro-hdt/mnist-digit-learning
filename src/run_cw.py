@@ -320,7 +320,8 @@ def run_task2_6(visual):
     MAT_evecs = '../results/task1_3_evecs.mat'
     MAT_evals = '../results/task1_3_evals.mat'
     start_time = time()
-    task2_6(Xtrn, Ytrn, 0.01, MAT_evecs, MAT_evals, my_mean(Xtrn), 200)
+    posVec = np.atleast_2d(my_mean(Xtrn))
+    task2_6(Xtrn, Ytrn, 0.01, MAT_evecs, MAT_evals, posVec, 200)
     print 'Elapsed time: {}'.format(time() - start_time)
     plt.savefig('../results/task2_6_img.pdf')
     plt.savefig('../results/task2_6_img.png')

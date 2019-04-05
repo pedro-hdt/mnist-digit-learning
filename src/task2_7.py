@@ -9,10 +9,11 @@ def task2_7(Xtrn, Ytrn, Xtst, Ytst, epsilon, ratio):
     Write a Python function that runs an experiment using a subset of training data.
     where ratio specifies the ratio of training data to use. If it is 0.9, use the first 90% of
     samples in Xtrain
-    :param Xtrain: M-by-D training data matrix (double)
-    :param Ytrain: M-by-1 label vector (unit8) for Xtrain
-    :param Xtest: M-by-D test data matrix (double)
-    :param Ytest: M-by-1 label vector (unit8) for Xtest
+
+    :param Xtrn: M-by-D training data matrix (double)
+    :param Ytrn: M-by-1 label vector (unit8) for Xtrain
+    :param Xtst: M-by-D test data matrix (double)
+    :param Ytst: M-by-1 label vector (unit8) for Xtest
     :param epsilon: a scalar variable (double) for covariance regularisation
     :param ratio: scalar (double) - ratio of training data to use.
     :return:

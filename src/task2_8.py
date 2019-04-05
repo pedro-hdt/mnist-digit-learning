@@ -54,8 +54,3 @@ def task2_8(Xtrn, Ytrn, Xtst, Ytst, epsilon, L):
     print 'N = {}'.format(N)
     print 'Nerrs = {}'.format(Nerrs)
     print 'acc = {}'.format(acc)
-
-
-
-
-
