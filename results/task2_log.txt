@@ -1,0 +1,87 @@
+
+Runtime of k-NN for k = 1
+0.239367961884
+
+Runtime of k-NN for k = 3
+0.247230052948
+
+Runtime of k-NN for k = 5
+0.263035058975
+
+Runtime of k-NN for k = 10
+0.266674041748
+
+Runtime of k-NN for k = 20
+0.278063058853
+Elapsed time in k-nn: 48.7078418732
+
+
+k = 1
+N = 3998
+Nerrs = 108
+acc = 0.972986493247
+
+k = 3
+N = 3998
+Nerrs = 112
+acc = 0.971985992996
+
+k = 5
+N = 3998
+Nerrs = 124
+acc = 0.968984492246
+
+k = 10
+N = 3998
+Nerrs = 132
+acc = 0.966983491746
+
+k = 20
+N = 3998
+Nerrs = 156
+acc = 0.960980490245
+
+Runtime of k-NN for k = 1
+2.34341907501
+
+Runtime of k-NN for k = 3
+2.68790006638
+[[-2.08904165e-01]
+ [ 1.58404048e-01]
+ [ 6.22207693e-02]
+ [-4.39084874e-01]
+ [ 5.92199943e-01]
+ [-3.10485276e-01]
+ [ 3.15481643e-01]
+ [ 5.42312370e-01]
+ [ 1.16887479e-01]
+ [ 4.43417258e-01]
+ [ 7.78629244e-17]]
+Elapsed time in Gaussian classification: 4.45114898682 secs
+N = 3998
+Nerrs = 199
+acc = 0.950225112556
+Elapsed time: 4.49607181549
+Elapsed time: 20.0627140999
+Ratio = 90.0%
+acc = 0.949724862431
+
+Ratio = 80.0%
+acc = 0.949724862431
+
+Ratio = 70.0%
+acc = 0.949974987494
+
+Ratio = 60.0%
+acc = 0.952226113057
+
+Ratio = 50.0%
+acc = 0.950725362681
+
+Ratio = 40.0%
+acc = 0.949474737369
+
+Ratio = 30.0%
+acc = 0.951475737869
+
+Total runtime of task 2:  141.441708803

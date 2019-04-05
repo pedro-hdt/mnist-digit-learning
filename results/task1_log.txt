@@ -1,0 +1,31 @@
+Elapsed time in clustering for k = 1: 0.536806106567 secs
+Elapsed time in clustering for k = 2: 7.33470392227 secs
+Elapsed time in clustering for k = 3: 13.4022221565 secs
+Elapsed time in clustering for k = 4: 22.809180975 secs
+Elapsed time in clustering for k = 5: 11.4280841351 secs
+Elapsed time in clustering for k = 7: 29.3885941505 secs
+Elapsed time in clustering for k = 10: 40.1443920135 secs
+Elapsed time in clustering for k = 15: 38.2033398151 secs
+Elapsed time in clustering for k = 20: 25.1109259129 secs
+Total time for clustering: 188.36651206 secs
+Moving files...
+
+Method: first 10 samples 
+Final error:  39.1534690582
+Number of iterations:  78
+
+Method: random samples 
+Final error:  39.288237061
+Number of iterations:  93
+
+Method: furthest from mean 
+Final error:  39.3517567748
+Number of iterations:  43
+
+Method: random sample of each class 
+Final error:  39.3058357367
+Number of iterations:  74
+
+Method: mean of each class 
+Final error:  39.2941085885
+Number of iterations:  112
