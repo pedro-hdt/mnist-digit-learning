@@ -1,3 +1,0 @@
-
-Runtime of k-NN for k = 0
-2.56962490082

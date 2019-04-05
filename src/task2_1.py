@@ -2,6 +2,7 @@ from run_knn_classifier import *
 from comp_confmat import *
 from time import time
 import scipy.io as sio
+import sys
 
 
 def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
@@ -24,10 +25,18 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
     :param Ks: 1-by-L vector (integer) of the numbers of nearest neighbours in Xtrain
     """
 
+    # redirect output from stdout to text file so we can use the results in report
+    sys.stdout = open('../results/task2_1_log_individual.txt', 'w+')
+
     # Numbers refer to tasks in docstring above
     start_time = time() # 2.
     Ypreds = run_knn_classifier(Xtrn, Ytrn, Xtst, Ks) # 1.
-    print 'Elapsed time in k-nn: {}\n'.format(time() - start_time) #2.
+    runtime = time() - start_time # 2.
+    sys.stdout = sys.__stdout__
+    print 'Elapsed time in k-nn: {}\n'.format(runtime) #2.
+
+    # redirect output from stdout to text file so we can use the results in report
+    sys.stdout = open('../results/task2_1_log_stats.txt', 'w+')
 
     N = len(Ytst)
     L = len(Ks)
@@ -44,3 +53,8 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
         print 'N = {}'.format(N)
         print 'Nerrs = {}'.format(Nerrs)
         print 'acc = {}'.format(acc)
+
+    sys.stdout = sys.__stdout__
+    with open('../results/task2_1_log_stats.txt', 'r') as f:
+        msg = f.read()
+        print msg

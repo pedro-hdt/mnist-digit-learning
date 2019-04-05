@@ -1,6 +1,5 @@
 from my_dist import *
 from scipy.stats import mode
-import sys
 from time import time
 
 def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
@@ -13,9 +12,6 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
     :param Ks: L-by-1 vector of the numbers of nearest neighbours in Xtrn
     :return: Ypreds : N-by-L matrix of predicted labels for Xtst
     """
-
-    # redirect output from stdout to text file so we can use the results in report
-    sys.stdout = open('../results/task2_1_log.txt', 'w+')
 
     N = len(Xtst)
     L = len(Ks)
