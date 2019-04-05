@@ -1,23 +1,23 @@
 
 ==================== Running task 2.1 ====================
-Overhead runtime:  32.355866909
+Overhead runtime:  31.4935040474
 
 Runtime of k-NN for k = 1
-32.5790948868
+31.7277619839
 
 Runtime of k-NN for k = 3
-32.5934479237
+31.8408210278
 
 Runtime of k-NN for k = 5
-32.6102287769
+31.7926561832
 
 Runtime of k-NN for k = 10
-32.6062970161
+31.752395153
 
 Runtime of k-NN for k = 20
-32.6198089123
+31.7961411476
 
-Total time in k-nn: 33.6855800152
+Total time in k-nn: 33.0392940044
 
 -------------------- k = 1 --------------------
 k = 1
@@ -46,16 +46,16 @@ Nerrs = 156
 acc = 0.960980490245
 
 ==================== Running task 2.2 ====================
-Overhead runtime:  12.2663829327
+Overhead runtime:  13.7630660534
 
 Runtime of k-NN for k = 1
-14.535712719
+16.1770250797
 
 ==================== Running task 2.2 ====================
-Overhead runtime:  11.6840040684
+Overhead runtime:  13.832515955
 
 Runtime of k-NN for k = 3
-14.438570261
+16.8926291466
 
 ==================== Running task 2.3 ====================
 
@@ -73,14 +73,14 @@ Runtime of k-NN for k = 3
  [ 7.78629244e-17]]
 
 ==================== Running task 2.5 ====================
-Elapsed time in Gaussian classification: 4.94439911842 secs
+Elapsed time in Gaussian classification: 4.48949408531 secs
 N = 3998
 Nerrs = 199
 acc = 0.950225112556
-Elapsed time (2.5): 5.01578307152
+Elapsed time (2.5): 4.54218196869
 
 ==================== Running task 2.6 ====================
-Elapsed time (2.6): 19.2520539761
+Elapsed time (2.6): 22.5637731552
 
 ==================== Running task 2.7 ====================
 Ratio = 90.0%
@@ -116,5 +116,29 @@ acc = 0.949474737369
 Ratio = 30.0%
 acc = 0.951475737869
 
+-------------------- L = 2 --------------------
 
-Total runtime of task 2:  130.084455013
+==================== Running task 2.8 ====================
+Elapsed time in MGC: 9.90424013138 secs
+N = 3998
+Nerrs = 175
+acc = 0.956228114057
+
+-------------------- L = 5 --------------------
+
+==================== Running task 2.8 ====================
+Elapsed time in MGC: 24.3279891014 secs
+N = 3998
+Nerrs = 121
+acc = 0.969734867434
+
+-------------------- L = 10 --------------------
+
+==================== Running task 2.8 ====================
+Elapsed time in MGC: 48.7900769711 secs
+N = 3998
+Nerrs = 93
+acc = 0.976738369185
+
+
+Total runtime of task 2:  216.536278009

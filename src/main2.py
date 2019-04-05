@@ -86,16 +86,14 @@ for ratio in ratios:
     sio.savemat('../results/task2_7_cm_{}.mat'.format(R), mdict={'CM': cm})
 
 # 2.8 ===================================================================================
-def run_task2_8(visual):
-
-    Ls = [2, 5, 10]
-    for L in Ls:
-        print '-------------------- L = {} --------------------'.format(L)
-        task2.task2_8(Xtrn, Ytrn, Xtst, Ytst, 0.01, L)
-        print
-        os.rename('task2_8_cm_{}.mat'.format(L), '../results/task2_8_cm_{}.mat'.format(L))
-        os.rename('task2_8_g{}_m1.mat'.format(L), '../results/task2_8_g{}_m1.mat'.format(L))
-        os.rename('task2_8_g{}_cov1.mat'.format(L), '../results/task2_8_g{}_cov1.mat'.format(L))
+Ls = [2, 5, 10]
+for L in Ls:
+    print '-------------------- L = {} --------------------'.format(L)
+    task2.task2_8(Xtrn, Ytrn, Xtst, Ytst, 0.01, L)
+    print
+    os.rename('task2_8_cm_{}.mat'.format(L), '../results/task2_8_cm_{}.mat'.format(L))
+    os.rename('task2_8_g{}_m1.mat'.format(L), '../results/task2_8_g{}_m1.mat'.format(L))
+    os.rename('task2_8_g{}_cov1.mat'.format(L), '../results/task2_8_g{}_cov1.mat'.format(L))
 
 # FINAL TIMING ==========================================================================
 runtime = time() - overall_start_time
