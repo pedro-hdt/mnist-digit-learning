@@ -191,7 +191,7 @@ def task2_3(X, Y):
         myrot = np.dot(vecs.T, contour) + mean[C_k].reshape([pca_dim, 1])
         ax.plot(myrot[0], myrot[1])
         ax.text(mean[C_k, 0], mean[C_k, 1], s=str(C_k))
-        ax.scatter(mean[C_k, 0], mean[C_k, 1], color='k')
+        ax.scatter(mean[C_k, 0], mean[C_k, 1], marker='.', color='k')
 
         # This is alternative code for this section, as seen in
         # https://stackoverflow.com/questions/10952060/plot-ellipse-with-matplotlib-pyplot-python
