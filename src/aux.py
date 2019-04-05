@@ -199,11 +199,16 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
     L = len(Ks)
     Ypreds = np.zeros((N, L), dtype='uint8')
 
+    start_time = time()
+
     # Compute distance from every point in test set to every point in dataset
     dist_mat = vec_sq_dist(Xtrn, Xtst)
 
     # get sorting index for all distances
     idx = dist_mat.argsort(axis=0)
+
+    overhead_runtime = time() - start_time
+    print 'Overhead runtime: ', overhead_runtime
 
     for l in range(L):
 
@@ -219,7 +224,7 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
             # we predict it is the most common value (ie the mode) of the k-nn
             Ypreds[n, l], _ = mode(k_nn_labels)
 
-        runtime = time() - start_time
+        runtime = time() - start_time + overhead_runtime
         print '\nRuntime of k-NN for k = {}'.format(Ks[l])
         print runtime
 

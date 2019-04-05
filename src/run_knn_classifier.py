@@ -26,6 +26,7 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
     idx = dist_mat.argsort(axis=0)
 
     overhead_runtime = time() - start_time
+    print 'Overhead runtime: ', overhead_runtime
 
     for l in range(L):
 

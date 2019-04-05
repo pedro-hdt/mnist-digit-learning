@@ -25,12 +25,14 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
     :param Ks: 1-by-L vector (integer) of the numbers of nearest neighbours in Xtrain
     """
 
+    print '\n==================== Running task 2.1 ===================='
+
     # Numbers refer to tasks in docstring above
 
     start_time = time() # 2.
     Ypreds = run_knn_classifier(Xtrn, Ytrn, Xtst, Ks) # 1.
     runtime = time() - start_time # 2.
-    print 'Elapsed time in k-nn: {}\n'.format(runtime) #2.
+    print '\nTotal time in k-nn: {}\n'.format(runtime) #2.
 
     N = len(Ytst)
     L = len(Ks)
@@ -43,7 +45,8 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
 
         # 4.
         Nerrs = N - CM.trace()
-        print '\nk = {}'.format(k)
+        print '-------------------- k = {} --------------------'.format(k)
+        print 'k = {}'.format(k)
         print 'N = {}'.format(N)
         print 'Nerrs = {}'.format(Nerrs)
         print 'acc = {}'.format(acc)
@@ -64,6 +67,8 @@ def task2_2(X, Y, k, MAT_evecs, MAT_evals, posVec, nbins):
     :return: Dmap: nbins-by-nbins matrix (uint8) - each element repressents
     the cluster number that the point belongs to.
     """
+
+    print '\n==================== Running task 2.2 ===================='
 
     D = posVec.shape[1]
 
@@ -133,6 +138,9 @@ def task2_3(X, Y):
     :param Y: M-by-1 label vector (uint8)
     """
 
+    print '\n==================== Running task 2.3 ===================='
+
+
     # These parameters control the number of classes and pca dimensions respectively
     # They are irrelevant for the assignment, and could be hardcoded but this
     # makes the code easier to adapt to other situations
@@ -183,6 +191,7 @@ def task2_3(X, Y):
         myrot = np.dot(vecs.T, contour) + mean[C_k].reshape([pca_dim, 1])
         ax.plot(myrot[0], myrot[1])
         ax.text(mean[C_k, 0], mean[C_k, 1], s=str(C_k))
+        ax.scatter(mean[C_k, 0], mean[C_k, 1], color='k')
 
         # This is alternative code for this section, as seen in
         # https://stackoverflow.com/questions/10952060/plot-ellipse-with-matplotlib-pyplot-python
@@ -211,6 +220,9 @@ def task2_4(X, Y):
              for each class k = 1,...,K, and the last element holds the correlation
              for the whole data, i.e. Xtrain.
     """
+
+    print '\n==================== Running task 2.4 ===================='
+
 
     # These parameters control the number of classes and pca dimensions respectively
     # They are 'irrelevant' for the assignment, and could be hardcoded but this
@@ -266,6 +278,9 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
     :param epsilon: a scalar variable (double) for covariance regularisation
     """
 
+    print '\n==================== Running task 2.5 ===================='
+
+
     # Number tags refer to the subtasks as numbered in the docstring above
 
     start_time = time() # 2.
@@ -305,6 +320,8 @@ def task2_6(X, Y, epsilon, MAT_evecs, MAT_evals, posVec, nbins):
         Dmap: nbins-by-nbins matrix (uint8) - each element represents
         the cluster number that the point belongs to.
     """
+
+    print '\n==================== Running task 2.6 ===================='
 
     pca_dim = 2
     n_classes = 10
@@ -403,6 +420,8 @@ def task2_7(Xtrn, Ytrn, Xtst, Ytst, epsilon, ratio):
         acc : scalar (double) of correct classification rate
     """
 
+    print '\n==================== Running task 2.7 ===================='
+
     # Extract relevant part of dataset
     data_limit = int(ratio * len(Ytrn))
 
@@ -440,6 +459,8 @@ def task2_8(Xtrn, Ytrn, Xtst, Ytst, epsilon, L):
     :param epsilon: a scalar variable (double) for covariance regularisation
     :param L: scalar (integer) of the number of Gaussian distributions per class
     """
+
+    print '\n==================== Running task 2.8 ===================='
 
     # Number tags refer to steps as in the docstring above
 

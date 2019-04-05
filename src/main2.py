@@ -51,16 +51,16 @@ for k in Ks:
 
 # 2.3 ===================================================================================
 task2.task2_3(Xtrn, Ytrn)
+plt.savefig('../results/task2_3_img.png')
 
 # 2.4 ===================================================================================
 Corrs = task2.task2_4(Xtrn, Ytrn)
-print Corrs
 sio.savemat(file_name='../results/task2_4_corrs.mat', mdict={'Corrs': Corrs})
 
 # 2.5 ===================================================================================
 start_time = time()
 task2.task2_5(Xtrn, Ytrn, Xtst, Ytst, 0.01)
-print 'Elapsed time: {}'.format(time() - start_time)
+print 'Elapsed time (2.5): {}'.format(time() - start_time)
 os.rename('task2_5_cm.mat', '../results/task2_5_cm.mat')
 os.rename('task2_5_m10.mat', '../results/task2_5_m10.mat')
 os.rename('task2_5_cov10.mat', '../results/task2_5_cov10.mat')
@@ -71,7 +71,7 @@ MAT_evals = '../results/task1_3_evals.mat'
 start_time = time()
 posVec = np.atleast_2d(my_mean(Xtrn))
 task2.task2_6(Xtrn, Ytrn, 0.01, MAT_evecs, MAT_evals, posVec, 200)
-print 'Elapsed time: {}'.format(time() - start_time)
+print 'Elapsed time (2.6): {}'.format(time() - start_time)
 plt.savefig('../results/task2_6_img.pdf')
 plt.savefig('../results/task2_6_img.png')
 

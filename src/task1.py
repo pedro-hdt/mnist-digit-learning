@@ -17,6 +17,8 @@ def task1_1(X, Y):
     :param Y: M-by-1 label vector (uint8) for X. Y(i) is the class number of X[i, :].
     """
 
+    print '\n==================== Running task 1.1 ===================='
+
     # for each of the 10 classes
     for C_k in range(10):
 
@@ -51,6 +53,8 @@ def task1_2(X, Y):
     :return: M: (K+1)-by-D mean vector matrix (float64), where K (not an input) is the number of classes, and D
     is the same as in Task 1.1. M[K+1,:] is the mean vector of the whole data.
     """
+
+    print '\n==================== Running task 1.2 ===================='
 
     # Extract dimensions
     D = X.shape[1]
@@ -97,6 +101,8 @@ def task1_3(X):
     - MinDims : 4-by-1 vector (integer) of the minimum number of PCA dimensions to cover
       70%, 80%, 90%, and 95% of the total variance.
     """
+
+    print '\n==================== Running task 1.3 ===================='
 
     D = X.shape[1]
 
@@ -148,6 +154,8 @@ def task1_4(EVecs):
     :param Evecs: the same format as in comp_pca.py
     """
 
+    print '\n==================== Running task 1.4 ===================='
+
     montage(EVecs[:, :10].T)
 
 
@@ -160,6 +168,8 @@ def task1_5(X, Ks):
     :param X: M-by-D data matrix (double)
     :param Ks: 1-by-L vector (integer) of the numbers of nearest neighbours
     """
+
+    print '\n==================== Running task 1.5 ===================='
 
     Cs = []
     idxs = []
@@ -192,6 +202,8 @@ def task1_6(MAT_ClusterCentres):
     :param MAT_ClusterCentres: file name of the file that contains cluster centres C.
     """
 
+    print '\n==================== Running task 1.6 ===================='
+
     C = sio.loadmat(file_name=MAT_ClusterCentres)['C']
     montage(C)
 
@@ -214,6 +226,8 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
     :return: Dmap : nbins-by-nbins matrix (uint8) - each element represents
              the cluster number that the point belongs to.
     """
+
+    print '\n==================== Running task 1.7 ===================='
 
     D = posVec.shape[1]
     Dmap = np.zeros((1, nbins*nbins), dtype='uint8')
@@ -287,6 +301,9 @@ def task1_8(X, Y, k):
     :param X: N-by-D ndarray (this is the dataset to perform clustering on)
     :param k: number of clusters
     """
+
+    print '\n==================== Running task 1.8 ===================='
+
     #==================================================================================#
     # Our 'control' is going to be the results for when we use the first ten samples
     # in the dataset as suggested previously.
