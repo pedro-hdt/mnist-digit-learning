@@ -9,13 +9,14 @@ def task2_2(X, Y, k, MAT_evecs, MAT_evals, posVec, nbins):
     Write a Python function that visualises the cross section of decision regions of k-NN with
     a 2D-PCA plane, where the position of the plane is specified by a point vector. Use the
     same specifications for plotting as in Task 1.7
+
     :param X: M-by-D data matrix (double)
     :param k: scalar (integer) - the number of nearest neighbours
     :param MAT_evecs: MAT filename of eigenvector matrix of D-by-D
     :param MAT_evals: MAT filename of eigenvalue vector of D-by-1
     :param posVec: 1-by-D vector (double) to specity the position of the plane
     :param nbins: scalar (integer) - the number of bins for each PCA axis
-    :return: Dmap  : nbins-by-nbins matrix (uint8) - each element repressents
+    :return: Dmap: nbins-by-nbins matrix (uint8) - each element repressents
     the cluster number that the point belongs to.
     """
 
@@ -33,9 +34,11 @@ def task2_2(X, Y, k, MAT_evecs, MAT_evals, posVec, nbins):
     # Extract std deviation (sqrt(var))
     sigma = EVals[:2] ** 0.5
 
-    # Create grid
-    xrange = np.linspace(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]), num=nbins)
-    yrange = np.linspace(projected_mean[:, 0] - (5 * sigma[1]), projected_mean[:, 1] + 5 * (sigma[1]), num=nbins)
+    # Create grid with range mean+-5sigma on each axis as specified
+    xbounds = [np.asscalar(projected_mean[:, 0] - (5 * sigma[0])), np.asscalar(projected_mean[:, 1] + 5 * (sigma[0]))]
+    ybounds = [np.asscalar(projected_mean[:, 0] - (5 * sigma[1])), np.asscalar(projected_mean[:, 1] + 5 * (sigma[1]))]
+    xrange = np.linspace(xbounds[0], xbounds[1], num=nbins)
+    yrange = np.linspace(ybounds[0], ybounds[1], num=nbins)
     xx_pc, yy_pc = np.meshgrid(xrange, yrange)
 
     # Padding the grid with 0's to make it match the dimensions od the unprojected data
@@ -56,15 +59,15 @@ def task2_2(X, Y, k, MAT_evecs, MAT_evals, posVec, nbins):
     Dmap = run_knn_classifier(X, Y, grid.T, [k])
     Dmap = Dmap.reshape((nbins, nbins))
 
-    # Plot the data in the new basis
-    plt.contourf(xx_pc, yy_pc, Dmap, levels=range(10))
-
-    plt.xlabel('1st Principal Component')
-    plt.ylabel('2nd Principal Component')
-    plt.box(on=True)
-    plt.xlim(projected_mean[:, 0] - (5 * sigma[0]), projected_mean[:, 1] + 5 * (sigma[0]))
-    plt.ylim(projected_mean[:, 0] - (5 * sigma[1]), projected_mean[:, 1] + 5 * (sigma[1]))
-    plt.suptitle('k-NN decision regions for k = {}'.format(k))
-    # plt.show() # TODO uncomment this before submission
+    # Plot Dmap (normalised to fit the colormap)
+    fig, ax = plt.subplots()
+    ax.imshow(Dmap / (1.0 * k), cmap='viridis', origin='lower', extent=xbounds + ybounds)
+    ax.set(xlabel='1st Principal Component',
+           ylabel='2nd Principal Component',
+           xlim=xbounds,
+           ylim=ybounds)
+    fig.canvas.set_window_title('Task 2.2')
+    fig.suptitle('k-NN decision regions for k = {}'.format(k))
+    # plt.show() # TODO uncomment this before submission?
 
     return Dmap

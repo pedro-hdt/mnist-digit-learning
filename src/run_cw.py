@@ -273,7 +273,7 @@ def run_task2_2(visual):
 
     MAT_evecs = '../results/task1_3_evecs.mat'
     MAT_evals = '../results/task1_3_evals.mat'
-    posVec = my_mean(Xtrn)
+    posVec = np.atleast_2d(my_mean(Xtrn))
     nbins = 200
 
     # TODO can do 15000 on DICE
