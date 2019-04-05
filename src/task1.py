@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import scipy.io as sio
 from aux import my_mean, comp_pca, my_kMeansClustering, vec_sq_dist
 from montage import montage
-
+from time import time
 
 def task1_1(X, Y):
     """
@@ -36,8 +36,6 @@ def task1_1(X, Y):
         # Saving the files in both pdf and png for the report
         plt.savefig(fname='../results/task1_1_imgs_class{}.pdf'.format(C_k))
         plt.savefig(fname='../results/task1_1_imgs_class{}.png'.format(C_k))
-
-    plt.show()
 
 
 def task1_2(X, Y):
@@ -75,7 +73,6 @@ def task1_2(X, Y):
     fig = plt.gcf()
     fig.suptitle('Mean vectors for each class and overall dataset', size=13)
     fig.canvas.set_window_title('Task 1.2')
-    plt.show()
 
     return M
 
@@ -169,7 +166,10 @@ def task1_5(X, Ks):
 
     # Do all computation because saving is asynchronous which makes it dangerous
     for k in Ks:
+        start_time = time()
         C, idx, SSE = my_kMeansClustering(X, k, X[:k])
+        runtime = time() - start_time
+        print 'Elapsed time in clustering for k = {}: {} secs'.format(k, runtime)
         Cs.append(np.copy(C))
         idxs.append(np.copy(idx))
         SSEs.append(np.copy(SSE))
@@ -271,6 +271,5 @@ def task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec, nbins):
            ylim=ybounds)
     fig.canvas.set_window_title('Task 1.7')
     fig.suptitle('Decision regions after k-means clustering for k = {}'.format(K))
-    # plt.show()
 
     return Dmap

@@ -62,7 +62,7 @@ Ks = Ks_clustering
 start_time = time()
 task1.task1_5(Xtrn, Ks)
 runtime = time() - start_time
-print 'Elapsed time: {} secs'.format(runtime)
+print 'Total time for clustering: {} secs'.format(runtime)
 
 # Move files to results directory to avoid cluttering our src folder
 print 'Moving files...'
@@ -99,3 +99,4 @@ for k in Ks:
     plt.savefig(fname='../results/task1_7_{}.png'.format(k))
     runtimes.append(time() - start_time)
 
+plt.show()
