@@ -1,2 +1,11 @@
-Elapsed time in clustering for k = 1: 0.42484998703 secs
-Elapsed time in clustering for k = 2: 6.31980085373 secs
+Elapsed time in clustering for k = 1: 0.436626911163 secs
+Elapsed time in clustering for k = 2: 6.02261209488 secs
+Elapsed time in clustering for k = 3: 12.0258190632 secs
+Elapsed time in clustering for k = 4: 18.3145480156 secs
+Elapsed time in clustering for k = 5: 9.25707006454 secs
+Elapsed time in clustering for k = 7: 25.8341619968 secs
+Elapsed time in clustering for k = 10: 36.6627621651 secs
+Elapsed time in clustering for k = 15: 42.5053620338 secs
+Elapsed time in clustering for k = 20: 27.1714558601 secs
+Total time for clustering: 178.236880064 secs
+Moving files...

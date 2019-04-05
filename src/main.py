@@ -99,4 +99,8 @@ for k in Ks:
     plt.savefig(fname='../results/task1_7_{}.png'.format(k))
     runtimes.append(time() - start_time)
 
+# 1.8 ===================================================================================
+k = 10
+task1.task1_8(Xtrn, Ytrn, k)
+
 plt.show()
