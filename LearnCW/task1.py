@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import scipy.io as sio
 from aux import my_mean, comp_pca, my_kMeansClustering, vec_sq_dist
 from montage import *
-from time import time
+from time import clock
 
 
 def task1_1(X, Y):
@@ -177,9 +177,9 @@ def task1_5(X, Ks):
 
     # Do all computation because saving is asynchronous which makes it dangerous
     for k in Ks:
-        start_time = time()
+        start_time = clock()
         C, idx, SSE = my_kMeansClustering(X, k, X[:k])
-        runtime = time() - start_time
+        runtime = clock() - start_time
         print 'Elapsed time in clustering for k = {}: {} secs'.format(k, runtime)
         Cs.append(np.copy(C))
         idxs.append(np.copy(idx))

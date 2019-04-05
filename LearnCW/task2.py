@@ -1,4 +1,4 @@
-from time import time
+from time import clock
 import scipy.io as sio
 import numpy as np
 import matplotlib.pyplot as plt
@@ -29,9 +29,9 @@ def task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks):
 
     # Numbers refer to tasks in docstring above
 
-    start_time = time() # 2.
+    start_time = clock() # 2.
     Ypreds = run_knn_classifier(Xtrn, Ytrn, Xtst, Ks) # 1.
-    runtime = time() - start_time # 2.
+    runtime = clock() - start_time # 2.
     print '\nTotal time in k-nn: {}\n'.format(runtime) #2.
 
     N = len(Ytst)
@@ -283,9 +283,9 @@ def task2_5(Xtrn, Ytrn, Xtst, Ytst, epsilon):
 
     # Number tags refer to the subtasks as numbered in the docstring above
 
-    start_time = time() # 2.
+    start_time = clock() # 2.
     Ypreds, Ms, Covs = my_gaussian_classify(Xtrn, Ytrn, Xtst, epsilon) # 1.
-    print 'Elapsed time in Gaussian classification: {} secs'.format(time() - start_time) #2.
+    print 'Elapsed time in Gaussian classification: {} secs'.format(clock() - start_time) #2.
 
     # 3.
     cm, acc = comp_confmat(Ytst, Ypreds, 10)
@@ -464,9 +464,9 @@ def task2_8(Xtrn, Ytrn, Xtst, Ytst, epsilon, L):
 
     # Number tags refer to steps as in the docstring above
 
-    start_time = time() # 2.
+    start_time = clock() # 2.
     Ypreds, MMs, MCovs = run_mgcs(Xtrn, Ytrn, Xtst, epsilon, L) # 1.
-    print 'Elapsed time in MGC: {} secs'.format(time() - start_time) # 2.
+    print 'Elapsed time in MGC: {} secs'.format(clock() - start_time) # 2.
 
     # 3.
     cm, acc = comp_confmat(Ytst, Ypreds, 10)
