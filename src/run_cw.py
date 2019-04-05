@@ -31,27 +31,17 @@ import gc
 
 
 def run_all(visual):
-    start_time = time()
-    times = []
-    t11 = run_task1_1(visual)
-    times.append(t11)
-    t12 = run_task1_2(visual)
-    times.append(t12)
-    t13 = run_task1_3(visual)
-    times.append(t13)
-    t14 = run_task1_4(visual)
-    times.append(t14)
+    run_task1_1(visual)
+    run_task1_2(visual)
+    run_task1_3(visual)
+    run_task1_4(visual)
 
     run_vec_dist(visual)
     run_k_means(visual)
 
     t15 = run_task1_5(visual)
-    times.append(t15)
     t16 = run_task1_6(visual)
-    times.append(t16)
     print '\nAll tasks run successfully!'
-    print 'Total runtime (including saving and plotting interruptions): {} secs'.format(time() - start_time)
-    print 'Total runtime (excluding saving and plotting interruptions): {} secs'.format(sum(times))
 
 
 def run_task1_1(visual):

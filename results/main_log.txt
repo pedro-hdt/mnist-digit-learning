@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/pedro-teixeira/2b/mnist-digit-learning/src/main.py", line 12, in <module>
+    print filter(re.match(), dir(task1))
+TypeError: match() takes at least 2 arguments (0 given)
