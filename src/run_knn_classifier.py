@@ -38,7 +38,7 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
             Ypreds[n, l], _ = mode(k_nn_labels)
 
         runtime = time() - start_time
-        print '\nRuntime of k-NN for k = {}'.format(l)
+        print '\nRuntime of k-NN for k = {}'.format(Ks[l])
         print runtime
 
     return Ypreds

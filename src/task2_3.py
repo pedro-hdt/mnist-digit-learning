@@ -9,12 +9,13 @@ def task2_3(X, Y):
     Write a Python function that does the following:
         1. Transform X to the data in the 2D space spanned by the first two principal components.
         2. Estimate the parameters (mean vector and covariance matrix) of Gaussian distribution
-        for each class in the 2D space.
+           for each class in the 2D space.
         3. On a single graph, plot a contour of the distribution for each class using plot() function.
-        Do not use functions for plotting contours such as contour(). The lengths of longest
-        / shortest axis of an ellipse should be proportional to the standard deviation for the
-        axis. (Please note that contours of different distributions plotted by this method
-        do not necessary give the set of points of the same pdf value.)
+           Do not use functions for plotting contours such as contour(). The lengths of longest
+           / shortest axis of an ellipse should be proportional to the standard deviation for the
+           axis. (Please note that contours of different distributions plotted by this method
+           do not necessary give the set of points of the same pdf value.)
+
     :param X: M-by-D data matrix (double)
     :param Y: M-by-1 label vector (uint8)
     """
@@ -34,7 +35,11 @@ def task2_3(X, Y):
     covar_m = np.zeros((n_classes, pca_dim, pca_dim))
     std_dv = np.zeros((n_classes, pca_dim))
 
+    # Initialise our figure
+    fig, ax = plt.subplots()
+
     for C_k in range(n_classes):
+
         class_samples = X_pc[Y[:] == C_k]
         mean[C_k] = my_mean(class_samples)
         X_pcshift = class_samples - mean[C_k]
@@ -61,10 +66,14 @@ def task2_3(X, Y):
 
         # Use the eigenvectors of the covariance matrix to create a linear transformation
         # of the circle (adding the mean to translate the location)
-        vs, _ = comp_pca(covar_m[C_k])
-        myrot = np.dot(vs.T, contour) + mean[C_k].reshape([pca_dim, 1])
-        plt.plot(myrot[0], myrot[1])
-        plt.text(mean[C_k, 0], mean[C_k, 1], s=str(C_k))
+        vecs, vals = comp_pca(covar_m[C_k])
+        myrot = np.dot(vecs.T, contour) + mean[C_k].reshape([pca_dim, 1])
+        ax.plot(myrot[0], myrot[1])
+        ax.text(mean[C_k, 0], mean[C_k, 1], s=str(C_k))
+        ax.set(xlabel='1st Principal Component',
+               ylabel='2nd Principal Component')
+        fig.canvas.set_window_title('Task 2.3')
+        fig.suptitle('Contours of distributions for each class')
 
         # This is alternative code for this section, as seen in
         # https://stackoverflow.com/questions/10952060/plot-ellipse-with-matplotlib-pyplot-python
