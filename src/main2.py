@@ -72,7 +72,8 @@ MAT_evecs = '../results/task1_3_evecs.mat'
 MAT_evals = '../results/task1_3_evals.mat'
 start_time = time()
 posVec = np.atleast_2d(my_mean(Xtrn))
-task2.task2_6(Xtrn, Ytrn, 0.01, MAT_evecs, MAT_evals, posVec, 200)
+Dmap = task2.task2_6(Xtrn, Ytrn, 0.01, MAT_evecs, MAT_evals, posVec, 200)
+sio.savemat('../results/task2_6_dmap.mat', mdict={'Dmap': Dmap})
 print 'Elapsed time (2.6): {}'.format(time() - start_time)
 plt.savefig('../results/task2_6_img.pdf')
 plt.savefig('../results/task2_6_img.png')
@@ -80,7 +81,7 @@ plt.savefig('../results/task2_6_img.png')
 # 2.7 ===================================================================================
 ratios = [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]
 for ratio in ratios:
-    R = ratio * 100
+    R = int(ratio * 100)
     cm, acc = task2.task2_7(Xtrn, Ytrn, Xtst, Ytst, 0.01, ratio)
     print 'Ratio = {}%'.format(R)
     print 'acc = {}\n'.format(acc)
