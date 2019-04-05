@@ -1,7 +1,0 @@
-#!/home/pedro-teixeira/2b/mnist-digit-learning/dice/bin/python
-#
-# Call the graphical interface for Epydoc.
-#
-
-from epydoc.gui import gui
-gui()
