@@ -1,0 +1,4 @@
+Elapsed time in Gaussian classification: 4.76195502281 secs
+N = 3998
+Nerrs = 199
+acc = 0.950225112556

@@ -1,0 +1,15 @@
+
+Runtime of k-NN for k = 0
+0.228157043457
+
+Runtime of k-NN for k = 1
+0.233947992325
+
+Runtime of k-NN for k = 2
+0.239279985428
+
+Runtime of k-NN for k = 3
+0.24445104599
+
+Runtime of k-NN for k = 4
+0.257328033447
