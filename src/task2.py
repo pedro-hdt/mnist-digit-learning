@@ -190,7 +190,7 @@ def task2_3(X, Y):
         vecs, vals = comp_pca(covar_m[C_k])
         myrot = np.dot(vecs.T, contour) + mean[C_k].reshape([pca_dim, 1])
         ax.plot(myrot[0], myrot[1])
-        ax.text(mean[C_k, 0], mean[C_k, 1], s=str(C_k))
+        ax.text(mean[C_k, 0]+0.1, mean[C_k, 1]+0.1, s=str(C_k))
         ax.scatter(mean[C_k, 0], mean[C_k, 1], marker='.', color='k')
 
         # This is alternative code for this section, as seen in

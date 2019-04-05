@@ -56,6 +56,7 @@ plt.savefig('../results/task2_3_img.png')
 # 2.4 ===================================================================================
 Corrs = task2.task2_4(Xtrn, Ytrn)
 sio.savemat(file_name='../results/task2_4_corrs.mat', mdict={'Corrs': Corrs})
+print Corrs
 
 # 2.5 ===================================================================================
 start_time = time()
