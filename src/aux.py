@@ -1,5 +1,5 @@
 import numpy as np
-from time import time
+from time import clock
 from scipy.stats import mode
 from logdet import *
 
@@ -164,7 +164,7 @@ def comp_pca(X):
     # Find the eigenvectors and eigenvalues
     # EVecs will be the principal componentsbout that
     # library function returns unit vectors so we need nto worry a
-    EVals, EVecs = np.linalg.eig(covar_m)
+    EVals, EVecs = np.linalg.eigh(covar_m)
 
     # The first element of each eigenvector must be non-negative
     for i in range(EVecs.shape[1]):
@@ -199,7 +199,7 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
     L = len(Ks)
     Ypreds = np.zeros((N, L), dtype='uint8')
 
-    start_time = time()
+    start_time = clock()
 
     # Compute distance from every point in test set to every point in dataset
     dist_mat = vec_sq_dist(Xtrn, Xtst)
@@ -207,12 +207,12 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
     # get sorting index for all distances
     idx = dist_mat.argsort(axis=0)
 
-    overhead_runtime = time() - start_time
+    overhead_runtime = clock() - start_time
     print 'Overhead runtime: ', overhead_runtime
 
     for l in range(L):
 
-        start_time = time()
+        start_time = clock()
 
         k = Ks[l] # k in k-NN
 
@@ -224,7 +224,7 @@ def run_knn_classifier(Xtrn, Ytrn, Xtst, Ks):
             # we predict it is the most common value (ie the mode) of the k-nn
             Ypreds[n, l], _ = mode(k_nn_labels)
 
-        runtime = time() - start_time + overhead_runtime
+        runtime = clock() - start_time + overhead_runtime
         print '\nRuntime of k-NN for k = {}'.format(Ks[l])
         print runtime
 

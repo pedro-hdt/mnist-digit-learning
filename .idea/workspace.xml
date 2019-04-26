@@ -16,7 +16,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/task2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1818">
+            <state relative-caret-position="4136">
               <caret line="192" column="50" selection-start-line="192" selection-start-column="50" selection-end-line="192" selection-end-column="50" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -40,7 +40,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/task1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
+            <state relative-caret-position="6578">
               <caret line="304" column="50" selection-start-line="304" selection-start-column="50" selection-end-line="304" selection-end-column="50" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -52,7 +52,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
+            <state relative-caret-position="1936">
               <caret line="96" column="21" selection-start-line="96" selection-end-line="97" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
@@ -64,7 +64,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/run_cw.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
+            <state relative-caret-position="6754">
               <caret line="333" selection-start-line="333" selection-end-line="340" selection-end-column="96" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -76,7 +76,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/aux.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-90">
+            <state relative-caret-position="2948">
               <caret line="137" column="11" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="11" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -931,19 +931,30 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.check1_5" />
+      <item itemvalue="Python.graph_sse" />
+      <item itemvalue="Python.k_means visual (k=10)" />
+      <item itemvalue="Python.k_means visual (k=15)" />
+      <item itemvalue="Python.k_means visual (k=2)" />
+      <item itemvalue="Python.k_means visual (k=3)" />
+      <item itemvalue="Python.k_means visual (k=4)" />
+      <item itemvalue="Python.k_means visual (k=7)" />
+      <item itemvalue="Python.k_means" />
+      <item itemvalue="Python.simple1_5" />
+      <item itemvalue="Python.task1" />
       <item itemvalue="Python.task1_1" />
       <item itemvalue="Python.task1_2" />
       <item itemvalue="Python.task1_3" />
       <item itemvalue="Python.task1_4" />
+      <item itemvalue="Python.task1_5 visual cached" />
+      <item itemvalue="Python.task1_5 visual" />
       <item itemvalue="Python.task1_5" />
       <item itemvalue="Python.task1_6" />
-      <item itemvalue="Python.task1_8" />
-      <item itemvalue="Python.task2_1" />
-      <item itemvalue="Python.task1_5 visual" />
-      <item itemvalue="Python.graph_sse" />
-      <item itemvalue="Python.check1_5" />
-      <item itemvalue="Python.task1_5 visual cached" />
       <item itemvalue="Python.task1_7" />
+      <item itemvalue="Python.task1_8" />
+      <item itemvalue="Python.task1_full" />
+      <item itemvalue="Python.task2" />
+      <item itemvalue="Python.task2_1" />
       <item itemvalue="Python.task2_2" />
       <item itemvalue="Python.task2_3" />
       <item itemvalue="Python.task2_4" />
@@ -951,19 +962,8 @@
       <item itemvalue="Python.task2_6" />
       <item itemvalue="Python.task2_7" />
       <item itemvalue="Python.task2_8" />
-      <item itemvalue="Python.task1" />
-      <item itemvalue="Python.task2" />
-      <item itemvalue="Python.k_means" />
-      <item itemvalue="Python.k_means visual (k=10)" />
-      <item itemvalue="Python.simple1_5" />
       <item itemvalue="Python.test k_means visual (k=10) " />
-      <item itemvalue="Python.k_means visual (k=2)" />
-      <item itemvalue="Python.k_means visual (k=3)" />
-      <item itemvalue="Python.k_means visual (k=4)" />
-      <item itemvalue="Python.k_means visual (k=7)" />
-      <item itemvalue="Python.k_means visual (k=15)" />
       <item itemvalue="Python.vec_dist" />
-      <item itemvalue="Python.task1_full" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -1325,11 +1325,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="34" width="1920" height="1046" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49835527" visible="true" weight="0.18766473" />
       <window_info id="Structure" order="1" sideWeight="0.50164473" side_tool="true" weight="0.18766473" />
       <window_info id="Favorites" order="2" sideWeight="0.50164473" side_tool="true" weight="0.18766473" />
-      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32921347" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49710068" weight="0.33186814" />
@@ -1341,6 +1341,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49947146" weight="0.32857144" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5028993" side_tool="true" weight="0.33186814" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4989429" weight="0.32747254" />
+      <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1469,43 +1470,16 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/intermediate7.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/check1_5.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/outside7.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/inside3.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/outside3.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/outside15.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/final15.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/inside15.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/inside7.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/final7.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/intermediate7.txt" />
+    <entry file="file://$PROJECT_DIR$/src/check1_5.py" />
+    <entry file="file://$PROJECT_DIR$/src/outside7.txt" />
+    <entry file="file://$PROJECT_DIR$/src/inside3.txt" />
+    <entry file="file://$PROJECT_DIR$/src/outside3.txt" />
+    <entry file="file://$PROJECT_DIR$/src/outside15.txt" />
+    <entry file="file://$PROJECT_DIR$/src/final15.txt" />
+    <entry file="file://$PROJECT_DIR$/src/inside15.txt" />
+    <entry file="file://$PROJECT_DIR$/src/inside7.txt" />
+    <entry file="file://$PROJECT_DIR$/src/final7.txt" />
     <entry file="file://$PROJECT_DIR$/src/montage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -1528,13 +1502,7 @@
     <entry file="file://$PROJECT_DIR$/results/task1_8_log.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/results/task2_1_log.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/results/task2_1_log.txt" />
     <entry file="file://$PROJECT_DIR$/results/task2_1_log_stats.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1773,16 +1741,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/run_cw.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="333" selection-start-line="333" selection-end-line="340" selection-end-column="96" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/results/task2_3_img.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -1795,19 +1753,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/aux.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-90">
-          <caret line="137" column="11" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/task2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1818">
+        <state relative-caret-position="4136">
           <caret line="192" column="50" selection-start-line="192" selection-start-column="50" selection-end-line="192" selection-end-column="50" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -1817,7 +1765,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/task1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
+        <state relative-caret-position="6578">
           <caret line="304" column="50" selection-start-line="304" selection-start-column="50" selection-end-line="304" selection-end-column="50" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -1827,10 +1775,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
+        <state relative-caret-position="1936">
           <caret line="96" column="21" selection-start-line="96" selection-end-line="97" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/run_cw.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6754">
+          <caret line="333" selection-start-line="333" selection-end-line="340" selection-end-column="96" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/aux.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2948">
+          <caret line="137" column="11" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
